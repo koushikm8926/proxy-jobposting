@@ -79,7 +79,7 @@ export const Hero: React.FC<HeroProps> = ({ onFindJobs, onHireTalent }) => {
         {/* Right Side: Panoramic Integrated Visual of Professionals & Modern Bengaluru */}
         <div className="hero-panoramic-visual">
           <img
-            src="/images/home_hero_people_feathered.png"
+            src="/images/home_hero_professionals_feathered.png"
             alt="Proxy ambitious professionals in modern Bengaluru"
             className="hero-feathered-img"
           />
