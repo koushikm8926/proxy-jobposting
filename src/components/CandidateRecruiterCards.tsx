@@ -74,7 +74,7 @@ export const CandidateRecruiterCards: React.FC<CandidateRecruiterCardsProps> = (
             <div className="audience-image-container">
               <div className="image-fade-mask">
                 <img
-                  src="/images/recruiter_man_card_feathered.png"
+                  src="/images/recruiter_man_new.png"
                   alt="Recruiter connecting with verified talent"
                   className="audience-feathered-photo"
                 />
