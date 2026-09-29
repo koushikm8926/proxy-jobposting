@@ -140,10 +140,7 @@ export const Navbar: React.FC<NavbarProps> = ({
           <button
             type="button"
             className={`btn ${isJoinCandidateActive ? 'btn-primary' : 'btn-outline'}`}
-            onClick={() => {
-              onPageChange('join-candidate')
-              window.scrollTo({ top: 0, behavior: 'smooth' })
-            }}
+            onClick={onJoinCandidate}
             style={{
               fontSize: '13px',
               padding: '9px 18px',
@@ -228,8 +225,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               className="btn btn-outline"
               onClick={() => {
                 setMobileMenuOpen(false)
-                onPageChange('join-candidate')
-                window.scrollTo({ top: 0, behavior: 'smooth' })
+                onJoinCandidate()
               }}
               style={{ width: '100%', justifyContent: 'space-between' }}
             >

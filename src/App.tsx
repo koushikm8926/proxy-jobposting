@@ -6,10 +6,11 @@ import { RecruitersPage } from './pages/RecruitersPage'
 import { CandidatesPage } from './pages/CandidatesPage'
 import { ContactPage } from './pages/ContactPage'
 import { FAQPage } from './pages/FAQPage'
+import { JoinCandidatePage } from './pages/JoinCandidatePage'
 import { Modal, type ModalType } from './components/Modal'
 
 export function App() {
-  // Support hash navigation and state, defaulting to 'faq' as just requested
+  // Support hash navigation and state, defaulting to 'join-candidate' for current screen
   const [currentPage, setCurrentPage] = useState<NavPage>(() => {
     if (typeof window !== 'undefined') {
       const hash = window.location.hash.toLowerCase()
@@ -19,8 +20,9 @@ export function App() {
       if (hash === '#candidates') return 'candidates'
       if (hash === '#contact') return 'contact'
       if (hash === '#faq' || hash === '#faqs') return 'faq'
+      if (hash === '#join-candidate' || hash === '#join') return 'join-candidate'
     }
-    return 'contact'
+    return 'join-candidate'
   })
 
   const [modalType, setModalType] = useState<ModalType>(null)
@@ -41,6 +43,8 @@ export function App() {
         setCurrentPage('contact')
       } else if (hash === '#faq' || hash === '#faqs') {
         setCurrentPage('faq')
+      } else if (hash === '#join-candidate' || hash === '#join') {
+        setCurrentPage('join-candidate')
       }
     }
 
@@ -54,7 +58,8 @@ export function App() {
   }
 
   const handleOpenCandidateModal = () => {
-    setModalType('candidate')
+    handlePageChange('join-candidate')
+    window.scrollTo({ top: 0, behavior: 'smooth' })
   }
 
   const handleOpenRecruiterModal = () => {
@@ -135,6 +140,9 @@ export function App() {
           <FAQPage
             onContactClick={() => handlePageChange('contact')}
           />
+        )}
+        {currentPage === 'join-candidate' && (
+          <JoinCandidatePage />
         )}
       </main>
 
