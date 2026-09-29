@@ -32,7 +32,7 @@ export const Hero: React.FC<HeroProps> = ({ onFindJobs, onHireTalent }) => {
         </svg>
       </div>
 
-      <div className="container hero-container">
+      <div className="hero-container-fluid">
         {/* Left Side: Content & Actions */}
         <div className="hero-text-block">
           <span className="hero-kicker">THE DESIRE TO ACHIEVE</span>
@@ -79,7 +79,7 @@ export const Hero: React.FC<HeroProps> = ({ onFindJobs, onHireTalent }) => {
         {/* Right Side: Panoramic Integrated Visual of Professionals & Modern Bengaluru */}
         <div className="hero-panoramic-visual">
           <img
-            src="/images/home_hero_professionals_feathered.png"
+            src="/images/hero_chatgpt_clean_cut.png"
             alt="Proxy ambitious professionals in modern Bengaluru"
             className="hero-feathered-img"
           />
@@ -91,6 +91,7 @@ export const Hero: React.FC<HeroProps> = ({ onFindJobs, onHireTalent }) => {
           position: relative;
           background-color: #ffffff;
           overflow: hidden;
+          width: 100%;
           min-height: 520px;
           display: flex;
           align-items: center;
@@ -112,22 +113,26 @@ export const Hero: React.FC<HeroProps> = ({ onFindJobs, onHireTalent }) => {
           height: 100%;
         }
 
-        .hero-container {
+        /* Fluid container with ZERO right margin/padding so image touches the right edge */
+        .hero-container-fluid {
           position: relative;
           z-index: 1;
           display: grid;
-          grid-template-columns: 1.05fr 1fr;
+          grid-template-columns: minmax(460px, 1.05fr) minmax(480px, 1.25fr);
           align-items: center;
-          gap: 24px;
-          padding-top: 36px;
-          padding-bottom: 44px;
+          gap: 0;
           width: 100%;
+          padding-left: clamp(24px, 5vw, 72px);
+          padding-right: 0; /* ZERO gap on the right side */
+          box-sizing: border-box;
         }
 
         /* Left Content */
         .hero-text-block {
           max-width: 520px;
-          padding-left: 4px;
+          padding-top: 36px;
+          padding-bottom: 44px;
+          padding-right: 24px;
         }
 
         .hero-kicker {
@@ -245,29 +250,36 @@ export const Hero: React.FC<HeroProps> = ({ onFindJobs, onHireTalent }) => {
           margin: 2px 0 0;
         }
 
-        /* Right Panoramic Visual */
+        /* Right Panoramic Visual: 100% Flush to the Right Edge of the Screen */
         .hero-panoramic-visual {
           position: relative;
           display: flex;
           justify-content: flex-end;
           align-items: center;
+          width: 100%;
           height: 100%;
+          margin: 0;
+          padding: 0;
+          overflow: hidden;
         }
 
         .hero-feathered-img {
           width: 100%;
-          max-width: 580px;
+          max-width: 100%;
           height: auto;
-          max-height: 480px;
-          object-fit: contain;
+          max-height: 560px;
+          object-fit: cover;
           object-position: right center;
           display: block;
-          filter: drop-shadow(0 12px 32px rgba(0, 0, 0, 0.06));
+          margin: 0;
+          padding: 0;
         }
 
         @media (max-width: 990px) {
-          .hero-container {
+          .hero-container-fluid {
             grid-template-columns: 1fr;
+            padding-left: 20px;
+            padding-right: 0;
             padding-top: 24px;
             padding-bottom: 32px;
           }
