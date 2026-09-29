@@ -20,7 +20,7 @@ export function App() {
       if (hash === '#contact') return 'contact'
       if (hash === '#faq' || hash === '#faqs') return 'faq'
     }
-    return 'faq'
+    return 'contact'
   })
 
   const [modalType, setModalType] = useState<ModalType>(null)

@@ -2,7 +2,14 @@ import React, { useState, useEffect } from 'react'
 import { Logo } from './Logo'
 import { Menu, X, ArrowRight } from 'lucide-react'
 
-export type NavPage = 'home' | 'about' | 'recruiters' | 'candidates' | 'contact' | 'faq'
+export type NavPage =
+  | 'home'
+  | 'about'
+  | 'recruiters'
+  | 'candidates'
+  | 'contact'
+  | 'faq'
+  | 'join-candidate'
 
 interface NavbarProps {
   currentPage: NavPage
@@ -50,6 +57,8 @@ export const Navbar: React.FC<NavbarProps> = ({
       }
     }
   }
+
+  const isJoinCandidateActive = currentPage === 'join-candidate'
 
   return (
     <header
@@ -130,9 +139,17 @@ export const Navbar: React.FC<NavbarProps> = ({
         >
           <button
             type="button"
-            className="btn btn-outline"
-            onClick={onJoinCandidate}
-            style={{ fontSize: '13px', padding: '9px 18px' }}
+            className={`btn ${isJoinCandidateActive ? 'btn-primary' : 'btn-outline'}`}
+            onClick={() => {
+              onPageChange('join-candidate')
+              window.scrollTo({ top: 0, behavior: 'smooth' })
+            }}
+            style={{
+              fontSize: '13px',
+              padding: '9px 18px',
+              borderWidth: isJoinCandidateActive ? '1px' : '1.5px',
+              borderColor: '#0c0d0e'
+            }}
           >
             Join as Candidate
           </button>
@@ -211,7 +228,8 @@ export const Navbar: React.FC<NavbarProps> = ({
               className="btn btn-outline"
               onClick={() => {
                 setMobileMenuOpen(false)
-                onJoinCandidate()
+                onPageChange('join-candidate')
+                window.scrollTo({ top: 0, behavior: 'smooth' })
               }}
               style={{ width: '100%', justifyContent: 'space-between' }}
             >
