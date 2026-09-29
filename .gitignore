@@ -28,6 +28,8 @@ dist-ssr
 .env
 .env.local
 .env.*.local
+.env.example
 admin/.env
 admin/.env.local
 admin/.env.*.local
+admin/.env.example
