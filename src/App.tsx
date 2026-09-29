@@ -4,10 +4,11 @@ import { HomePage } from './pages/HomePage'
 import { AboutPage } from './pages/AboutPage'
 import { RecruitersPage } from './pages/RecruitersPage'
 import { CandidatesPage } from './pages/CandidatesPage'
+import { ContactPage } from './pages/ContactPage'
 import { Modal, type ModalType } from './components/Modal'
 
 export function App() {
-  // Support hash navigation and state, defaulting to 'candidates' as just requested
+  // Support hash navigation and state, defaulting to 'contact' as just requested
   const [currentPage, setCurrentPage] = useState<NavPage>(() => {
     if (typeof window !== 'undefined') {
       const hash = window.location.hash.toLowerCase()
@@ -15,8 +16,9 @@ export function App() {
       if (hash === '#about') return 'about'
       if (hash === '#recruiters') return 'recruiters'
       if (hash === '#candidates') return 'candidates'
+      if (hash === '#contact') return 'contact'
     }
-    return 'candidates'
+    return 'contact'
   })
 
   const [modalType, setModalType] = useState<ModalType>(null)
@@ -33,6 +35,8 @@ export function App() {
         setCurrentPage('recruiters')
       } else if (hash === '#candidates' || hash === '#for-candidates') {
         setCurrentPage('candidates')
+      } else if (hash === '#contact' || hash === '#contact-us') {
+        setCurrentPage('contact')
       }
     }
 
@@ -68,8 +72,8 @@ export function App() {
   }
 
   const handleNavigateSection = (sectionId: string) => {
-    if (sectionId === 'categories' || sectionId === 'how-it-works') {
-      if (currentPage === 'about' || currentPage === 'recruiters') {
+    if (sectionId === 'categories' || sectionId === 'how-it-works' || sectionId === 'for-candidates') {
+      if (currentPage !== 'home' && currentPage !== 'candidates') {
         setCurrentPage('candidates')
       }
       setTimeout(() => {
@@ -119,6 +123,9 @@ export function App() {
             onJoinCandidate={handleOpenCandidateModal}
             onSelectCategory={handleOpenCategoryModal}
           />
+        )}
+        {currentPage === 'contact' && (
+          <ContactPage />
         )}
       </main>
 
