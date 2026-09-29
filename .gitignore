@@ -23,3 +23,11 @@ dist-ssr
 *.sln
 *.sw?
 .vercel
+
+# Environment variables — never commit secrets
+.env
+.env.local
+.env.*.local
+admin/.env
+admin/.env.local
+admin/.env.*.local

@@ -1,5 +1,7 @@
 import React, { useState } from 'react'
 import { Briefcase, TrendingUp, UserCheck, ShieldCheck, CheckCircle2, Upload, FileText, X, ArrowRight, Sparkles } from 'lucide-react'
+import { db } from '../../firebase'
+import { collection, addDoc, serverTimestamp } from 'firebase/firestore'
 
 export const CandidateRegistrationForm: React.FC = () => {
   const [formData, setFormData] = useState({
@@ -16,6 +18,7 @@ export const CandidateRegistrationForm: React.FC = () => {
   const [resumeFile, setResumeFile] = useState<File | null>(null)
   const [isSubmitted, setIsSubmitted] = useState(false)
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const [submitError, setSubmitError] = useState<string | null>(null)
   const [dragActive, setDragActive] = useState(false)
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
@@ -52,13 +55,31 @@ export const CandidateRegistrationForm: React.FC = () => {
     }
   }
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setIsSubmitting(true)
-    setTimeout(() => {
-      setIsSubmitting(false)
+    setSubmitError(null)
+    try {
+      await addDoc(collection(db, 'candidates'), {
+        fullName:         formData.fullName.trim(),
+        email:            formData.email.trim().toLowerCase(),
+        mobileNumber:     formData.mobileNumber.trim(),
+        currentLocation:  formData.currentLocation,
+        highestEducation: formData.highestEducation,
+        workExperience:   formData.workExperience,
+        preferredRole:    formData.preferredRole,
+        hasResume:        !!resumeFile,
+        resumeFileName:   resumeFile?.name ?? null,
+        status:           'pending',
+        registeredAt:     serverTimestamp(),
+      })
       setIsSubmitted(true)
-    }, 700)
+    } catch (err) {
+      console.error('Firestore write failed:', err)
+      setSubmitError('Something went wrong. Please check your connection and try again.')
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   const handleReset = () => {
@@ -421,6 +442,20 @@ export const CandidateRegistrationForm: React.FC = () => {
                         I agree to the <a href="#contact" style={{ textDecoration: 'underline', color: '#0c0d0e' }}>Terms &amp; Conditions</a> and <a href="#contact" style={{ textDecoration: 'underline', color: '#0c0d0e' }}>Privacy Policy</a>
                       </label>
                     </div>
+                    {/* Submit Error */}
+                    {submitError && (
+                      <div style={{
+                        padding: '10px 14px',
+                        background: '#fee2e2',
+                        border: '1px solid #fecaca',
+                        borderRadius: 10,
+                        fontSize: 13,
+                        color: '#dc2626',
+                        fontWeight: 500,
+                      }}>
+                        {submitError}
+                      </div>
+                    )}
 
                     {/* Submit Button */}
                     <button
