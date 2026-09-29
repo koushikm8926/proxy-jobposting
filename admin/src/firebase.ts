@@ -1,29 +1,21 @@
 import { initializeApp } from 'firebase/app'
 import { getFirestore } from 'firebase/firestore'
-import { getAuth } from 'firebase/auth'
+import { getAuth, GoogleAuthProvider } from 'firebase/auth'
 
 // ---------------------------------------------------------------------------
-// Firebase config
-// Populate these values in admin/.env (copy from Firebase Console →
-// Project Settings → Your apps → SDK setup and configuration → Config).
-//
-// Example admin/.env:
-//   VITE_FIREBASE_API_KEY=AIza...
-//   VITE_FIREBASE_AUTH_DOMAIN=your-project.firebaseapp.com
-//   VITE_FIREBASE_PROJECT_ID=your-project
-//   VITE_FIREBASE_STORAGE_BUCKET=your-project.appspot.com
-//   VITE_FIREBASE_MESSAGING_SENDER_ID=123456789
-//   VITE_FIREBASE_APP_ID=1:123456789:web:abc123
+// Firebase credentials for the Admin Portal
+// Values are read from admin/.env — see admin/.env.example for required keys.
 // ---------------------------------------------------------------------------
 const firebaseConfig = {
-  apiKey:            import.meta.env.VITE_FIREBASE_API_KEY            ?? 'YOUR_API_KEY',
-  authDomain:        import.meta.env.VITE_FIREBASE_AUTH_DOMAIN        ?? 'YOUR_AUTH_DOMAIN',
-  projectId:         import.meta.env.VITE_FIREBASE_PROJECT_ID         ?? 'YOUR_PROJECT_ID',
-  storageBucket:     import.meta.env.VITE_FIREBASE_STORAGE_BUCKET     ?? 'YOUR_STORAGE_BUCKET',
-  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID ?? 'YOUR_MESSAGING_SENDER_ID',
-  appId:             import.meta.env.VITE_FIREBASE_APP_ID             ?? 'YOUR_APP_ID',
+  apiKey:            import.meta.env.VITE_FIREBASE_API_KEY            ?? '',
+  authDomain:        import.meta.env.VITE_FIREBASE_AUTH_DOMAIN        ?? '',
+  projectId:         import.meta.env.VITE_FIREBASE_PROJECT_ID         ?? '',
+  storageBucket:     import.meta.env.VITE_FIREBASE_STORAGE_BUCKET     ?? '',
+  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID ?? '',
+  appId:             import.meta.env.VITE_FIREBASE_APP_ID             ?? '',
 }
 
 const app = initializeApp(firebaseConfig)
-export const db   = getFirestore(app)
-export const auth = getAuth(app)
+export const db            = getFirestore(app)
+export const auth          = getAuth(app)
+export const googleProvider = new GoogleAuthProvider()
