@@ -15,6 +15,8 @@ import {
   ArrowRight,
   CheckCircle2
 } from 'lucide-react'
+import { db } from '../../firebase'
+import { collection, addDoc, serverTimestamp } from 'firebase/firestore'
 
 interface RecruiterRegisterSectionProps {
   onLoginClick?: () => void
@@ -41,6 +43,7 @@ export const RecruiterRegisterSection: React.FC<RecruiterRegisterSectionProps> =
   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [isSubmitted, setIsSubmitted] = useState(false)
+  const [submitError, setSubmitError] = useState<string | null>(null)
   const [showLoginModal, setShowLoginModal] = useState(false)
   const [loginEmail, setLoginEmail] = useState('')
   const [loginPassword, setLoginPassword] = useState('')
@@ -55,13 +58,44 @@ export const RecruiterRegisterSection: React.FC<RecruiterRegisterSectionProps> =
     setFormData(prev => ({ ...prev, agreeTerms: e.target.checked }))
   }
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setIsSubmitting(true)
-    setTimeout(() => {
-      setIsSubmitting(false)
+    setSubmitError(null)
+    try {
+      const recruiterData = {
+        fullName:         formData.fullName.trim(),
+        email:            formData.email.trim().toLowerCase(),
+        mobileNumber:     `${formData.countryCode} ${formData.mobileNumber.trim()}`,
+        companyName:      formData.companyName.trim(),
+        industry:         formData.industry,
+        companySize:      formData.companySize,
+        jobRole:          formData.jobRole.trim(),
+        companyWebsite:   formData.companyWebsite.trim() || null,
+        hearAboutUs:      formData.hearAboutUs || null,
+        status:           'pending',
+        registeredAt:     serverTimestamp(),
+      }
+      // Write to recruiters collection
+      await addDoc(collection(db, 'recruiters'), recruiterData)
+      // Also write to companies collection so admin Companies view is populated
+      await addDoc(collection(db, 'companies'), {
+        companyName:    formData.companyName.trim(),
+        industry:       formData.industry,
+        companySize:    formData.companySize,
+        companyWebsite: formData.companyWebsite.trim() || null,
+        recruiterName:  formData.fullName.trim(),
+        recruiterEmail: formData.email.trim().toLowerCase(),
+        status:         'pending',
+        registeredAt:   serverTimestamp(),
+      })
       setIsSubmitted(true)
-    }, 700)
+    } catch (err) {
+      console.error('Firestore write failed:', err)
+      setSubmitError('Something went wrong. Please check your connection and try again.')
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   const handleReset = () => {
@@ -525,6 +559,22 @@ export const RecruiterRegisterSection: React.FC<RecruiterRegisterSectionProps> =
                         I agree to the <a href="#contact" className="legal-link">Terms &amp; Conditions</a> and <a href="#contact" className="legal-link">Privacy Policy</a>.
                       </label>
                     </div>
+
+                    {/* Submit Error */}
+                    {submitError && (
+                      <div style={{
+                        padding: '10px 14px',
+                        background: '#fee2e2',
+                        border: '1px solid #fecaca',
+                        borderRadius: 10,
+                        fontSize: 13,
+                        color: '#dc2626',
+                        fontWeight: 500,
+                        marginBottom: 4,
+                      }}>
+                        {submitError}
+                      </div>
+                    )}
 
                     {/* Submit Button */}
                     <button
