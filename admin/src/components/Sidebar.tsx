@@ -2,7 +2,6 @@ import React from 'react'
 import {
   LayoutDashboard,
   Users,
-  Building2,
   Briefcase
 } from 'lucide-react'
 import type { AdminView } from '../types'
@@ -12,14 +11,12 @@ interface SidebarProps {
   onNavigate: (view: AdminView) => void
   candidateCount: number
   recruiterCount: number
-  companyCount: number
 }
 
 const navItems: { id: AdminView; label: string; icon: React.FC<{ size?: number }> }[] = [
   { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboard },
   { id: 'candidates', label: 'Candidates', icon: Users },
   { id: 'recruiters', label: 'Recruiters', icon: Briefcase },
-  { id: 'companies', label: 'Companies', icon: Building2 },
 ]
 
 export const Sidebar: React.FC<SidebarProps> = ({
@@ -27,12 +24,10 @@ export const Sidebar: React.FC<SidebarProps> = ({
   onNavigate,
   candidateCount,
   recruiterCount,
-  companyCount,
 }) => {
   const getCounts = (id: AdminView) => {
     if (id === 'candidates') return candidateCount
     if (id === 'recruiters') return recruiterCount
-    if (id === 'companies') return companyCount
     return null
   }
 

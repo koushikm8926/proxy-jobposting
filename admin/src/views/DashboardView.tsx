@@ -1,11 +1,10 @@
 import React from 'react'
-import type { Candidate, Recruiter, Company } from '../types'
-import { Users, Briefcase, Building2, TrendingUp } from 'lucide-react'
+import type { Candidate, Recruiter } from '../types'
+import { Users, Briefcase, TrendingUp } from 'lucide-react'
 
 interface DashboardViewProps {
   candidates: Candidate[]
   recruiters: Recruiter[]
-  companies: Company[]
   isFirebaseConfigured: boolean
 }
 
@@ -31,7 +30,6 @@ const StatCard: React.FC<{
 export const DashboardView: React.FC<DashboardViewProps> = ({
   candidates,
   recruiters,
-  companies,
   isFirebaseConfigured,
 }) => {
   const pendingCandidates = candidates.filter(c => c.status === 'pending').length
@@ -85,12 +83,6 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
           icon={<Briefcase size={22} color="#8b5cf6" />}
           iconBg="#ede9fe"
           delta={pendingRecruiters > 0 ? `${pendingRecruiters} pending` : undefined}
-        />
-        <StatCard
-          label="Registered Companies"
-          value={companies.length}
-          icon={<Building2 size={22} color="#22c55e" />}
-          iconBg="#dcfce7"
         />
         <StatCard
           label="Total Registrations"

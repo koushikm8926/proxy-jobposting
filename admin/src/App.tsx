@@ -4,7 +4,6 @@ import { Sidebar } from './components/Sidebar'
 import { DashboardView } from './views/DashboardView'
 import { CandidatesView } from './views/CandidatesView'
 import { RecruitersView } from './views/RecruitersView'
-import { CompaniesView } from './views/CompaniesView'
 import { useAdminData } from './hooks/useAdminData'
 import { AuthProvider, useAuth } from './context/AuthContext'
 import { LoginPage } from './pages/LoginPage'
@@ -15,13 +14,12 @@ const PAGE_META: Record<AdminView, { title: string; subtitle: string }> = {
   dashboard: { title: 'Dashboard', subtitle: 'Overview of all registrations and activity' },
   candidates: { title: 'Candidates', subtitle: 'All users who registered as job seekers' },
   recruiters: { title: 'Recruiters', subtitle: 'All users who registered to hire talent' },
-  companies: { title: 'Companies', subtitle: 'All companies registered through recruiters' },
 }
 
 // ─── Inner app (only rendered when authenticated) ──────────────────────────
 function AdminApp() {
   const [currentView, setCurrentView] = useState<AdminView>('dashboard')
-  const { candidates, recruiters, companies, loading, isFirebaseConfigured } = useAdminData()
+  const { candidates, recruiters, loading, isFirebaseConfigured } = useAdminData()
   const { user, signOut } = useAuth()
 
   const meta = PAGE_META[currentView]
@@ -34,7 +32,6 @@ function AdminApp() {
         onNavigate={setCurrentView}
         candidateCount={candidates.length}
         recruiterCount={recruiters.length}
-        companyCount={companies.length}
       />
 
       {/* Main content area */}
@@ -90,7 +87,6 @@ function AdminApp() {
             <DashboardView
               candidates={candidates}
               recruiters={recruiters}
-              companies={companies}
               isFirebaseConfigured={isFirebaseConfigured}
             />
           )}
@@ -99,9 +95,6 @@ function AdminApp() {
           )}
           {currentView === 'recruiters' && (
             <RecruitersView recruiters={recruiters} loading={loading} />
-          )}
-          {currentView === 'companies' && (
-            <CompaniesView companies={companies} loading={loading} />
           )}
         </div>
       </div>

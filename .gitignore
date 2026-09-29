@@ -33,3 +33,4 @@ admin/.env
 admin/.env.local
 admin/.env.*.local
 admin/.env.example
+.env*

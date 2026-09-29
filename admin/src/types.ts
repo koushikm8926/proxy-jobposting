@@ -43,4 +43,4 @@ export interface Company {
   openPositions?: number
 }
 
-export type AdminView = 'dashboard' | 'candidates' | 'recruiters' | 'companies'
+export type AdminView = 'dashboard' | 'candidates' | 'recruiters'
