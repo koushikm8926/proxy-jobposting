@@ -5,10 +5,11 @@ import { AboutPage } from './pages/AboutPage'
 import { RecruitersPage } from './pages/RecruitersPage'
 import { CandidatesPage } from './pages/CandidatesPage'
 import { ContactPage } from './pages/ContactPage'
+import { FAQPage } from './pages/FAQPage'
 import { Modal, type ModalType } from './components/Modal'
 
 export function App() {
-  // Support hash navigation and state, defaulting to 'contact' as just requested
+  // Support hash navigation and state, defaulting to 'faq' as just requested
   const [currentPage, setCurrentPage] = useState<NavPage>(() => {
     if (typeof window !== 'undefined') {
       const hash = window.location.hash.toLowerCase()
@@ -17,8 +18,9 @@ export function App() {
       if (hash === '#recruiters') return 'recruiters'
       if (hash === '#candidates') return 'candidates'
       if (hash === '#contact') return 'contact'
+      if (hash === '#faq' || hash === '#faqs') return 'faq'
     }
-    return 'contact'
+    return 'faq'
   })
 
   const [modalType, setModalType] = useState<ModalType>(null)
@@ -37,6 +39,8 @@ export function App() {
         setCurrentPage('candidates')
       } else if (hash === '#contact' || hash === '#contact-us') {
         setCurrentPage('contact')
+      } else if (hash === '#faq' || hash === '#faqs') {
+        setCurrentPage('faq')
       }
     }
 
@@ -126,6 +130,11 @@ export function App() {
         )}
         {currentPage === 'contact' && (
           <ContactPage />
+        )}
+        {currentPage === 'faq' && (
+          <FAQPage
+            onContactClick={() => handlePageChange('contact')}
+          />
         )}
       </main>
 

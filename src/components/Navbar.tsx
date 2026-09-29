@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { Logo } from './Logo'
 import { Menu, X, ArrowRight } from 'lucide-react'
 
-export type NavPage = 'home' | 'about' | 'recruiters' | 'candidates' | 'contact'
+export type NavPage = 'home' | 'about' | 'recruiters' | 'candidates' | 'contact' | 'faq'
 
 interface NavbarProps {
   currentPage: NavPage
@@ -36,7 +36,7 @@ export const Navbar: React.FC<NavbarProps> = ({
     { name: 'Recruiters', id: 'recruiters', isPage: true },
     { name: 'Candidates', id: 'candidates', isPage: true },
     { name: 'Contact', id: 'contact', isPage: true },
-    { name: 'FAQs', id: 'faq', isPage: false },
+    { name: 'FAQs', id: 'faq', isPage: true },
   ]
 
   const handleLinkClick = (link: typeof navLinks[0]) => {
