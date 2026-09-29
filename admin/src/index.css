@@ -498,3 +498,228 @@ img { display: block; max-width: 100%; }
   .admin-content { padding: 20px 16px; }
   .stat-grid { grid-template-columns: 1fr 1fr; }
 }
+
+/* ---- Auth loading screen ---- */
+.auth-loading-screen {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  gap: 16px;
+  background: var(--bg-page);
+  color: var(--text-muted);
+  font-size: 14px;
+  font-weight: 500;
+}
+
+/* ---- Login Page ---- */
+.login-page {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #0c0d0e 0%, #18181b 60%, #1e1b4b 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+
+.login-card {
+  background: #ffffff;
+  border-radius: 20px;
+  padding: 48px 44px;
+  width: 100%;
+  max-width: 420px;
+  box-shadow: 0 24px 64px rgba(0,0,0,0.35);
+}
+
+/* Logo row */
+.login-logo {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 32px;
+}
+
+.login-logo-icon {
+  width: 52px;
+  height: 52px;
+  border-radius: 14px;
+  background: #0c0d0e;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.login-brand {
+  font-size: 22px;
+  font-weight: 900;
+  letter-spacing: -0.04em;
+  color: #0c0d0e;
+}
+
+.login-brand-sub {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #a1a1aa;
+  margin-top: 1px;
+}
+
+/* Heading */
+.login-title {
+  font-size: 26px;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  color: #0c0d0e;
+  margin-bottom: 6px;
+}
+
+.login-subtitle {
+  font-size: 14px;
+  color: #71717a;
+  margin-bottom: 28px;
+}
+
+/* Form */
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.login-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.login-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: #3f3f46;
+}
+
+.login-input {
+  width: 100%;
+  padding: 11px 14px;
+  border: 1.5px solid #e4e4e7;
+  border-radius: 10px;
+  font-family: inherit;
+  font-size: 14px;
+  color: #0c0d0e;
+  background: #fafafa;
+  transition: border-color 0.18s, box-shadow 0.18s;
+  outline: none;
+}
+
+.login-input:focus {
+  border-color: #0c0d0e;
+  background: #ffffff;
+  box-shadow: 0 0 0 3px rgba(12,13,14,0.07);
+}
+
+.login-input:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+/* Password row with eye toggle */
+.login-input-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.login-input-wrap .login-input {
+  padding-right: 42px;
+}
+
+.login-eye-btn {
+  position: absolute;
+  right: 12px;
+  color: #a1a1aa;
+  display: flex;
+  align-items: center;
+  padding: 4px;
+  border-radius: 6px;
+  transition: color 0.15s;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.login-eye-btn:hover {
+  color: #52525b;
+}
+
+/* Error banner */
+.login-error {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 12px 14px;
+  background: #fee2e2;
+  border: 1px solid #fecaca;
+  border-radius: 10px;
+  font-size: 13.5px;
+  color: #dc2626;
+  font-weight: 500;
+  line-height: 1.45;
+}
+
+.login-error svg { flex-shrink: 0; margin-top: 1px; }
+
+/* Submit button */
+.login-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  padding: 13px 20px;
+  border-radius: 11px;
+  font-family: inherit;
+  font-size: 15px;
+  font-weight: 700;
+  background: #0c0d0e;
+  color: #ffffff;
+  border: none;
+  cursor: pointer;
+  transition: background 0.18s, transform 0.15s, box-shadow 0.15s;
+  margin-top: 4px;
+}
+
+.login-btn:hover:not(:disabled) {
+  background: #27272a;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.18);
+}
+
+.login-btn:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+/* Spinner inside button */
+.login-spinner {
+  width: 16px;
+  height: 16px;
+  border: 2.5px solid rgba(255,255,255,0.35);
+  border-top-color: #ffffff;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+  flex-shrink: 0;
+}
+
+/* Footer note */
+.login-footer {
+  margin-top: 24px;
+  text-align: center;
+  font-size: 12.5px;
+  color: #a1a1aa;
+  line-height: 1.5;
+}
