@@ -104,7 +104,7 @@ export const HowItWorks: React.FC = () => {
     <section id="how-it-works" className="how-it-works-section">
       <div className="container" style={{ maxWidth: '1440px' }}>
         {/* Section Header */}
-        <div className="section-header" style={{ textAlign: 'center', marginBottom: '52px' }}>
+        <div className="section-header" style={{ textAlign: 'center', marginBottom: '28px' }}>
           <span className="section-kicker" style={{ color: '#52525b', letterSpacing: '0.18em', fontWeight: 800 }}>
             HOW PROXY WORKS
           </span>
@@ -171,7 +171,7 @@ export const HowItWorks: React.FC = () => {
 
       <style>{`
         .how-it-works-section {
-          padding: 80px 0 90px;
+          padding: 16px 0 44px;
           background-color: #ffffff;
         }
 

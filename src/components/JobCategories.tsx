@@ -74,7 +74,7 @@ export const JobCategories: React.FC<JobCategoriesProps> = ({ onSelectCategory }
 
       <style>{`
         .categories-section {
-          padding: 80px 0;
+          padding: 32px 0 16px;
           background-color: #ffffff;
         }
 

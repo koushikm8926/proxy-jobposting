@@ -40,7 +40,7 @@ export const CandidateRecruiterCards: React.FC<CandidateRecruiterCardsProps> = (
             <div className="audience-image-container">
               <div className="image-fade-mask">
                 <img
-                  src="/images/candidate_woman_card_feathered.png"
+                  src="/images/candidate_woman_new.png"
                   alt="Candidate discovering genuine job opportunities"
                   className="audience-feathered-photo"
                 />
@@ -86,7 +86,7 @@ export const CandidateRecruiterCards: React.FC<CandidateRecruiterCardsProps> = (
 
       <style>{`
         .audience-section-fluid {
-          padding: 36px 0 72px;
+          padding: 36px 0 24px;
           background-color: #ffffff;
           width: 100%;
           box-sizing: border-box;
