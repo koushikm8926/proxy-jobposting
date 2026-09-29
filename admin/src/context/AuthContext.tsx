@@ -21,7 +21,13 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [authLoading, setAuthLoading] = useState(true)
 
   useEffect(() => {
-    const unsub = onAuthStateChanged(auth, (firebaseUser) => {
+    const unsub = onAuthStateChanged(auth, async (firebaseUser) => {
+      if (firebaseUser && firebaseUser.email?.toLowerCase() !== 'proxyapplicationcode@gmail.com'.toLowerCase()) {
+        await fbSignOut(auth)
+        setUser(null)
+        setAuthLoading(false)
+        return
+      }
       setUser(firebaseUser)
       setAuthLoading(false)
     })

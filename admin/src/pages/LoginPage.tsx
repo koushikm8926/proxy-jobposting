@@ -32,7 +32,8 @@ export const LoginPage: React.FC = () => {
       if (email.toLowerCase() !== ALLOWED_EMAIL.toLowerCase()) {
         // Immediately sign the unauthorized user back out
         await signOut(auth)
-        setError(`Access denied. Only ${ALLOWED_EMAIL} is permitted to access this portal.`)
+        alert('You are not authorised for login')
+        setError('You are not authorised for login')
         return
       }
       // AuthContext detects the user change and unmounts this page ✅
@@ -102,11 +103,6 @@ export const LoginPage: React.FC = () => {
             </>
           )}
         </button>
-
-        <p className="login-footer">
-          Access is restricted to authorised administrators only.<br />
-          Only <strong>{ALLOWED_EMAIL}</strong> may sign in.
-        </p>
       </div>
     </div>
   )
