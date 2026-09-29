@@ -36,7 +36,7 @@ export const BengaluruFocus: React.FC<BengaluruFocusProps> = ({ onKnowMore }) =>
           <div className="bengaluru-skyline-col">
             <div className="skyline-fade-wrap">
               <img
-                src="/images/bengaluru_skyline_fullwidth.png"
+                src="/images/bengaluru_skyline_new.png"
                 alt="Modern Bengaluru City Corporate Skyline"
                 className="bengaluru-photo-img"
               />

@@ -19,11 +19,10 @@ export const AboutJourney: React.FC = () => {
           {/* Right Skyline Image */}
           <div className="journey-image-wrapper">
             <img
-              src="/images/about_journey_buildings.jpg"
+              src="/images/bengaluru_skyline_new.png"
               alt="Bengaluru Skyline Growth"
               className="journey-skyline-img"
             />
-            <div className="journey-gradient-mask"></div>
           </div>
         </div>
       </div>
@@ -35,14 +34,14 @@ export const AboutJourney: React.FC = () => {
         }
 
         .journey-banner {
-          background: linear-gradient(135deg, #f8f9fa 0%, #edf0f5 100%);
+          background-color: #fafafb;
           border: 1px solid #e4e7ec;
           border-radius: 28px;
           overflow: hidden;
           display: flex;
-          align-items: center;
+          align-items: stretch;
           position: relative;
-          min-height: 340px;
+          min-height: 360px;
           box-shadow: 0 16px 40px -12px rgba(0, 0, 0, 0.06);
         }
 
@@ -50,6 +49,9 @@ export const AboutJourney: React.FC = () => {
           flex: 1.1;
           padding: 56px 48px;
           z-index: 2;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
         }
 
         .journey-title {
@@ -69,32 +71,31 @@ export const AboutJourney: React.FC = () => {
         }
 
         .journey-image-wrapper {
-          flex: 1;
+          flex: 1.15;
           height: 100%;
-          min-height: 340px;
+          min-height: 360px;
           position: relative;
           display: flex;
-          align-items: center;
+          align-items: stretch;
           justify-content: flex-end;
           overflow: hidden;
+          background-color: #fafafb;
+          -webkit-mask-image: linear-gradient(to right, transparent 0%, rgba(0, 0, 0, 0.15) 14%, rgba(0, 0, 0, 0.8) 32%, #000000 48%);
+          mask-image: linear-gradient(to right, transparent 0%, rgba(0, 0, 0, 0.15) 14%, rgba(0, 0, 0, 0.8) 32%, #000000 48%);
         }
 
         .journey-skyline-img {
           width: 100%;
           height: 100%;
-          min-height: 340px;
+          min-height: 360px;
           object-fit: cover;
-          object-position: center;
+          object-position: right center;
+          display: block;
+          transition: transform 0.5s ease;
         }
 
-        .journey-gradient-mask {
-          position: absolute;
-          top: 0;
-          bottom: 0;
-          left: 0;
-          width: 90px;
-          background: linear-gradient(to right, #edf0f5, transparent);
-          pointer-events: none;
+        .journey-banner:hover .journey-skyline-img {
+          transform: scale(1.03);
         }
 
         @media (max-width: 960px) {
@@ -109,11 +110,10 @@ export const AboutJourney: React.FC = () => {
           }
           .journey-image-wrapper {
             width: 100%;
-            height: 240px;
-            min-height: 240px;
-          }
-          .journey-gradient-mask {
-            display: none;
+            height: 260px;
+            min-height: 260px;
+            -webkit-mask-image: linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 1) 25%);
+            mask-image: linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 1) 25%);
           }
         }
       `}</style>

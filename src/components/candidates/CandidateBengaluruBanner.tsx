@@ -23,11 +23,10 @@ export const CandidateBengaluruBanner: React.FC = () => {
           {/* Right Skyline & City Badge */}
           <div className="cand-city-image-wrapper">
             <img
-              src="/images/candidate_banner_buildings.jpg"
+              src="/images/bengaluru_skyline_new.png"
               alt="Bengaluru Skyline City"
               className="cand-city-skyline"
             />
-            <div className="cand-city-mask"></div>
 
             {/* Launch City Badge */}
             <div className="cand-launch-badge">
@@ -50,35 +49,36 @@ export const CandidateBengaluruBanner: React.FC = () => {
         }
 
         .cand-city-banner {
-          background: linear-gradient(135deg, #18191c 0%, #2b2e38 100%);
+          background-color: #fafafb;
+          border: 1px solid #e4e7ec;
           border-radius: 28px;
           overflow: hidden;
           display: flex;
-          align-items: center;
+          align-items: stretch;
           position: relative;
-          min-height: 260px;
-          box-shadow: 0 16px 40px -12px rgba(0, 0, 0, 0.15);
+          min-height: 280px;
+          box-shadow: 0 12px 36px -10px rgba(0, 0, 0, 0.06);
         }
 
         .cand-city-content {
           flex: 1.1;
-          padding: 44px 48px;
+          padding: 48px 48px;
           display: flex;
-          align-items: flex-start;
+          align-items: center;
           gap: 20px;
           z-index: 2;
         }
 
         .cand-city-pin-badge {
-          width: 48px;
-          height: 48px;
+          width: 52px;
+          height: 52px;
           border-radius: 50%;
-          background: #ffffff;
+          background: #f4f4f5;
           display: flex;
           align-items: center;
           justify-content: center;
           flex-shrink: 0;
-          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
         }
 
         .cand-city-text-block {
@@ -87,37 +87,42 @@ export const CandidateBengaluruBanner: React.FC = () => {
         }
 
         .cand-city-kicker {
-          font-size: 14px;
-          font-weight: 500;
-          color: #d1d5db;
-          margin-bottom: 4px;
+          font-size: 12px;
+          font-weight: 800;
+          letter-spacing: 0.16em;
+          text-transform: uppercase;
+          color: #52525b;
+          margin-bottom: 6px;
         }
 
         .cand-city-title {
-          font-size: 28px;
+          font-size: 30px;
           font-weight: 800;
-          color: #ffffff;
-          letter-spacing: -0.02em;
-          line-height: 1.2;
+          color: #0c0d0e;
+          letter-spacing: -0.025em;
+          line-height: 1.18;
           margin-bottom: 10px;
         }
 
         .cand-city-sub {
-          font-size: 13.5px;
-          color: #9ca3af;
-          line-height: 1.55;
-          max-width: 440px;
+          font-size: 14.5px;
+          color: #475467;
+          line-height: 1.6;
+          max-width: 460px;
         }
 
         .cand-city-image-wrapper {
-          flex: 1;
+          flex: 1.15;
           height: 100%;
-          min-height: 260px;
+          min-height: 280px;
           position: relative;
           display: flex;
-          align-items: center;
+          align-items: stretch;
           justify-content: flex-end;
           overflow: hidden;
+          background-color: #fafafb;
+          -webkit-mask-image: linear-gradient(to right, transparent 0%, rgba(0, 0, 0, 0.15) 14%, rgba(0, 0, 0, 0.85) 32%, #000000 50%);
+          mask-image: linear-gradient(to right, transparent 0%, rgba(0, 0, 0, 0.15) 14%, rgba(0, 0, 0, 0.85) 32%, #000000 50%);
         }
 
         .cand-city-skyline {
@@ -125,17 +130,13 @@ export const CandidateBengaluruBanner: React.FC = () => {
           height: 100%;
           min-height: 260px;
           object-fit: cover;
-          object-position: center;
+          object-position: right center;
+          display: block;
+          transition: transform 0.6s ease;
         }
 
-        .cand-city-mask {
-          position: absolute;
-          top: 0;
-          bottom: 0;
-          left: 0;
-          width: 90px;
-          background: linear-gradient(to right, #2b2e38, transparent);
-          pointer-events: none;
+        .cand-city-banner:hover .cand-city-skyline {
+          transform: scale(1.03);
         }
 
         .cand-launch-badge {
