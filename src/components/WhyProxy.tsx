@@ -101,7 +101,7 @@ export const WhyProxy: React.FC = () => {
     <section id="why-proxy" className="why-proxy-section">
       <div className="container">
         {/* Section Header */}
-        <div className="section-header" style={{ textAlign: 'center', marginBottom: '48px' }}>
+        <div className="section-header reveal-on-scroll" style={{ textAlign: 'center', marginBottom: '48px' }}>
           <span className="section-kicker" style={{ color: '#52525b', letterSpacing: '0.18em', fontWeight: 800 }}>
             WHY PROXY
           </span>
@@ -116,7 +116,7 @@ export const WhyProxy: React.FC = () => {
         {/* 4 Feature Cards Grid */}
         <div className="features-grid">
           {features.map((item, idx) => (
-            <div key={idx} className="feature-card">
+            <div key={idx} className={`feature-card reveal-on-scroll delay-${(idx + 1) * 100}`}>
               <div className="feature-icon-wrapper">
                 {item.icon}
               </div>
@@ -166,15 +166,19 @@ export const WhyProxy: React.FC = () => {
           flex-direction: column;
           align-items: center;
           text-align: center;
-          transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+          transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
           box-shadow: 0 4px 16px rgba(0, 0, 0, 0.02);
         }
 
         .feature-card:hover {
-          transform: translateY(-4px);
+          transform: translateY(-6px);
           background-color: #ffffff;
           border-color: #e4e4e7;
-          box-shadow: 0 16px 36px -8px rgba(0, 0, 0, 0.08);
+          box-shadow: 0 18px 38px -8px rgba(0, 0, 0, 0.09);
+        }
+
+        .feature-card:hover .feature-icon-wrapper svg {
+          transform: scale(1.1) translateY(-3px);
         }
 
         .feature-icon-wrapper {

@@ -106,6 +106,8 @@ export const Hero: React.FC<HeroProps> = ({ onFindJobs, onHireTalent }) => {
           height: 300px;
           pointer-events: none;
           z-index: 0;
+          animation: floatWave 14s ease-in-out infinite alternate;
+          transform-origin: top left;
         }
 
         .contour-svg {
@@ -143,12 +145,16 @@ export const Hero: React.FC<HeroProps> = ({ onFindJobs, onHireTalent }) => {
           text-transform: uppercase;
           display: block;
           margin-bottom: 8px;
+          animation: heroSlideUp 0.65s cubic-bezier(0.16, 1, 0.3, 1) both;
+          animation-delay: 0.05s;
         }
 
         .hero-main-title {
           display: flex;
           flex-direction: column;
           margin: 0 0 16px;
+          animation: heroSlideUp 0.75s cubic-bezier(0.16, 1, 0.3, 1) both;
+          animation-delay: 0.15s;
         }
 
         .title-brand {
@@ -174,6 +180,8 @@ export const Hero: React.FC<HeroProps> = ({ onFindJobs, onHireTalent }) => {
           line-height: 1.55;
           margin: 0 0 32px;
           max-width: 440px;
+          animation: heroSlideUp 0.75s cubic-bezier(0.16, 1, 0.3, 1) both;
+          animation-delay: 0.25s;
         }
 
         .hero-cta-group {
@@ -181,6 +189,8 @@ export const Hero: React.FC<HeroProps> = ({ onFindJobs, onHireTalent }) => {
           align-items: center;
           gap: 16px;
           margin-bottom: 36px;
+          animation: heroSlideUp 0.75s cubic-bezier(0.16, 1, 0.3, 1) both;
+          animation-delay: 0.35s;
         }
 
         .hero-pill-btn {
@@ -193,7 +203,7 @@ export const Hero: React.FC<HeroProps> = ({ onFindJobs, onHireTalent }) => {
           align-items: center;
           gap: 10px;
           cursor: pointer;
-          transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+          transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         .hero-pill-black {
@@ -205,8 +215,8 @@ export const Hero: React.FC<HeroProps> = ({ onFindJobs, onHireTalent }) => {
 
         .hero-pill-black:hover {
           background-color: #27272a;
-          transform: translateY(-1.5px);
-          box-shadow: 0 8px 20px rgba(0, 0, 0, 0.18);
+          transform: translateY(-2px);
+          box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
         }
 
         .hero-pill-outline {
@@ -217,19 +227,23 @@ export const Hero: React.FC<HeroProps> = ({ onFindJobs, onHireTalent }) => {
 
         .hero-pill-outline:hover {
           background-color: #f4f4f5;
-          transform: translateY(-1.5px);
+          transform: translateY(-2px);
+          box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
         }
 
         .hero-launch-badge {
           display: flex;
           align-items: flex-start;
           gap: 12px;
+          animation: heroSlideUp 0.75s cubic-bezier(0.16, 1, 0.3, 1) both;
+          animation-delay: 0.45s;
         }
 
         .launch-pin-wrap {
           color: #0c0d0e;
           padding-top: 2px;
           flex-shrink: 0;
+          animation: pulseSubtle 3.2s ease-in-out infinite;
         }
 
         .launch-meta {
@@ -261,6 +275,8 @@ export const Hero: React.FC<HeroProps> = ({ onFindJobs, onHireTalent }) => {
           margin: 0;
           padding: 0;
           overflow: hidden;
+          animation: heroSlideRight 0.85s cubic-bezier(0.16, 1, 0.3, 1) both;
+          animation-delay: 0.12s;
         }
 
         .hero-feathered-img {
@@ -273,6 +289,11 @@ export const Hero: React.FC<HeroProps> = ({ onFindJobs, onHireTalent }) => {
           display: block;
           margin: 0;
           padding: 0;
+          transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .hero-panoramic-visual:hover .hero-feathered-img {
+          transform: scale(1.012);
         }
 
         @media (max-width: 990px) {

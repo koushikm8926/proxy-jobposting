@@ -44,7 +44,7 @@ export const JobCategories: React.FC<JobCategoriesProps> = ({ onSelectCategory }
     <section id="categories" className="categories-section">
       <div className="container">
         {/* Section Header */}
-        <div className="section-header" style={{ textAlign: 'center', marginBottom: '44px' }}>
+        <div className="section-header reveal-on-scroll" style={{ textAlign: 'center', marginBottom: '44px' }}>
           <span className="section-kicker" style={{ color: '#52525b', letterSpacing: '0.18em', fontWeight: 800 }}>
             EXPLORE OPPORTUNITIES
           </span>
@@ -62,7 +62,7 @@ export const JobCategories: React.FC<JobCategoriesProps> = ({ onSelectCategory }
             <button
               key={idx}
               type="button"
-              className="category-card-bold"
+              className={`category-card-bold reveal-scale delay-${Math.min(500, ((idx % 6) + 1) * 50)}`}
               onClick={() => onSelectCategory && onSelectCategory(cat.name)}
             >
               <div className="cat-icon-box">{cat.icon}</div>

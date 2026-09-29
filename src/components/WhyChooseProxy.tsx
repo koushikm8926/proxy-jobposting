@@ -24,7 +24,7 @@ export const WhyChooseProxy: React.FC = () => {
     <section className="why-choose-section">
       <div className="container">
         {/* Section Header */}
-        <div className="section-header" style={{ textAlign: 'center', marginBottom: '52px' }}>
+        <div className="section-header reveal-on-scroll" style={{ textAlign: 'center', marginBottom: '52px' }}>
           <span className="section-kicker" style={{ color: '#52525b', letterSpacing: '0.18em', fontWeight: 800 }}>
             WHY CHOOSE PROXY
           </span>
@@ -36,7 +36,7 @@ export const WhyChooseProxy: React.FC = () => {
         {/* 3 Large & Bold Columns Grid */}
         <div className="pillars-grid-large">
           {pillars.map((pillar, idx) => (
-            <div key={idx} className="pillar-card-bold">
+            <div key={idx} className={`pillar-card-bold reveal-on-scroll delay-${(idx + 1) * 100}`}>
               <div className="pillar-icon-circle-large">
                 {pillar.icon}
               </div>
@@ -77,17 +77,22 @@ export const WhyChooseProxy: React.FC = () => {
           text-align: center;
           padding: 24px 20px;
           border-radius: 24px;
-          transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+          transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         .pillar-card-bold:hover {
-          transform: translateY(-4px);
+          transform: translateY(-5px);
+        }
+
+        .pillar-card-bold:hover .pillar-icon-circle-large {
+          transform: scale(1.1) translateY(-2px);
         }
 
         .pillar-icon-circle-large {
           width: 72px;
           height: 72px;
           border-radius: 50%;
+          transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1);
           background-color: #f4f4f6;
           display: flex;
           align-items: center;

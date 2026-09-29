@@ -9,9 +9,9 @@ export const BengaluruFocus: React.FC<BengaluruFocusProps> = ({ onKnowMore }) =>
   return (
     <section className="bengaluru-fullwidth-section">
       <div className="bengaluru-screen-wrapper">
-        <div className="bengaluru-banner-card">
+        <div className="bengaluru-banner-card reveal-on-scroll">
           {/* Left Text Content */}
-          <div className="bengaluru-content-col">
+          <div className="bengaluru-content-col reveal-left delay-100">
             <span className="bengaluru-kicker">OUR FOCUS</span>
             <h2 className="bengaluru-heading">
               Starting from Bengaluru,<br />
@@ -33,7 +33,7 @@ export const BengaluruFocus: React.FC<BengaluruFocusProps> = ({ onKnowMore }) =>
           </div>
 
           {/* Right Skyline Column: Ultra Smooth Edge Fade & Crisp Floating Badge */}
-          <div className="bengaluru-skyline-col">
+          <div className="bengaluru-skyline-col reveal-right delay-200">
             <div className="skyline-fade-wrap">
               <img
                 src="/images/bengaluru_skyline_new.png"
@@ -43,7 +43,7 @@ export const BengaluruFocus: React.FC<BengaluruFocusProps> = ({ onKnowMore }) =>
             </div>
 
             {/* Single Crisp Floating City Launch Badge */}
-            <div className="bengaluru-floating-pill">
+            <div className="bengaluru-floating-pill floating-badge-animated">
               <div className="pill-pin-circle">
                 <MapPin size={22} color="#0c0d0e" strokeWidth={2.4} />
               </div>

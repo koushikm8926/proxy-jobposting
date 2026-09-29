@@ -9,6 +9,7 @@ import { FAQPage } from './pages/FAQPage'
 import { JoinCandidatePage } from './pages/JoinCandidatePage'
 import { RecruiterRegisterPage } from './pages/RecruiterRegisterPage'
 import { Modal, type ModalType } from './components/Modal'
+import { useScrollReveal } from './hooks/useScrollReveal'
 
 export function App() {
   // Support hash navigation and state, defaulting to 'register-recruiter' for current screen
@@ -29,6 +30,9 @@ export function App() {
 
   const [modalType, setModalType] = useState<ModalType>(null)
   const [selectedCategory, setSelectedCategory] = useState<string>('')
+
+  // Trigger GPU-accelerated scroll animations dynamically on page change
+  useScrollReveal(currentPage)
 
   useEffect(() => {
     const handleHash = () => {

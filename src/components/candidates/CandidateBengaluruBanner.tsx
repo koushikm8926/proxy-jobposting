@@ -29,7 +29,7 @@ export const CandidateBengaluruBanner: React.FC = () => {
             />
 
             {/* Launch City Badge */}
-            <div className="cand-launch-badge">
+            <div className="cand-launch-badge floating-badge-animated">
               <div className="cand-launch-pin">
                 <MapPin size={20} color="#0c0d0e" />
               </div>

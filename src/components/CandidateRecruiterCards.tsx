@@ -15,7 +15,7 @@ export const CandidateRecruiterCards: React.FC<CandidateRecruiterCardsProps> = (
       <div className="audience-fluid-container">
         <div className="audience-grid-equal">
           {/* ================= Card 1: For Candidates ================= */}
-          <div id="for-candidates" className="audience-card-split">
+          <div id="for-candidates" className="audience-card-split reveal-left">
             <div className="audience-card-content">
               <span className="audience-kicker">FOR CANDIDATES</span>
               <h3 className="audience-title">
@@ -49,7 +49,7 @@ export const CandidateRecruiterCards: React.FC<CandidateRecruiterCardsProps> = (
           </div>
 
           {/* ================= Card 2: For Recruiters ================= */}
-          <div id="for-recruiters" className="audience-card-split">
+          <div id="for-recruiters" className="audience-card-split reveal-right delay-150">
             <div className="audience-card-content">
               <span className="audience-kicker">FOR RECRUITERS</span>
               <h3 className="audience-title">

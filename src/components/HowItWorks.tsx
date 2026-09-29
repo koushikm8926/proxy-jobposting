@@ -104,7 +104,7 @@ export const HowItWorks: React.FC = () => {
     <section id="how-it-works" className="how-it-works-section">
       <div className="container" style={{ maxWidth: '1440px' }}>
         {/* Section Header */}
-        <div className="section-header" style={{ textAlign: 'center', marginBottom: '28px' }}>
+        <div className="section-header reveal-on-scroll" style={{ textAlign: 'center', marginBottom: '28px' }}>
           <span className="section-kicker" style={{ color: '#52525b', letterSpacing: '0.18em', fontWeight: 800 }}>
             HOW PROXY WORKS
           </span>
@@ -119,7 +119,7 @@ export const HowItWorks: React.FC = () => {
         {/* Single-Line Side-by-Side Workflows with Middle Vertical Separation Line */}
         <div className="workflows-unified-grid">
           {/* ================= Left Track: For Candidates ================= */}
-          <div className="track-side">
+          <div className="track-side reveal-left">
             <h3 className="track-header-title">For Candidates</h3>
             <div className="track-steps-row">
               {candidateSteps.map((step, idx) => (
@@ -145,7 +145,7 @@ export const HowItWorks: React.FC = () => {
           <div className="workflows-vertical-divider" />
 
           {/* ================= Right Track: For Recruiters ================= */}
-          <div className="track-side">
+          <div className="track-side reveal-right delay-150">
             <h3 className="track-header-title">For Recruiters</h3>
             <div className="track-steps-row">
               {recruiterSteps.map((step, idx) => (

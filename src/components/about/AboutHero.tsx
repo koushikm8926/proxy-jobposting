@@ -80,6 +80,7 @@ export const AboutHero: React.FC<AboutHeroProps> = ({ onScrollToStory }) => {
 
         .about-hero-content {
           max-width: 540px;
+          animation: heroSlideUp 0.75s cubic-bezier(0.16, 1, 0.3, 1) both;
         }
 
         .about-hero-heading {
@@ -102,6 +103,8 @@ export const AboutHero: React.FC<AboutHeroProps> = ({ onScrollToStory }) => {
         .about-hero-visual-wrapper {
           display: flex;
           justify-content: center;
+          animation: heroSlideRight 0.85s cubic-bezier(0.16, 1, 0.3, 1) both;
+          animation-delay: 0.15s;
         }
 
         .about-hero-card {
@@ -134,6 +137,7 @@ export const AboutHero: React.FC<AboutHeroProps> = ({ onScrollToStory }) => {
           text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8);
           pointer-events: none;
           transform: rotate(3deg);
+          animation: floatBadgeSlow 4s ease-in-out infinite;
         }
 
         @media (max-width: 960px) {

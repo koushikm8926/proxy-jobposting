@@ -13,7 +13,7 @@ export const CallToAction: React.FC<CallToActionProps> = ({
   return (
     <section className="cta-section">
       <div className="container">
-        <div className="cta-box">
+        <div className="cta-box reveal-scale">
           {/* Left Text */}
           <div className="cta-text-wrapper">
             <span className="section-kicker">BE A PART OF PROXY</span>
