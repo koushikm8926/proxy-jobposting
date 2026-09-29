@@ -7,24 +7,24 @@ interface BengaluruFocusProps {
 
 export const BengaluruFocus: React.FC<BengaluruFocusProps> = ({ onKnowMore }) => {
   return (
-    <section className="bengaluru-section">
-      <div className="container">
-        <div className="bengaluru-banner">
+    <section className="bengaluru-fullwidth-section">
+      <div className="bengaluru-screen-wrapper">
+        <div className="bengaluru-banner-card">
           {/* Left Text Content */}
-          <div className="bengaluru-content">
-            <span className="section-kicker">OUR FOCUS</span>
-            <h2 className="bengaluru-title">
-              Starting from Bengaluru,<br />Growing Across India
+          <div className="bengaluru-content-col">
+            <span className="bengaluru-kicker">OUR FOCUS</span>
+            <h2 className="bengaluru-heading">
+              Starting from Bengaluru,<br />
+              Growing Across India
             </h2>
-            <p className="bengaluru-description">
+            <p className="bengaluru-paragraph">
               We are building a trusted recruitment ecosystem in Bengaluru with a long-term vision to expand across India, connecting more candidates and employers every day.
             </p>
             <div>
               <button
                 type="button"
-                className="btn btn-primary"
+                className="btn btn-primary bengaluru-btn"
                 onClick={onKnowMore}
-                style={{ padding: '12px 28px' }}
               >
                 <span>Know More</span>
                 <ArrowRight size={16} />
@@ -32,24 +32,24 @@ export const BengaluruFocus: React.FC<BengaluruFocusProps> = ({ onKnowMore }) =>
             </div>
           </div>
 
-          {/* Right Skyline Image & Badge */}
-          <div className="bengaluru-image-container">
-            <img
-              src="/images/bengaluru_buildings.jpg"
-              alt="Bengaluru Modern Skyline"
-              className="bengaluru-skyline-img"
-            />
-            {/* Overlay Gradient on left edge for seamless blend */}
-            <div className="skyline-edge-gradient"></div>
+          {/* Right Skyline Column: Ultra Smooth Edge Fade & Crisp Floating Badge */}
+          <div className="bengaluru-skyline-col">
+            <div className="skyline-fade-wrap">
+              <img
+                src="/images/bengaluru_skyline_fullwidth.png"
+                alt="Modern Bengaluru City Corporate Skyline"
+                className="bengaluru-photo-img"
+              />
+            </div>
 
-            {/* Floating City Badge */}
-            <div className="city-launch-badge">
-              <div className="city-pin-icon">
-                <MapPin size={22} color="#0c0d0e" />
+            {/* Single Crisp Floating City Launch Badge */}
+            <div className="bengaluru-floating-pill">
+              <div className="pill-pin-circle">
+                <MapPin size={22} color="#0c0d0e" strokeWidth={2.4} />
               </div>
-              <div className="city-badge-text">
-                <span className="city-badge-title">Bengaluru</span>
-                <span className="city-badge-sub">Our Launch City</span>
+              <div className="pill-text-meta">
+                <span className="pill-city-name">Bengaluru</span>
+                <span className="pill-city-tag">Our Launch City</span>
               </div>
             </div>
           </div>
@@ -57,136 +57,206 @@ export const BengaluruFocus: React.FC<BengaluruFocusProps> = ({ onKnowMore }) =>
       </div>
 
       <style>{`
-        .bengaluru-section {
+        .bengaluru-fullwidth-section {
           padding: 40px 0 80px;
           background-color: #ffffff;
+          width: 100%;
+          overflow: hidden;
         }
 
-        .bengaluru-banner {
-          background: linear-gradient(135deg, #f8f9fa 0%, #edf0f5 100%);
+        /* Covers the actual width of the screen with symmetric edge padding */
+        .bengaluru-screen-wrapper {
+          width: 100%;
+          padding: 0 32px;
+          box-sizing: border-box;
+        }
+
+        .bengaluru-banner-card {
+          width: 100%;
+          background-color: #fafafb;
           border: 1px solid #e4e7ec;
           border-radius: 28px;
           overflow: hidden;
           display: flex;
-          align-items: center;
+          align-items: stretch;
           position: relative;
-          min-height: 380px;
-          box-shadow: 0 16px 40px -12px rgba(0, 0, 0, 0.06);
+          min-height: 420px;
+          box-shadow: 0 12px 36px -10px rgba(0, 0, 0, 0.06);
         }
 
-        .bengaluru-content {
+        .bengaluru-content-col {
           flex: 1.1;
-          padding: 56px 48px;
+          padding: 64px 56px;
           z-index: 2;
-        }
-
-        .bengaluru-title {
-          font-size: 34px;
-          font-weight: 800;
-          color: #0c0d0e;
-          letter-spacing: -0.03em;
-          line-height: 1.2;
-          margin-bottom: 16px;
-        }
-
-        .bengaluru-description {
-          font-size: 15px;
-          color: #475467;
-          line-height: 1.6;
-          max-width: 480px;
-          margin-bottom: 28px;
-        }
-
-        .bengaluru-image-container {
-          flex: 1;
-          height: 100%;
-          min-height: 380px;
-          position: relative;
           display: flex;
-          align-items: center;
-          justify-content: flex-end;
-          overflow: hidden;
-        }
-
-        .bengaluru-skyline-img {
-          width: 100%;
-          height: 100%;
-          min-height: 380px;
-          object-fit: cover;
-          object-position: center;
-        }
-
-        .skyline-edge-gradient {
-          position: absolute;
-          top: 0;
-          bottom: 0;
-          left: 0;
-          width: 90px;
-          background: linear-gradient(to right, #edf0f5, transparent);
-          pointer-events: none;
-        }
-
-        .city-launch-badge {
-          position: absolute;
-          bottom: 36px;
-          right: 36px;
-          background: rgba(255, 255, 255, 0.95);
-          backdrop-filter: blur(10px);
-          border: 1px solid rgba(228, 231, 236, 0.9);
-          border-radius: 18px;
-          padding: 12px 22px;
-          display: flex;
-          align-items: center;
-          gap: 12px;
-          box-shadow: 0 12px 28px rgba(0, 0, 0, 0.12);
-          z-index: 3;
-        }
-
-        .city-pin-icon {
-          display: flex;
-          align-items: center;
+          flex-direction: column;
           justify-content: center;
         }
 
-        .city-badge-text {
+        .bengaluru-kicker {
+          font-size: 12px;
+          font-weight: 800;
+          letter-spacing: 0.18em;
+          color: #52525b;
+          text-transform: uppercase;
+          display: block;
+          margin-bottom: 12px;
+        }
+
+        .bengaluru-heading {
+          font-size: 42px;
+          font-weight: 800;
+          color: #0c0d0e;
+          letter-spacing: -0.035em;
+          line-height: 1.12;
+          margin: 0 0 18px;
+        }
+
+        .bengaluru-paragraph {
+          font-size: 15.5px;
+          color: #475467;
+          line-height: 1.6;
+          max-width: 520px;
+          margin: 0 0 32px;
+        }
+
+        .bengaluru-btn {
+          height: 48px;
+          padding: 0 28px;
+          border-radius: 9999px;
+          font-size: 15px;
+          font-weight: 600;
+          display: inline-flex;
+          align-items: center;
+          gap: 10px;
+          box-shadow: 0 4px 14px rgba(0, 0, 0, 0.1);
+          transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .bengaluru-btn:hover {
+          transform: translateY(-2px);
+          box-shadow: 0 8px 20px rgba(0, 0, 0, 0.16);
+          background-color: #27272a;
+        }
+
+        /* Right Skyline Column with Smooth Fade */
+        .bengaluru-skyline-col {
+          flex: 1.15;
+          position: relative;
+          display: flex;
+          align-items: stretch;
+          justify-content: flex-end;
+          overflow: hidden;
+          background-color: #fafafb;
+        }
+
+        .skyline-fade-wrap {
+          position: relative;
+          width: 100%;
+          height: 100%;
+          display: flex;
+          align-items: stretch;
+          justify-content: flex-end;
+          /* Dual-layer smooth mask gradient for dissolving left edge into card background */
+          -webkit-mask-image: linear-gradient(to right, transparent 0%, rgba(0, 0, 0, 0.15) 16%, rgba(0, 0, 0, 0.8) 36%, #000000 52%);
+          mask-image: linear-gradient(to right, transparent 0%, rgba(0, 0, 0, 0.15) 16%, rgba(0, 0, 0, 0.8) 36%, #000000 52%);
+        }
+
+        .bengaluru-photo-img {
+          width: 100%;
+          height: 100%;
+          min-height: 420px;
+          object-fit: cover;
+          object-position: right center;
+          display: block;
+          transition: transform 0.6s ease;
+        }
+
+        .bengaluru-banner-card:hover .bengaluru-photo-img {
+          transform: scale(1.03);
+        }
+
+        /* Floating City Launch Badge */
+        .bengaluru-floating-pill {
+          position: absolute;
+          bottom: 40px;
+          right: 48px;
+          background: rgba(255, 255, 255, 0.98);
+          backdrop-filter: blur(14px);
+          border: 1px solid rgba(228, 231, 236, 0.9);
+          border-radius: 20px;
+          padding: 13px 26px;
+          display: flex;
+          align-items: center;
+          gap: 14px;
+          box-shadow: 0 16px 36px -6px rgba(0, 0, 0, 0.14);
+          z-index: 3;
+          transition: transform 0.25s ease;
+        }
+
+        .bengaluru-floating-pill:hover {
+          transform: translateY(-2px);
+        }
+
+        .pill-pin-circle {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: 38px;
+          height: 38px;
+          border-radius: 50%;
+          background-color: #f4f4f5;
+        }
+
+        .pill-text-meta {
           display: flex;
           flex-direction: column;
         }
 
-        .city-badge-title {
-          font-size: 16px;
+        .pill-city-name {
+          font-size: 16.5px;
           font-weight: 800;
           color: #0c0d0e;
           letter-spacing: -0.01em;
+          line-height: 1.2;
         }
 
-        .city-badge-sub {
-          font-size: 12px;
-          font-weight: 500;
-          color: #64748b;
+        .pill-city-tag {
+          font-size: 12.5px;
+          font-weight: 600;
+          color: #71717a;
+        }
+
+        @media (max-width: 1200px) {
+          .bengaluru-screen-wrapper {
+            padding: 0 20px;
+          }
+          .bengaluru-content-col {
+            padding: 48px 36px;
+          }
+          .bengaluru-heading {
+            font-size: 34px;
+          }
         }
 
         @media (max-width: 960px) {
-          .bengaluru-banner {
+          .bengaluru-banner-card {
             flex-direction: column;
+            min-height: auto;
           }
-          .bengaluru-content {
-            padding: 40px 24px 32px;
-          }
-          .bengaluru-title {
-            font-size: 28px;
-          }
-          .bengaluru-image-container {
+          .bengaluru-skyline-col {
             width: 100%;
-            height: 260px;
-            min-height: 260px;
+            height: 280px;
+            min-height: 280px;
           }
-          .skyline-edge-gradient {
-            display: none;
+          .skyline-fade-wrap {
+            -webkit-mask-image: linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 1) 25%);
+            mask-image: linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 1) 25%);
           }
-          .city-launch-badge {
-            bottom: 20px;
-            right: 20px;
+          .bengaluru-floating-pill {
+            bottom: 24px;
+            right: 24px;
+            padding: 10px 20px;
           }
         }
       `}</style>

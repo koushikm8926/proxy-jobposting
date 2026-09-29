@@ -10,6 +10,7 @@ export type NavPage =
   | 'contact'
   | 'faq'
   | 'join-candidate'
+  | 'register-recruiter'
 
 interface NavbarProps {
   currentPage: NavPage
@@ -105,7 +106,9 @@ export const Navbar: React.FC<NavbarProps> = ({
           }}
         >
           {navLinks.map((link) => {
-            const isActive = link.isPage && currentPage === link.id
+            const isActive =
+              (link.isPage && currentPage === link.id) ||
+              (link.id === 'recruiters' && currentPage === 'register-recruiter')
             return (
               <button
                 key={link.name}

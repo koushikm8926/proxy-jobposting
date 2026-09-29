@@ -11,21 +11,24 @@ export const CandidateRecruiterCards: React.FC<CandidateRecruiterCardsProps> = (
   onRegisterRecruiter
 }) => {
   return (
-    <section className="audience-section">
-      <div className="container">
-        <div className="audience-grid">
-          {/* Card 1: For Candidates */}
-          <div id="for-candidates" className="audience-card">
-            <div className="audience-content">
-              <span className="section-kicker">FOR CANDIDATES</span>
-              <h3 className="audience-title">Discover Genuine Opportunities</h3>
-              <p className="audience-text">
+    <section className="audience-section-fluid">
+      <div className="audience-fluid-container">
+        <div className="audience-grid-equal">
+          {/* ================= Card 1: For Candidates ================= */}
+          <div id="for-candidates" className="audience-card-split">
+            <div className="audience-card-content">
+              <span className="audience-kicker">FOR CANDIDATES</span>
+              <h3 className="audience-title">
+                Discover Genuine<br />
+                Opportunities
+              </h3>
+              <p className="audience-desc">
                 Find relevant job opportunities, create your professional profile, and connect with trusted employers through one simple platform.
               </p>
               <div className="audience-btn-wrap">
                 <button
                   type="button"
-                  className="btn btn-primary"
+                  className="btn btn-primary audience-pill-btn audience-pill-black"
                   onClick={onJoinCandidate}
                 >
                   <span>Join as Candidate</span>
@@ -33,27 +36,33 @@ export const CandidateRecruiterCards: React.FC<CandidateRecruiterCardsProps> = (
                 </button>
               </div>
             </div>
-            <div className="audience-image-box">
-              <img
-                src="/images/candidate_woman.jpg"
-                alt="Candidate discovering opportunities"
-                className="audience-img"
-              />
+
+            <div className="audience-image-container">
+              <div className="image-fade-mask">
+                <img
+                  src="/images/candidate_woman_card_feathered.png"
+                  alt="Candidate discovering genuine job opportunities"
+                  className="audience-feathered-photo"
+                />
+              </div>
             </div>
           </div>
 
-          {/* Card 2: For Recruiters */}
-          <div id="for-recruiters" className="audience-card">
-            <div className="audience-content">
-              <span className="section-kicker">FOR RECRUITERS</span>
-              <h3 className="audience-title">Find Relevant Talent Faster</h3>
-              <p className="audience-text">
+          {/* ================= Card 2: For Recruiters ================= */}
+          <div id="for-recruiters" className="audience-card-split">
+            <div className="audience-card-content">
+              <span className="audience-kicker">FOR RECRUITERS</span>
+              <h3 className="audience-title">
+                Find Relevant<br />
+                Talent Faster
+              </h3>
+              <p className="audience-desc">
                 Build your talent pipeline, connect with verified candidates, and simplify your hiring process.
               </p>
               <div className="audience-btn-wrap">
                 <button
                   type="button"
-                  className="btn btn-outline"
+                  className="btn btn-outline audience-pill-btn audience-pill-outline"
                   onClick={onRegisterRecruiter}
                 >
                   <span>Register as Recruiter</span>
@@ -61,102 +70,222 @@ export const CandidateRecruiterCards: React.FC<CandidateRecruiterCardsProps> = (
                 </button>
               </div>
             </div>
-            <div className="audience-image-box">
-              <img
-                src="/images/recruiter_man.jpg"
-                alt="Recruiter finding top talent"
-                className="audience-img"
-              />
+
+            <div className="audience-image-container">
+              <div className="image-fade-mask">
+                <img
+                  src="/images/recruiter_man_card_feathered.png"
+                  alt="Recruiter connecting with verified talent"
+                  className="audience-feathered-photo"
+                />
+              </div>
             </div>
           </div>
         </div>
       </div>
 
       <style>{`
-        .audience-section {
-          padding: 30px 0 80px;
+        .audience-section-fluid {
+          padding: 36px 0 72px;
           background-color: #ffffff;
+          width: 100%;
+          box-sizing: border-box;
         }
 
-        .audience-grid {
+        /* Covers the whole width of the screen equally */
+        .audience-fluid-container {
+          width: 100%;
+          max-width: 100%;
+          margin: 0 auto;
+          padding: 0 40px;
+          box-sizing: border-box;
+        }
+
+        .audience-grid-equal {
           display: grid;
           grid-template-columns: 1fr 1fr;
           gap: 28px;
+          width: 100%;
+          box-sizing: border-box;
         }
 
-        .audience-card {
-          background-color: #f9f9fb;
-          border: 1px solid #f0f0f4;
-          border-radius: 24px;
+        .audience-card-split {
+          position: relative;
+          background-color: #fafafb;
+          border: 1px solid #e5e7eb;
+          border-radius: 28px;
           overflow: hidden;
           display: flex;
-          flex-direction: row;
           align-items: stretch;
+          min-height: 290px;
           transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+          box-shadow: 0 4px 16px rgba(0, 0, 0, 0.02);
         }
 
-        .audience-card:hover {
-          transform: translateY(-4px);
-          box-shadow: 0 20px 36px -12px rgba(0, 0, 0, 0.08);
-          border-color: #e4e4e7;
+        .audience-card-split:hover {
+          transform: translateY(-3px);
+          box-shadow: 0 18px 36px -12px rgba(0, 0, 0, 0.08);
+          border-color: #d4d4d8;
         }
 
-        .audience-content {
-          padding: 36px 28px;
-          flex: 1.1;
+        /* Content block on the left */
+        .audience-card-content {
+          flex: 1.15;
+          padding: 40px 20px 40px 40px;
           display: flex;
           flex-direction: column;
           justify-content: center;
+          z-index: 2;
+          position: relative;
+        }
+
+        .audience-kicker {
+          font-size: 11.5px;
+          font-weight: 800;
+          letter-spacing: 0.16em;
+          color: #52525b;
+          text-transform: uppercase;
+          display: block;
+          margin-bottom: 8px;
         }
 
         .audience-title {
-          font-size: 26px;
+          font-size: 30px;
           font-weight: 800;
+          letter-spacing: -0.025em;
+          line-height: 1.15;
           color: #0c0d0e;
-          line-height: 1.25;
-          letter-spacing: -0.02em;
-          margin-bottom: 12px;
+          margin: 0 0 14px;
         }
 
-        .audience-text {
+        .audience-desc {
           font-size: 14px;
-          color: #64748b;
-          line-height: 1.6;
-          margin-bottom: 24px;
+          color: #52525b;
+          line-height: 1.55;
+          margin: 0 0 28px;
+          max-width: 340px;
         }
 
         .audience-btn-wrap {
           margin-top: auto;
         }
 
-        .audience-image-box {
-          flex: 0.9;
+        .audience-pill-btn {
+          height: 46px;
+          padding: 0 24px;
+          border-radius: 9999px;
+          font-size: 14px;
+          font-weight: 600;
+          display: inline-flex;
+          align-items: center;
+          gap: 10px;
+          cursor: pointer;
+          transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .audience-pill-black {
+          background-color: #0c0d0e;
+          color: #ffffff;
+          border: 1px solid #0c0d0e;
+        }
+
+        .audience-pill-black:hover {
+          background-color: #27272a;
+          transform: translateY(-1.5px);
+          box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+        }
+
+        .audience-pill-outline {
+          background-color: #ffffff;
+          color: #0c0d0e;
+          border: 1.5px solid #0c0d0e;
+        }
+
+        .audience-pill-outline:hover {
+          background-color: #f4f4f5;
+          transform: translateY(-1.5px);
+        }
+
+        /* Image block on the right with smooth left fade */
+        .audience-image-container {
+          flex: 0.95;
           position: relative;
-          min-height: 240px;
+          display: flex;
+          align-items: stretch;
+          justify-content: flex-end;
           overflow: hidden;
         }
 
-        .audience-img {
+        .image-fade-mask {
+          position: relative;
+          width: 100%;
+          height: 100%;
+          display: flex;
+          align-items: stretch;
+          justify-content: flex-end;
+          /* Dual smooth dissolving mask gradient */
+          -webkit-mask-image: linear-gradient(to right, transparent 0%, rgba(0, 0, 0, 0.15) 12%, rgba(0, 0, 0, 0.75) 26%, #000000 42%);
+          mask-image: linear-gradient(to right, transparent 0%, rgba(0, 0, 0, 0.15) 12%, rgba(0, 0, 0, 0.75) 26%, #000000 42%);
+        }
+
+        .audience-feathered-photo {
           width: 100%;
           height: 100%;
           object-fit: cover;
-          object-position: center;
-          transition: transform 0.5s ease;
+          object-position: right center;
+          display: block;
+          transition: transform 0.4s ease;
         }
 
-        .audience-card:hover .audience-img {
-          transform: scale(1.04);
+        .audience-card-split:hover .audience-feathered-photo {
+          transform: scale(1.03);
         }
 
-        @media (max-width: 960px) {
-          .audience-grid {
-            grid-template-columns: 1fr;
+        @media (max-width: 1100px) {
+          .audience-fluid-container {
+            padding: 0 24px;
           }
-          .audience-card {
+          .audience-card-content {
+            padding: 32px 16px 32px 28px;
+          }
+          .audience-title {
+            font-size: 26px;
+          }
+        }
+
+        @media (max-width: 900px) {
+          .audience-grid-equal {
+            grid-template-columns: 1fr;
+            gap: 24px;
+          }
+          .audience-card-split {
+            min-height: auto;
+          }
+          .audience-title {
+            font-size: 24px;
+          }
+          .audience-feathered-photo {
+            max-height: 260px;
+          }
+        }
+
+        @media (max-width: 580px) {
+          .audience-fluid-container {
+            padding: 0 16px;
+          }
+          .audience-card-split {
             flex-direction: column;
           }
-          .audience-image-box {
-            height: 260px;
+          .audience-card-content {
+            padding: 28px 20px;
+          }
+          .audience-image-container {
+            width: 100%;
+            height: 220px;
+          }
+          .image-fade-mask {
+            -webkit-mask-image: linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 1) 25%);
+            mask-image: linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 1) 25%);
           }
         }
       `}</style>

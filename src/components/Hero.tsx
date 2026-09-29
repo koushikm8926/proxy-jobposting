@@ -1,5 +1,5 @@
 import React from 'react'
-import { ArrowRight, MapPin, Users } from 'lucide-react'
+import { ArrowRight, MapPin } from 'lucide-react'
 
 interface HeroProps {
   onFindJobs: () => void
@@ -8,286 +8,302 @@ interface HeroProps {
 
 export const Hero: React.FC<HeroProps> = ({ onFindJobs, onHireTalent }) => {
   return (
-    <section
-      id="home"
-      style={{
-        position: 'relative',
-        paddingTop: '32px',
-        paddingBottom: '80px',
-        overflow: 'hidden',
-        background: 'linear-gradient(180deg, #ffffff 0%, #fafafa 100%)'
-      }}
-    >
-      {/* Subtle background ambient curved wave */}
-      <div
-        style={{
-          position: 'absolute',
-          top: 0,
-          left: 0,
-          right: 0,
-          height: '100%',
-          backgroundImage: 'radial-gradient(circle at 10% 20%, rgba(240, 242, 245, 0.7) 0%, transparent 60%)',
-          pointerEvents: 'none'
-        }}
-      />
+    <section id="home" className="home-hero-root">
+      {/* Subtle organic contour wave in top-left corner */}
+      <div className="hero-contour-waves">
+        <svg
+          viewBox="0 0 400 300"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+          className="contour-svg"
+        >
+          <path
+            d="M-50 40C60 40 120 90 140 160C160 230 220 270 320 270"
+            stroke="rgba(0, 0, 0, 0.04)"
+            strokeWidth="32"
+            strokeLinecap="round"
+          />
+          <path
+            d="M-80 120C40 120 90 160 110 220C130 280 190 320 280 320"
+            stroke="rgba(0, 0, 0, 0.025)"
+            strokeWidth="24"
+            strokeLinecap="round"
+          />
+        </svg>
+      </div>
 
-      <div className="container" style={{ position: 'relative', zIndex: 1 }}>
-        <div className="hero-grid">
-          {/* Left Column: Hero Text & Actions */}
-          <div className="hero-content">
-            <span className="section-kicker" style={{ color: '#52525b', letterSpacing: '0.18em' }}>
-              THE DESIRE TO ACHIEVE
-            </span>
+      <div className="container hero-container">
+        {/* Left Side: Content & Actions */}
+        <div className="hero-text-block">
+          <span className="hero-kicker">THE DESIRE TO ACHIEVE</span>
 
-            <h1 className="hero-heading">
-              <span className="brand-bold">PROXY</span>
-              <span className="brand-tagline">The Desire to Achieve.</span>
-            </h1>
+          <h1 className="hero-main-title">
+            <span className="title-brand">PROXY</span>
+            <span className="title-tagline">The Desire to Achieve.</span>
+          </h1>
 
-            <p className="hero-desc">
-              Connecting candidates with opportunities and recruiters with the talent they need.
-            </p>
+          <p className="hero-paragraph">
+            Connecting candidates with opportunities and recruiters with the talent they need.
+          </p>
 
-            <div className="hero-actions">
-              <button
-                type="button"
-                className="btn btn-primary btn-hero"
-                onClick={onFindJobs}
-              >
-                <span>Find Jobs</span>
-                <ArrowRight size={16} />
-              </button>
-              <button
-                type="button"
-                className="btn btn-outline btn-hero"
-                onClick={onHireTalent}
-              >
-                <span>Hire Talent</span>
-                <ArrowRight size={16} />
-              </button>
-            </div>
-
-            {/* Launching in Bengaluru Badge */}
-            <div className="launch-badge">
-              <div className="launch-icon-wrapper">
-                <MapPin size={18} className="launch-icon" />
-              </div>
-              <div className="launch-text">
-                <span className="launch-title">Launching in Bengaluru</span>
-                <span className="launch-subtitle">Building a recruitment ecosystem across India.</span>
-              </div>
-            </div>
+          <div className="hero-cta-group">
+            <button
+              type="button"
+              className="btn btn-primary hero-pill-btn hero-pill-black"
+              onClick={onFindJobs}
+            >
+              <span>Find Jobs</span>
+              <ArrowRight size={17} />
+            </button>
+            <button
+              type="button"
+              className="btn btn-outline hero-pill-btn hero-pill-outline"
+              onClick={onHireTalent}
+            >
+              <span>Hire Talent</span>
+              <ArrowRight size={17} />
+            </button>
           </div>
 
-          {/* Right Column: Hero Visual & Floating Badges */}
-          <div className="hero-visual-wrapper">
-            <div className="hero-image-card">
-              <img
-                src="/images/hero_professionals.jpg"
-                alt="Proxy corporate professionals in Bengaluru"
-                className="hero-img"
-              />
-
-              {/* Handwritten Floating Text on top-right */}
-              <div className="hero-handwritten-badge">
-                <span className="hw-line">People</span>
-                <span className="hw-line">Opportunities</span>
-                <span className="hw-line">Growth</span>
-                <span className="hw-line">Together</span>
-              </div>
-
-              {/* Frosted Dark Floating Pill Badge at bottom */}
-              <div className="hero-floating-glass-card">
-                <div className="glass-icon-circle">
-                  <Users size={18} color="#ffffff" />
-                </div>
-                <div className="glass-text">
-                  A trusted recruitment platform for a brighter tomorrow.
-                </div>
-              </div>
+          <div className="hero-launch-badge">
+            <div className="launch-pin-wrap">
+              <MapPin size={22} className="launch-pin-icon" />
+            </div>
+            <div className="launch-meta">
+              <h4 className="launch-title">Launching in Bengaluru</h4>
+              <p className="launch-desc">Building a recruitment ecosystem across India.</p>
             </div>
           </div>
+        </div>
+
+        {/* Right Side: Panoramic Integrated Visual of Professionals & Modern Bengaluru */}
+        <div className="hero-panoramic-visual">
+          <img
+            src="/images/home_hero_people_feathered.png"
+            alt="Proxy ambitious professionals in modern Bengaluru"
+            className="hero-feathered-img"
+          />
         </div>
       </div>
 
       <style>{`
-        .hero-grid {
-          display: grid;
-          grid-template-columns: 1fr 1fr;
-          gap: 48px;
-          align-items: center;
+        .home-hero-root {
+          position: relative;
+          background-color: #ffffff;
+          overflow: hidden;
           min-height: 520px;
+          display: flex;
+          align-items: center;
+          border-bottom: 1px solid #f4f4f5;
         }
 
-        .hero-content {
+        .hero-contour-waves {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 380px;
+          height: 300px;
+          pointer-events: none;
+          z-index: 0;
+        }
+
+        .contour-svg {
+          width: 100%;
+          height: 100%;
+        }
+
+        .hero-container {
+          position: relative;
+          z-index: 1;
+          display: grid;
+          grid-template-columns: 1.05fr 1fr;
+          align-items: center;
+          gap: 24px;
+          padding-top: 36px;
+          padding-bottom: 44px;
+          width: 100%;
+        }
+
+        /* Left Content */
+        .hero-text-block {
           max-width: 520px;
+          padding-left: 4px;
         }
 
-        .hero-heading {
-          margin: 12px 0 20px;
+        .hero-kicker {
+          font-size: 13px;
+          font-weight: 800;
+          letter-spacing: 0.16em;
+          color: #3f3f46;
+          text-transform: uppercase;
+          display: block;
+          margin-bottom: 8px;
+        }
+
+        .hero-main-title {
           display: flex;
           flex-direction: column;
+          margin: 0 0 16px;
         }
 
-        .brand-bold {
-          font-size: 64px;
+        .title-brand {
+          font-size: 74px;
           font-weight: 900;
           letter-spacing: -0.04em;
           line-height: 0.95;
           color: #0c0d0e;
         }
 
-        .brand-tagline {
-          font-size: 28px;
-          font-weight: 500;
-          letter-spacing: -0.02em;
-          color: #18181b;
+        .title-tagline {
+          font-size: 36px;
+          font-weight: 800;
+          letter-spacing: -0.025em;
+          color: #0c0d0e;
           margin-top: 8px;
+          line-height: 1.15;
         }
 
-        .hero-desc {
+        .hero-paragraph {
           font-size: 16px;
           color: #475467;
-          line-height: 1.6;
-          margin-bottom: 32px;
+          line-height: 1.55;
+          margin: 0 0 32px;
+          max-width: 440px;
         }
 
-        .hero-actions {
+        .hero-cta-group {
           display: flex;
           align-items: center;
           gap: 16px;
-          margin-bottom: 40px;
+          margin-bottom: 36px;
         }
 
-        .btn-hero {
-          padding: 12px 28px;
+        .hero-pill-btn {
+          height: 48px;
+          padding: 0 28px;
+          border-radius: 9999px;
           font-size: 15px;
+          font-weight: 600;
+          display: inline-flex;
+          align-items: center;
+          gap: 10px;
+          cursor: pointer;
+          transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        .launch-badge {
+        .hero-pill-black {
+          background-color: #0c0d0e;
+          color: #ffffff;
+          border: 1px solid #0c0d0e;
+          box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12);
+        }
+
+        .hero-pill-black:hover {
+          background-color: #27272a;
+          transform: translateY(-1.5px);
+          box-shadow: 0 8px 20px rgba(0, 0, 0, 0.18);
+        }
+
+        .hero-pill-outline {
+          background-color: #ffffff;
+          color: #0c0d0e;
+          border: 1.5px solid #0c0d0e;
+        }
+
+        .hero-pill-outline:hover {
+          background-color: #f4f4f5;
+          transform: translateY(-1.5px);
+        }
+
+        .hero-launch-badge {
           display: flex;
           align-items: flex-start;
-          gap: 14px;
+          gap: 12px;
         }
 
-        .launch-icon-wrapper {
+        .launch-pin-wrap {
           color: #0c0d0e;
           padding-top: 2px;
+          flex-shrink: 0;
         }
 
-        .launch-text {
+        .launch-meta {
           display: flex;
           flex-direction: column;
         }
 
         .launch-title {
-          font-size: 14px;
-          font-weight: 700;
+          font-size: 14.5px;
+          font-weight: 800;
           color: #0c0d0e;
+          margin: 0;
         }
 
-        .launch-subtitle {
+        .launch-desc {
           font-size: 13px;
           color: #64748b;
-          margin-top: 2px;
+          margin: 2px 0 0;
         }
 
-        /* Right Visual */
-        .hero-visual-wrapper {
+        /* Right Panoramic Visual */
+        .hero-panoramic-visual {
           position: relative;
           display: flex;
-          justify-content: center;
-        }
-
-        .hero-image-card {
-          position: relative;
-          width: 100%;
-          max-width: 520px;
-          border-radius: 28px;
-          overflow: hidden;
-          box-shadow: 0 20px 48px -12px rgba(0, 0, 0, 0.12);
-        }
-
-        .hero-img {
-          width: 100%;
-          height: 480px;
-          object-fit: cover;
-          object-position: center top;
-          transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-
-        .hero-image-card:hover .hero-img {
-          transform: scale(1.02);
-        }
-
-        /* Handwritten script accent */
-        .hero-handwritten-badge {
-          position: absolute;
-          top: 28px;
-          right: 28px;
-          font-family: var(--font-script);
-          font-size: 24px;
-          line-height: 1.15;
-          color: #1f2937;
-          display: flex;
-          flex-direction: column;
-          align-items: flex-end;
-          text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8);
-          pointer-events: none;
-          transform: rotate(3deg);
-        }
-
-        .hero-floating-glass-card {
-          position: absolute;
-          bottom: 24px;
-          left: 20px;
-          right: 20px;
-          background: rgba(30, 41, 59, 0.88);
-          backdrop-filter: blur(12px);
-          border: 1px solid rgba(255, 255, 255, 0.15);
-          border-radius: 9999px;
-          padding: 12px 20px;
-          display: flex;
+          justify-content: flex-end;
           align-items: center;
-          gap: 14px;
-          box-shadow: 0 16px 32px rgba(0, 0, 0, 0.25);
+          height: 100%;
         }
 
-        .glass-icon-circle {
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          width: 32px;
-          height: 32px;
-          background: rgba(255, 255, 255, 0.2);
-          border-radius: 50%;
-          flex-shrink: 0;
+        .hero-feathered-img {
+          width: 100%;
+          max-width: 580px;
+          height: auto;
+          max-height: 480px;
+          object-fit: contain;
+          object-position: right center;
+          display: block;
+          filter: drop-shadow(0 12px 32px rgba(0, 0, 0, 0.06));
         }
 
-        .glass-text {
-          font-size: 13px;
-          font-weight: 500;
-          color: #ffffff;
-          letter-spacing: -0.01em;
-          line-height: 1.4;
-        }
-
-        @media (max-width: 960px) {
-          .hero-grid {
+        @media (max-width: 990px) {
+          .hero-container {
             grid-template-columns: 1fr;
-            gap: 40px;
+            padding-top: 24px;
+            padding-bottom: 32px;
           }
-          .hero-content {
+          .hero-text-block {
             max-width: 100%;
           }
-          .brand-bold {
-            font-size: 48px;
+          .title-brand {
+            font-size: 54px;
           }
-          .brand-tagline {
+          .title-tagline {
+            font-size: 28px;
+          }
+          .hero-panoramic-visual {
+            justify-content: center;
+            margin-top: 16px;
+          }
+          .hero-feathered-img {
+            max-width: 100%;
+            max-height: 380px;
+          }
+        }
+
+        @media (max-width: 600px) {
+          .title-brand {
+            font-size: 44px;
+          }
+          .title-tagline {
             font-size: 24px;
           }
-          .hero-img {
-            height: 380px;
+          .hero-cta-group {
+            flex-direction: column;
+            align-items: stretch;
+          }
+          .hero-pill-btn {
+            justify-content: center;
+            width: 100%;
           }
         }
       `}</style>

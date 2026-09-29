@@ -7,10 +7,11 @@ import { CandidatesPage } from './pages/CandidatesPage'
 import { ContactPage } from './pages/ContactPage'
 import { FAQPage } from './pages/FAQPage'
 import { JoinCandidatePage } from './pages/JoinCandidatePage'
+import { RecruiterRegisterPage } from './pages/RecruiterRegisterPage'
 import { Modal, type ModalType } from './components/Modal'
 
 export function App() {
-  // Support hash navigation and state, defaulting to 'join-candidate' for current screen
+  // Support hash navigation and state, defaulting to 'register-recruiter' for current screen
   const [currentPage, setCurrentPage] = useState<NavPage>(() => {
     if (typeof window !== 'undefined') {
       const hash = window.location.hash.toLowerCase()
@@ -21,8 +22,9 @@ export function App() {
       if (hash === '#contact') return 'contact'
       if (hash === '#faq' || hash === '#faqs') return 'faq'
       if (hash === '#join-candidate' || hash === '#join') return 'join-candidate'
+      if (hash === '#register-recruiter' || hash === '#recruiter-registration' || hash === '#hire-talent') return 'register-recruiter'
     }
-    return 'join-candidate'
+    return 'home'
   })
 
   const [modalType, setModalType] = useState<ModalType>(null)
@@ -45,6 +47,8 @@ export function App() {
         setCurrentPage('faq')
       } else if (hash === '#join-candidate' || hash === '#join') {
         setCurrentPage('join-candidate')
+      } else if (hash === '#register-recruiter' || hash === '#recruiter-registration' || hash === '#hire-talent') {
+        setCurrentPage('register-recruiter')
       }
     }
 
@@ -63,7 +67,8 @@ export function App() {
   }
 
   const handleOpenRecruiterModal = () => {
-    setModalType('recruiter')
+    handlePageChange('register-recruiter')
+    window.scrollTo({ top: 0, behavior: 'smooth' })
   }
 
   const handleOpenCategoryModal = (catName: string) => {
@@ -143,6 +148,9 @@ export function App() {
         )}
         {currentPage === 'join-candidate' && (
           <JoinCandidatePage />
+        )}
+        {currentPage === 'register-recruiter' && (
+          <RecruiterRegisterPage />
         )}
       </main>
 
