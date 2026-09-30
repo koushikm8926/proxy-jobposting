@@ -3,7 +3,6 @@ import './index.css'
 import { Sidebar } from './components/Sidebar'
 import { DashboardView } from './views/DashboardView'
 import { CandidatesView } from './views/CandidatesView'
-import { RecruitersView } from './views/RecruitersView'
 import { useAdminData } from './hooks/useAdminData'
 import { AuthProvider, useAuth } from './context/AuthContext'
 import { LoginPage } from './pages/LoginPage'
@@ -12,8 +11,8 @@ import { LogOut } from 'lucide-react'
 
 const PAGE_META: Record<AdminView, { title: string; subtitle: string }> = {
   dashboard: { title: 'Dashboard', subtitle: 'Overview of all registrations and activity' },
-  candidates: { title: 'Candidates', subtitle: 'All users who registered as job seekers' },
-  recruiters: { title: 'Recruiters', subtitle: 'All users who registered to hire talent' },
+  candidates: { title: 'Registration Enquiries', subtitle: 'View candidate and recruiter registration requests.' },
+  recruiters: { title: 'Registration Enquiries', subtitle: 'View candidate and recruiter registration requests.' },
 }
 
 // ─── Inner app (only rendered when authenticated) ──────────────────────────
@@ -91,10 +90,22 @@ function AdminApp() {
             />
           )}
           {currentView === 'candidates' && (
-            <CandidatesView candidates={candidates} loading={loading} />
+            <CandidatesView
+              candidates={candidates}
+              recruiters={recruiters}
+              loading={loading}
+              initialTab="candidates"
+              onNavigate={setCurrentView}
+            />
           )}
           {currentView === 'recruiters' && (
-            <RecruitersView recruiters={recruiters} loading={loading} />
+            <CandidatesView
+              candidates={candidates}
+              recruiters={recruiters}
+              loading={loading}
+              initialTab="recruiters"
+              onNavigate={setCurrentView}
+            />
           )}
         </div>
       </div>

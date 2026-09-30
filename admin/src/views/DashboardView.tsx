@@ -1,6 +1,6 @@
 import React from 'react'
 import type { Candidate, Recruiter } from '../types'
-import { Users, Briefcase, TrendingUp } from 'lucide-react'
+import { Users, Briefcase } from 'lucide-react'
 
 interface DashboardViewProps {
   candidates: Candidate[]
@@ -13,8 +13,7 @@ const StatCard: React.FC<{
   value: number
   icon: React.ReactNode
   iconBg: string
-  delta?: string
-}> = ({ label, value, icon, iconBg, delta }) => (
+}> = ({ label, value, icon, iconBg }) => (
   <div className="stat-card">
     <div className="stat-icon" style={{ backgroundColor: iconBg }}>
       {icon}
@@ -22,7 +21,6 @@ const StatCard: React.FC<{
     <div>
       <div className="stat-label">{label}</div>
       <div className="stat-value">{value.toLocaleString()}</div>
-      {delta && <div className="stat-delta">↑ {delta}</div>}
     </div>
   </div>
 )
@@ -32,9 +30,6 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
   recruiters,
   isFirebaseConfigured,
 }) => {
-  const pendingCandidates = candidates.filter(c => c.status === 'pending').length
-  const pendingRecruiters = recruiters.filter(r => r.status === 'pending').length
-
   // Recent 5 of each
   const recentCandidates = [...candidates]
     .sort((a, b) => new Date(b.registeredAt).getTime() - new Date(a.registeredAt).getTime())
@@ -68,27 +63,19 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
         </div>
       )}
 
-      {/* Stat Cards */}
+      {/* Stat Cards - Only Total Candidates and Total Recruiters */}
       <div className="stat-grid">
         <StatCard
           label="Total Candidates"
           value={candidates.length}
           icon={<Users size={22} color="#3b82f6" />}
           iconBg="#dbeafe"
-          delta={pendingCandidates > 0 ? `${pendingCandidates} pending` : undefined}
         />
         <StatCard
           label="Total Recruiters"
           value={recruiters.length}
           icon={<Briefcase size={22} color="#8b5cf6" />}
           iconBg="#ede9fe"
-          delta={pendingRecruiters > 0 ? `${pendingRecruiters} pending` : undefined}
-        />
-        <StatCard
-          label="Total Registrations"
-          value={candidates.length + recruiters.length}
-          icon={<TrendingUp size={22} color="#f59e0b" />}
-          iconBg="#fef3c7"
         />
       </div>
 
@@ -107,14 +94,13 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
               <tr>
                 <th>Name</th>
                 <th>Role</th>
-                <th>Status</th>
                 <th>Date</th>
               </tr>
             </thead>
             <tbody>
               {recentCandidates.length === 0 ? (
                 <tr>
-                  <td colSpan={4} style={{ textAlign: 'center', padding: '40px', color: '#a1a1aa' }}>
+                  <td colSpan={3} style={{ textAlign: 'center', padding: '40px', color: '#a1a1aa' }}>
                     No candidates yet
                   </td>
                 </tr>
@@ -126,9 +112,6 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
                       <div className="cell-meta">{c.email}</div>
                     </td>
                     <td>{c.preferredRole || '—'}</td>
-                    <td>
-                      <span className={`status-badge ${c.status}`}>{c.status}</span>
-                    </td>
                     <td style={{ color: '#71717a', fontSize: '12.5px' }}>
                       {formatDate(c.registeredAt)}
                     </td>
@@ -152,14 +135,13 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
               <tr>
                 <th>Name</th>
                 <th>Company</th>
-                <th>Status</th>
                 <th>Date</th>
               </tr>
             </thead>
             <tbody>
               {recentRecruiters.length === 0 ? (
                 <tr>
-                  <td colSpan={4} style={{ textAlign: 'center', padding: '40px', color: '#a1a1aa' }}>
+                  <td colSpan={3} style={{ textAlign: 'center', padding: '40px', color: '#a1a1aa' }}>
                     No recruiters yet
                   </td>
                 </tr>
@@ -171,9 +153,6 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
                       <div className="cell-meta">{r.email}</div>
                     </td>
                     <td>{r.companyName}</td>
-                    <td>
-                      <span className={`status-badge ${r.status}`}>{r.status}</span>
-                    </td>
                     <td style={{ color: '#71717a', fontSize: '12.5px' }}>
                       {formatDate(r.registeredAt)}
                     </td>

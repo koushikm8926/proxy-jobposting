@@ -65,7 +65,6 @@ export const RecruitersView: React.FC<RecruitersViewProps> = ({ recruiters, load
               <th>Size</th>
               <th>Role</th>
               <th>Website</th>
-              <th>Status</th>
               <th>Registered</th>
             </tr>
           </thead>
@@ -97,9 +96,6 @@ export const RecruitersView: React.FC<RecruitersViewProps> = ({ recruiters, load
                       Website ↗
                     </a>
                   ) : '—'}
-                </td>
-                <td>
-                  <span className={`status-badge ${r.status}`}>{r.status}</span>
                 </td>
                 <td style={{ color: '#71717a', fontSize: '12.5px', whiteSpace: 'nowrap' }}>
                   {formatDate(r.registeredAt)}

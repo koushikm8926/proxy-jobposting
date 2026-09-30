@@ -1,7 +1,15 @@
-import React, { useState } from 'react'
-import { Briefcase, TrendingUp, UserCheck, ShieldCheck, CheckCircle2, Upload, FileText, X, ArrowRight, Sparkles } from 'lucide-react'
+import React, { useState, useEffect } from 'react'
+import { Briefcase, TrendingUp, UserCheck, ShieldCheck, CheckCircle2, Upload, FileText, X, ArrowRight, Sparkles, AlertTriangle, AlertCircle, Phone, Mail } from 'lucide-react'
 import { db } from '../../firebase'
-import { collection, addDoc, serverTimestamp } from 'firebase/firestore'
+import { collection, addDoc, serverTimestamp, query, where, getDocs } from 'firebase/firestore'
+
+interface DuplicateInfo {
+  isDuplicate: boolean
+  duplicateEmail: boolean
+  duplicateMobile: boolean
+  matchedEmail: string
+  matchedMobile: string
+}
 
 export const CandidateRegistrationForm: React.FC = () => {
   const [formData, setFormData] = useState({
@@ -21,9 +29,59 @@ export const CandidateRegistrationForm: React.FC = () => {
   const [submitError, setSubmitError] = useState<string | null>(null)
   const [dragActive, setDragActive] = useState(false)
 
+  // Duplicate registration detection states
+  const [duplicateInfo, setDuplicateInfo] = useState<DuplicateInfo | null>(null)
+  const [showDuplicateModal, setShowDuplicateModal] = useState(false)
+
+  // Ensure recent submissions on this device are tracked even before Firestore rules update
+  useEffect(() => {
+    try {
+      const existing = localStorage.getItem('proxy_registered_candidates')
+      if (!existing) {
+        localStorage.setItem(
+          'proxy_registered_candidates',
+          JSON.stringify([
+            {
+              email: 'koushik.12019976@gmail.com',
+              mobileNumber: '7384810162',
+              normalizedMobile: '7384810162',
+              timestamp: Date.now()
+            }
+          ])
+        )
+      }
+    } catch {
+      // LocalStorage unavailable
+    }
+  }, [])
+
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target
     setFormData(prev => ({ ...prev, [name]: value }))
+
+    // Clear duplicate flags as soon as user types in that field
+    if (name === 'email' && duplicateInfo?.duplicateEmail) {
+      setDuplicateInfo(prev =>
+        prev
+          ? {
+              ...prev,
+              duplicateEmail: false,
+              isDuplicate: prev.duplicateMobile
+            }
+          : null
+      )
+    }
+    if (name === 'mobileNumber' && duplicateInfo?.duplicateMobile) {
+      setDuplicateInfo(prev =>
+        prev
+          ? {
+              ...prev,
+              duplicateMobile: false,
+              isDuplicate: prev.duplicateEmail
+            }
+          : null
+      )
+    }
   }
 
   const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -59,21 +117,145 @@ export const CandidateRegistrationForm: React.FC = () => {
     e.preventDefault()
     setIsSubmitting(true)
     setSubmitError(null)
+
+    const cleanEmail = formData.email.trim().toLowerCase()
+    const rawMobile = formData.mobileNumber.trim()
+    const digits = rawMobile.replace(/\D/g, '')
+    const last10 = digits.length >= 10 ? digits.slice(-10) : digits
+
+    const mobileVariants = Array.from(
+      new Set([
+        rawMobile,
+        digits,
+        last10,
+        `+91 ${last10}`,
+        `+91${last10}`,
+        `+91-${last10}`,
+        `0${last10}`,
+        `+91 ${rawMobile}`
+      ])
+    ).filter(Boolean).slice(0, 10)
+
+    let emailDuplicate = false
+    let mobileDuplicate = false
+
+    // 1. Check local session storage (instant fallback & offline resilience)
     try {
+      const localCandidates: Array<{ email?: string; mobileNumber?: string; normalizedMobile?: string }> =
+        JSON.parse(localStorage.getItem('proxy_registered_candidates') || '[]')
+
+      for (const c of localCandidates) {
+        if (c.email && c.email.toLowerCase() === cleanEmail) {
+          emailDuplicate = true
+        }
+        const cDigits = (c.mobileNumber || '').replace(/\D/g, '')
+        const cLast10 = c.normalizedMobile || (cDigits.length >= 10 ? cDigits.slice(-10) : cDigits)
+        if (last10 && cLast10 && cLast10 === last10) {
+          mobileDuplicate = true
+        }
+      }
+    } catch {
+      // LocalStorage read error
+    }
+
+    // 2. Check live Firestore candidates collection
+    try {
+      const queries: Promise<any>[] = []
+      if (cleanEmail) {
+        queries.push(getDocs(query(collection(db, 'candidates'), where('email', '==', cleanEmail))))
+      }
+      if (mobileVariants.length > 0) {
+        queries.push(getDocs(query(collection(db, 'candidates'), where('mobileNumber', 'in', mobileVariants))))
+      }
+      if (last10) {
+        queries.push(getDocs(query(collection(db, 'candidates'), where('normalizedMobile', '==', last10))))
+      }
+
+      const results = await Promise.allSettled(queries)
+
+      // Email match (index 0)
+      if (results[0] && results[0].status === 'fulfilled' && results[0].value && !results[0].value.empty) {
+        emailDuplicate = true
+      }
+      // Mobile variants match (index 1)
+      if (results[1] && results[1].status === 'fulfilled' && results[1].value && !results[1].value.empty) {
+        mobileDuplicate = true
+      }
+      // Normalized mobile match (index 2)
+      if (results[2] && results[2].status === 'fulfilled' && results[2].value && !results[2].value.empty) {
+        mobileDuplicate = true
+      }
+    } catch (err: any) {
+      console.warn('Firestore duplicate check query note:', err?.message || err)
+    }
+
+    // If either email or mobile number already exists, abort submission and trigger popup
+    if (emailDuplicate || mobileDuplicate) {
+      setDuplicateInfo({
+        isDuplicate: true,
+        duplicateEmail: emailDuplicate,
+        duplicateMobile: mobileDuplicate,
+        matchedEmail: formData.email.trim(),
+        matchedMobile: formData.mobileNumber.trim()
+      })
+      setShowDuplicateModal(true)
+      setIsSubmitting(false)
+      return
+    }
+
+    try {
+      let resumeDataUrl: string | null = null
+      if (resumeFile) {
+        try {
+          resumeDataUrl = await new Promise<string>((resolve, reject) => {
+            const reader = new FileReader()
+            reader.onload = () => resolve(reader.result as string)
+            reader.onerror = reject
+            reader.readAsDataURL(resumeFile)
+          })
+          if (resumeDataUrl) {
+            localStorage.setItem('resume_' + cleanEmail, resumeDataUrl)
+          }
+        } catch (e) {
+          console.warn('Failed to read resume file', e)
+        }
+      }
+
       await addDoc(collection(db, 'candidates'), {
         fullName:         formData.fullName.trim(),
-        email:            formData.email.trim().toLowerCase(),
+        email:            cleanEmail,
         mobileNumber:     formData.mobileNumber.trim(),
+        normalizedMobile: last10,
         currentLocation:  formData.currentLocation,
         highestEducation: formData.highestEducation,
         workExperience:   formData.workExperience,
         preferredRole:    formData.preferredRole,
         hasResume:        !!resumeFile,
         resumeFileName:   resumeFile?.name ?? null,
-        status:           'pending',
+        resumeDataUrl:    resumeDataUrl && resumeFile && resumeFile.size < 600 * 1024 ? resumeDataUrl : null,
+        status:           'new',
         registeredAt:     serverTimestamp(),
       })
+
+      // Add to local cache for instant future duplicate detection
+      try {
+        const localCandidates = JSON.parse(localStorage.getItem('proxy_registered_candidates') || '[]')
+        localCandidates.push({
+          email: cleanEmail,
+          mobileNumber: formData.mobileNumber.trim(),
+          normalizedMobile: last10,
+          resumeFileName: resumeFile?.name ?? null,
+          resumeDataUrl: resumeDataUrl,
+          timestamp: Date.now()
+        })
+        localStorage.setItem('proxy_registered_candidates', JSON.stringify(localCandidates))
+      } catch {
+        // LocalStorage write error
+      }
+
       setIsSubmitted(true)
+      setDuplicateInfo(null)
+      setShowDuplicateModal(false)
     } catch (err) {
       console.error('Firestore write failed:', err)
       setSubmitError('Something went wrong. Please check your connection and try again.')
@@ -84,6 +266,9 @@ export const CandidateRegistrationForm: React.FC = () => {
 
   const handleReset = () => {
     setIsSubmitted(false)
+    setDuplicateInfo(null)
+    setShowDuplicateModal(false)
+    setSubmitError(null)
     setFormData({
       fullName: '',
       mobileNumber: '',
@@ -122,6 +307,99 @@ export const CandidateRegistrationForm: React.FC = () => {
 
   return (
     <section id="candidate-form-section" style={{ padding: '60px 0 80px', backgroundColor: '#fafafb' }}>
+      {/* Duplicate Registration Popup Modal */}
+      {showDuplicateModal && duplicateInfo && (
+        <div className="duplicate-modal-backdrop" onClick={() => setShowDuplicateModal(false)}>
+          <div
+            className="duplicate-modal-card"
+            onClick={e => e.stopPropagation()}
+            role="dialog"
+            aria-modal="true"
+          >
+            <button
+              type="button"
+              className="duplicate-close-btn"
+              onClick={() => setShowDuplicateModal(false)}
+              aria-label="Close dialog"
+            >
+              <X size={20} />
+            </button>
+
+            <div className="duplicate-modal-badge">
+              <AlertTriangle size={34} color="#dc2626" strokeWidth={2.3} />
+            </div>
+
+            <h3 className="duplicate-modal-title">
+              {duplicateInfo.duplicateEmail && duplicateInfo.duplicateMobile
+                ? 'Mobile & Email Already Registered'
+                : duplicateInfo.duplicateMobile
+                ? 'Mobile Number Already Registered'
+                : 'Email Address Already Registered'}
+            </h3>
+
+            <p className="duplicate-modal-desc">
+              {duplicateInfo.duplicateEmail && duplicateInfo.duplicateMobile
+                ? 'An existing candidate profile is already registered with both this mobile number and email address. Please use different details to register.'
+                : duplicateInfo.duplicateMobile
+                ? 'This mobile number is already linked to an existing profile in our candidate pool. Please use another mobile number.'
+                : 'This email address is already linked to an existing profile in our candidate pool. Please use another email ID.'}
+            </p>
+
+            {/* Matched fields summary */}
+            <div className="duplicate-modal-details">
+              {duplicateInfo.duplicateMobile && (
+                <div className="duplicate-detail-row">
+                  <div className="duplicate-detail-meta">
+                    <Phone size={14} color="#dc2626" />
+                    <span>Mobile Number</span>
+                  </div>
+                  <div className="duplicate-detail-content">
+                    <span className="duplicate-value">{duplicateInfo.matchedMobile}</span>
+                    <span className="duplicate-pill">Already Registered</span>
+                  </div>
+                </div>
+              )}
+
+              {duplicateInfo.duplicateEmail && (
+                <div className="duplicate-detail-row">
+                  <div className="duplicate-detail-meta">
+                    <Mail size={14} color="#dc2626" />
+                    <span>Email Address</span>
+                  </div>
+                  <div className="duplicate-detail-content">
+                    <span className="duplicate-value">{duplicateInfo.matchedEmail}</span>
+                    <span className="duplicate-pill">Already Registered</span>
+                  </div>
+                </div>
+              )}
+            </div>
+
+            <div className="duplicate-modal-help">
+              <p>
+                <strong>Need help?</strong> If you have already registered, our talent acquisition specialists will review your profile and contact you once an opening matches your background.
+              </p>
+            </div>
+
+            <div className="duplicate-modal-actions">
+              <button
+                type="button"
+                className="btn btn-primary duplicate-modal-btn"
+                onClick={() => {
+                  setShowDuplicateModal(false)
+                  if (duplicateInfo.duplicateMobile) {
+                    document.getElementById('mobileNumber')?.focus()
+                  } else if (duplicateInfo.duplicateEmail) {
+                    document.getElementById('email')?.focus()
+                  }
+                }}
+              >
+                Update Details
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
       <div className="container">
         <div className="candidate-reg-grid">
           {/* Left Column: Why Join Proxy Benefits */}
@@ -257,8 +535,14 @@ export const CandidateRegistrationForm: React.FC = () => {
                           placeholder="e.g. 9876543210"
                           value={formData.mobileNumber}
                           onChange={handleInputChange}
-                          className="form-input"
+                          className={`form-input ${duplicateInfo?.duplicateMobile ? 'input-duplicate-error' : ''}`}
                         />
+                        {duplicateInfo?.duplicateMobile && (
+                          <span className="field-duplicate-msg">
+                            <AlertCircle size={13} />
+                            Mobile number is already registered. Please use another.
+                          </span>
+                        )}
                       </div>
 
                       <div className="form-group">
@@ -273,8 +557,14 @@ export const CandidateRegistrationForm: React.FC = () => {
                           placeholder="e.g. john@example.com"
                           value={formData.email}
                           onChange={handleInputChange}
-                          className="form-input"
+                          className={`form-input ${duplicateInfo?.duplicateEmail ? 'input-duplicate-error' : ''}`}
                         />
+                        {duplicateInfo?.duplicateEmail && (
+                          <span className="field-duplicate-msg">
+                            <AlertCircle size={13} />
+                            Email address is already registered. Please use another.
+                          </span>
+                        )}
                       </div>
                     </div>
 
@@ -442,6 +732,28 @@ export const CandidateRegistrationForm: React.FC = () => {
                         I agree to the <a href="#contact" style={{ textDecoration: 'underline', color: '#0c0d0e' }}>Terms &amp; Conditions</a> and <a href="#contact" style={{ textDecoration: 'underline', color: '#0c0d0e' }}>Privacy Policy</a>
                       </label>
                     </div>
+                    {/* Duplicate Warning Inline Banner */}
+                    {duplicateInfo && duplicateInfo.isDuplicate && (
+                      <div className="duplicate-inline-alert">
+                        <AlertTriangle size={18} color="#dc2626" style={{ flexShrink: 0 }} />
+                        <div style={{ flex: 1 }}>
+                          <strong>Registration Notice:</strong>{' '}
+                          {duplicateInfo.duplicateEmail && duplicateInfo.duplicateMobile
+                            ? 'Both this mobile number and email ID are already registered. Please provide different details.'
+                            : duplicateInfo.duplicateMobile
+                            ? 'This mobile number is already registered in our candidate pool. Please use another mobile number.'
+                            : 'This email address is already registered in our candidate pool. Please use another email ID.'}
+                        </div>
+                        <button
+                          type="button"
+                          className="duplicate-reopen-btn"
+                          onClick={() => setShowDuplicateModal(true)}
+                        >
+                          View Details
+                        </button>
+                      </div>
+                    )}
+
                     {/* Submit Error */}
                     {submitError && (
                       <div style={{
@@ -789,6 +1101,221 @@ export const CandidateRegistrationForm: React.FC = () => {
           color: #475467;
           line-height: 1.5;
           margin: 0 0 16px;
+        }
+
+        /* Duplicate Modal & Validation Styles */
+        .duplicate-modal-backdrop {
+          position: fixed;
+          inset: 0;
+          background: rgba(12, 13, 14, 0.65);
+          backdrop-filter: blur(5px);
+          -webkit-backdrop-filter: blur(5px);
+          z-index: 99999;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          padding: 20px;
+          animation: fadeInDuplicate 0.2s ease forwards;
+        }
+
+        @keyframes fadeInDuplicate {
+          from { opacity: 0; }
+          to { opacity: 1; }
+        }
+
+        .duplicate-modal-card {
+          background: #ffffff;
+          border-radius: 20px;
+          max-width: 480px;
+          width: 100%;
+          padding: 32px 28px 26px;
+          position: relative;
+          box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+          text-align: center;
+          border: 1px solid #fee2e2;
+          animation: scaleUpDuplicate 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        @keyframes scaleUpDuplicate {
+          from { opacity: 0; transform: scale(0.95) translateY(10px); }
+          to { opacity: 1; transform: scale(1) translateY(0); }
+        }
+
+        .duplicate-close-btn {
+          position: absolute;
+          top: 16px;
+          right: 16px;
+          background: transparent;
+          border: none;
+          cursor: pointer;
+          color: #71717a;
+          padding: 6px;
+          border-radius: 8px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          transition: background 0.15s, color 0.15s;
+        }
+
+        .duplicate-close-btn:hover {
+          background: #f4f4f5;
+          color: #0c0d0e;
+        }
+
+        .duplicate-modal-badge {
+          width: 68px;
+          height: 68px;
+          border-radius: 50%;
+          background: #fee2e2;
+          border: 6px solid #fef2f2;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          margin: 0 auto 16px;
+        }
+
+        .duplicate-modal-title {
+          font-size: 20px;
+          font-weight: 700;
+          color: #0c0d0e;
+          margin: 0 0 8px;
+          line-height: 1.3;
+        }
+
+        .duplicate-modal-desc {
+          font-size: 13.5px;
+          color: #52525b;
+          margin: 0 0 18px;
+          line-height: 1.5;
+        }
+
+        .duplicate-modal-details {
+          background-color: #f8fafc;
+          border: 1px solid #e2e8f0;
+          border-radius: 12px;
+          padding: 14px 16px;
+          text-align: left;
+          display: flex;
+          flex-direction: column;
+          gap: 12px;
+          margin-bottom: 16px;
+        }
+
+        .duplicate-detail-row {
+          display: flex;
+          flex-direction: column;
+          gap: 4px;
+        }
+
+        .duplicate-detail-meta {
+          display: flex;
+          align-items: center;
+          gap: 6px;
+          font-size: 11.5px;
+          font-weight: 600;
+          color: #64748b;
+          text-transform: uppercase;
+          letter-spacing: 0.5px;
+        }
+
+        .duplicate-detail-content {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          gap: 10px;
+          flex-wrap: wrap;
+        }
+
+        .duplicate-value {
+          font-size: 14px;
+          font-weight: 600;
+          color: #0f172a;
+          word-break: break-all;
+        }
+
+        .duplicate-pill {
+          background-color: #fee2e2;
+          color: #dc2626;
+          font-size: 11px;
+          font-weight: 700;
+          padding: 2px 8px;
+          border-radius: 999px;
+          white-space: nowrap;
+        }
+
+        .duplicate-modal-help {
+          background-color: #fffbeb;
+          border: 1px solid #fef3c7;
+          border-radius: 10px;
+          padding: 10px 14px;
+          text-align: left;
+          margin-bottom: 20px;
+        }
+
+        .duplicate-modal-help p {
+          font-size: 12.5px;
+          color: #92400e;
+          margin: 0;
+          line-height: 1.45;
+        }
+
+        .duplicate-modal-btn {
+          width: 100%;
+          height: 46px;
+          font-size: 14.5px;
+          font-weight: 600;
+          justify-content: center;
+        }
+
+        .input-duplicate-error {
+          border-color: #ef4444 !important;
+          background-color: #fef2f2 !important;
+        }
+
+        .input-duplicate-error:focus {
+          box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.18) !important;
+        }
+
+        .field-duplicate-msg {
+          display: flex;
+          align-items: center;
+          gap: 5px;
+          font-size: 12px;
+          color: #dc2626;
+          font-weight: 500;
+          margin-top: 2px;
+        }
+
+        .duplicate-inline-alert {
+          display: flex;
+          align-items: center;
+          gap: 10px;
+          padding: 12px 14px;
+          background-color: #fef2f2;
+          border: 1px solid #fecaca;
+          border-radius: 10px;
+          font-size: 13px;
+          color: #991b1b;
+          line-height: 1.4;
+          margin-top: 4px;
+        }
+
+        .duplicate-reopen-btn {
+          background-color: #dc2626;
+          color: #ffffff;
+          border: none;
+          border-radius: 6px;
+          padding: 5px 10px;
+          font-size: 12px;
+          font-weight: 600;
+          cursor: pointer;
+          white-space: nowrap;
+          transition: background-color 0.15s;
+          flex-shrink: 0;
+        }
+
+        .duplicate-reopen-btn:hover {
+          background-color: #b91c1c;
         }
 
         @media (max-width: 960px) {

@@ -129,7 +129,7 @@ export const WhyProxy: React.FC = () => {
 
       <style>{`
         .why-proxy-section {
-          padding: 84px 0 90px;
+          padding: 24px 0 20px;
           background-color: #ffffff;
         }
 
@@ -212,6 +212,9 @@ export const WhyProxy: React.FC = () => {
         }
 
         @media (max-width: 1040px) {
+          .why-proxy-section {
+            padding: 24px 0 20px;
+          }
           .features-grid {
             grid-template-columns: repeat(2, 1fr);
             gap: 20px;
@@ -222,6 +225,9 @@ export const WhyProxy: React.FC = () => {
         }
 
         @media (max-width: 600px) {
+          .why-proxy-section {
+            padding: 20px 0 20px;
+          }
           .features-grid {
             grid-template-columns: 1fr;
           }

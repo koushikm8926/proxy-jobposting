@@ -47,7 +47,7 @@ export const CallToAction: React.FC<CallToActionProps> = ({
 
       <style>{`
         .cta-section {
-          padding: 30px 0 80px;
+          padding: 10px 0 80px;
           background-color: #ffffff;
         }
 
@@ -93,6 +93,9 @@ export const CallToAction: React.FC<CallToActionProps> = ({
         }
 
         @media (max-width: 960px) {
+          .cta-section {
+            padding: 10px 0 60px;
+          }
           .cta-box {
             flex-direction: column;
             align-items: flex-start;

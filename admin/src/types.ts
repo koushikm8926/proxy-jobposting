@@ -1,4 +1,4 @@
-export type UserStatus = 'active' | 'pending' | 'suspended'
+export type UserStatus = 'active' | 'pending' | 'suspended' | 'new' | 'viewed'
 export type CompanyStatus = 'active' | 'pending' | 'rejected'
 
 export interface Candidate {
@@ -10,9 +10,13 @@ export interface Candidate {
   highestEducation: string
   workExperience: string
   preferredRole: string
+  hasResume?: boolean
+  resumeFileName?: string
   resumeUrl?: string
-  registeredAt: Date | string
-  status: UserStatus
+  resumeDataUrl?: string
+  registeredAt: any
+  status?: UserStatus
+  viewed?: boolean
 }
 
 export interface Recruiter {
@@ -26,8 +30,9 @@ export interface Recruiter {
   jobRole: string
   companyWebsite?: string
   hearAboutUs?: string
-  registeredAt: Date | string
-  status: UserStatus
+  registeredAt: any
+  status?: UserStatus
+  viewed?: boolean
 }
 
 export interface Company {

@@ -49,7 +49,7 @@ export const WhyChooseProxy: React.FC = () => {
 
       <style>{`
         .why-choose-section {
-          padding: 90px 0 80px;
+          padding: 24px 0 20px;
           background-color: #ffffff;
         }
 
@@ -126,6 +126,9 @@ export const WhyChooseProxy: React.FC = () => {
         }
 
         @media (max-width: 960px) {
+          .why-choose-section {
+            padding: 24px 0 20px;
+          }
           .why-choose-title {
             font-size: 34px;
           }

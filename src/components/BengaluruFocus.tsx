@@ -58,35 +58,40 @@ export const BengaluruFocus: React.FC<BengaluruFocusProps> = ({ onKnowMore }) =>
 
       <style>{`
         .bengaluru-fullwidth-section {
-          padding: 40px 0 80px;
-          background-color: #ffffff;
           width: 100%;
+          padding: 0;
+          margin: 60px 0 0;
+          background-color: #fafafb;
+          border-top: 1px solid #e4e7ec;
+          border-bottom: 1px solid #e4e7ec;
           overflow: hidden;
+          position: relative;
         }
 
-        /* Covers the actual width of the screen with symmetric edge padding */
+        /* Covers the entire viewport width edge-to-edge */
         .bengaluru-screen-wrapper {
           width: 100%;
-          padding: 0 32px;
+          padding: 0;
+          margin: 0;
           box-sizing: border-box;
         }
 
         .bengaluru-banner-card {
           width: 100%;
           background-color: #fafafb;
-          border: 1px solid #e4e7ec;
-          border-radius: 28px;
+          border: none;
+          border-radius: 0;
           overflow: hidden;
           display: flex;
           align-items: stretch;
           position: relative;
-          min-height: 420px;
-          box-shadow: 0 12px 36px -10px rgba(0, 0, 0, 0.06);
+          min-height: 480px;
+          box-shadow: none;
         }
 
         .bengaluru-content-col {
           flex: 1.1;
-          padding: 64px 56px;
+          padding: 72px 48px 72px max(32px, calc((100vw - 1200px) / 2 + 24px));
           z-index: 2;
           display: flex;
           flex-direction: column;
@@ -139,9 +144,9 @@ export const BengaluruFocus: React.FC<BengaluruFocusProps> = ({ onKnowMore }) =>
           background-color: #27272a;
         }
 
-        /* Right Skyline Column with Smooth Fade */
+        /* Right Skyline Column spanning to screen edge */
         .bengaluru-skyline-col {
-          flex: 1.15;
+          flex: 1.25;
           position: relative;
           display: flex;
           align-items: stretch;
@@ -157,15 +162,15 @@ export const BengaluruFocus: React.FC<BengaluruFocusProps> = ({ onKnowMore }) =>
           display: flex;
           align-items: stretch;
           justify-content: flex-end;
-          /* Dual-layer smooth mask gradient for dissolving left edge into card background */
-          -webkit-mask-image: linear-gradient(to right, transparent 0%, rgba(0, 0, 0, 0.15) 16%, rgba(0, 0, 0, 0.8) 36%, #000000 52%);
-          mask-image: linear-gradient(to right, transparent 0%, rgba(0, 0, 0, 0.15) 16%, rgba(0, 0, 0, 0.8) 36%, #000000 52%);
+          /* Dual-layer smooth mask gradient for dissolving left edge into full-width background */
+          -webkit-mask-image: linear-gradient(to right, transparent 0%, rgba(0, 0, 0, 0.12) 14%, rgba(0, 0, 0, 0.8) 32%, #000000 48%);
+          mask-image: linear-gradient(to right, transparent 0%, rgba(0, 0, 0, 0.12) 14%, rgba(0, 0, 0, 0.8) 32%, #000000 48%);
         }
 
         .bengaluru-photo-img {
           width: 100%;
           height: 100%;
-          min-height: 420px;
+          min-height: 480px;
           object-fit: cover;
           object-position: right center;
           display: block;
@@ -176,11 +181,11 @@ export const BengaluruFocus: React.FC<BengaluruFocusProps> = ({ onKnowMore }) =>
           transform: scale(1.03);
         }
 
-        /* Floating City Launch Badge */
+        /* Floating City Launch Badge aligned with right content grid */
         .bengaluru-floating-pill {
           position: absolute;
           bottom: 40px;
-          right: 48px;
+          right: max(32px, calc((100vw - 1200px) / 2 + 24px));
           background: rgba(255, 255, 255, 0.98);
           backdrop-filter: blur(14px);
           border: 1px solid rgba(228, 231, 236, 0.9);
@@ -228,14 +233,15 @@ export const BengaluruFocus: React.FC<BengaluruFocusProps> = ({ onKnowMore }) =>
         }
 
         @media (max-width: 1200px) {
-          .bengaluru-screen-wrapper {
-            padding: 0 20px;
-          }
           .bengaluru-content-col {
-            padding: 48px 36px;
+            padding: 56px 32px;
           }
           .bengaluru-heading {
             font-size: 34px;
+          }
+          .bengaluru-floating-pill {
+            right: 32px;
+            bottom: 32px;
           }
         }
 
@@ -244,19 +250,22 @@ export const BengaluruFocus: React.FC<BengaluruFocusProps> = ({ onKnowMore }) =>
             flex-direction: column;
             min-height: auto;
           }
+          .bengaluru-content-col {
+            padding: 48px 24px;
+          }
           .bengaluru-skyline-col {
             width: 100%;
-            height: 280px;
-            min-height: 280px;
+            height: 300px;
+            min-height: 300px;
           }
           .skyline-fade-wrap {
-            -webkit-mask-image: linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 1) 25%);
-            mask-image: linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 1) 25%);
+            -webkit-mask-image: linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 1) 22%);
+            mask-image: linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 1) 22%);
           }
           .bengaluru-floating-pill {
-            bottom: 24px;
-            right: 24px;
-            padding: 10px 20px;
+            bottom: 20px;
+            right: 20px;
+            padding: 10px 18px;
           }
         }
       `}</style>

@@ -86,7 +86,7 @@ export const CandidateRecruiterCards: React.FC<CandidateRecruiterCardsProps> = (
 
       <style>{`
         .audience-section-fluid {
-          padding: 36px 0 24px;
+          padding: 10px 0 24px;
           background-color: #ffffff;
           width: 100%;
           box-sizing: border-box;
@@ -254,6 +254,9 @@ export const CandidateRecruiterCards: React.FC<CandidateRecruiterCardsProps> = (
         }
 
         @media (max-width: 900px) {
+          .audience-section-fluid {
+            padding: 10px 0 20px;
+          }
           .audience-grid-equal {
             grid-template-columns: 1fr;
             gap: 24px;
