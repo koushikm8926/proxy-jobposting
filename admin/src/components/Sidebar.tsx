@@ -3,6 +3,7 @@ import {
   LayoutDashboard,
   Users,
   Briefcase,
+  Mail,
   LogOut
 } from 'lucide-react'
 import type { AdminView } from '../types'
@@ -12,6 +13,7 @@ interface SidebarProps {
   onNavigate: (view: AdminView) => void
   candidateCount: number
   recruiterCount: number
+  messageCount?: number
   userEmail?: string | null
   onSignOut?: () => void
 }
@@ -20,6 +22,7 @@ const navItems: { id: AdminView; label: string; icon: React.FC<{ size?: number }
   { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboard },
   { id: 'candidates', label: 'Candidates', icon: Users },
   { id: 'recruiters', label: 'Recruiters', icon: Briefcase },
+  { id: 'messages', label: 'Messages', icon: Mail },
 ]
 
 export const Sidebar: React.FC<SidebarProps> = ({
@@ -27,12 +30,14 @@ export const Sidebar: React.FC<SidebarProps> = ({
   onNavigate,
   candidateCount,
   recruiterCount,
+  messageCount = 0,
   userEmail,
   onSignOut,
 }) => {
   const getCounts = (id: AdminView) => {
     if (id === 'candidates') return candidateCount
     if (id === 'recruiters') return recruiterCount
+    if (id === 'messages') return messageCount
     return null
   }
 

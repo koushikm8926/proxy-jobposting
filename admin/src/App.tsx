@@ -12,12 +12,13 @@ const PAGE_META: Record<AdminView, { title: string; subtitle: string }> = {
   dashboard: { title: 'Dashboard', subtitle: 'Overview of all registrations and activity' },
   candidates: { title: 'Registration Enquiries', subtitle: 'View candidate and recruiter registration requests.' },
   recruiters: { title: 'Registration Enquiries', subtitle: 'View candidate and recruiter registration requests.' },
+  messages: { title: 'Contact Messages', subtitle: 'View inquiries submitted from the Contact Us form.' },
 }
 
 // ─── Inner app (only rendered when authenticated) ──────────────────────────
 function AdminApp() {
   const [currentView, setCurrentView] = useState<AdminView>('dashboard')
-  const { candidates, recruiters, loading, isFirebaseConfigured } = useAdminData()
+  const { candidates, recruiters, messages, loading, isFirebaseConfigured } = useAdminData()
   const { user, signOut } = useAuth()
 
   const meta = PAGE_META[currentView]
@@ -30,6 +31,7 @@ function AdminApp() {
         onNavigate={setCurrentView}
         candidateCount={candidates.length}
         recruiterCount={recruiters.length}
+        messageCount={messages.length}
         userEmail={user?.email}
         onSignOut={signOut}
       />
@@ -63,6 +65,7 @@ function AdminApp() {
             <CandidatesView
               candidates={candidates}
               recruiters={recruiters}
+              messages={messages}
               loading={loading}
               initialTab="candidates"
               onNavigate={setCurrentView}
@@ -72,8 +75,19 @@ function AdminApp() {
             <CandidatesView
               candidates={candidates}
               recruiters={recruiters}
+              messages={messages}
               loading={loading}
               initialTab="recruiters"
+              onNavigate={setCurrentView}
+            />
+          )}
+          {currentView === 'messages' && (
+            <CandidatesView
+              candidates={candidates}
+              recruiters={recruiters}
+              messages={messages}
+              loading={loading}
+              initialTab="messages"
               onNavigate={setCurrentView}
             />
           )}

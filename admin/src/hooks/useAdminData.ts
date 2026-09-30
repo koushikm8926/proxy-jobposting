@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react'
 import { db } from '../firebase'
 import { collection, onSnapshot, query, orderBy } from 'firebase/firestore'
-import type { Candidate, Recruiter, Company } from '../types'
+import type { Candidate, Recruiter, Company, ContactMessage } from '../types'
 
 // Detect if Firebase is configured (not placeholder)
 const IS_FIREBASE_CONFIGURED = !import.meta.env.VITE_FIREBASE_API_KEY?.includes('YOUR')
@@ -10,6 +10,33 @@ const IS_FIREBASE_CONFIGURED = !import.meta.env.VITE_FIREBASE_API_KEY?.includes(
 // ---------------------
 // Mock data for preview when Firebase isn't configured
 // ---------------------
+const MOCK_MESSAGES: ContactMessage[] = [
+  {
+    id: 'm1',
+    name: 'Rahul Sen',
+    email: 'rahul.sen@example.com',
+    phone: '+91 98450 12345',
+    role: 'Candidate looking for job',
+    subject: 'Career Consultation',
+    message: 'Hello Proxy team, I have 5 years of experience in Fullstack web development and I am looking for high-impact opportunities in Bengaluru.',
+    registeredAt: '2026-09-29T10:15:00.000Z',
+    createdAt: '2026-09-29T10:15:00.000Z',
+    status: 'new',
+  },
+  {
+    id: 'm2',
+    name: 'Meera Deshmukh',
+    email: 'meera@novatech.in',
+    phone: '+91 99801 54321',
+    role: 'Employer / Recruiter',
+    subject: 'Hiring Partnership',
+    message: 'We are looking to hire 10+ frontend engineers over the next quarter and would like to explore staffing and partnership options with Proxy.',
+    registeredAt: '2026-09-28T14:40:00.000Z',
+    createdAt: '2026-09-28T14:40:00.000Z',
+    status: 'viewed',
+  },
+]
+
 const MOCK_CANDIDATES: Candidate[] = [
   {
     id: '1',
@@ -160,10 +187,10 @@ export function useAdminData() {
   const [candidates, setCandidates] = useState<Candidate[]>([])
   const [recruiters, setRecruiters] = useState<Recruiter[]>([])
   const [companies, setCompanies] = useState<Company[]>([])
+  const [messages, setMessages] = useState<ContactMessage[]>([])
   const [loading, setLoading] = useState(true)
 
-  // Tracks how many of the 3 collections have received their first snapshot.
-  // Only when all 3 have fired do we set loading=false.
+  // Tracks how many of the collections have received their first snapshot.
   const resolvedCount = useRef(0)
 
   useEffect(() => {
@@ -174,6 +201,7 @@ export function useAdminData() {
       setCandidates(MOCK_CANDIDATES)
       setRecruiters(MOCK_RECRUITERS)
       setCompanies(MOCK_COMPANIES)
+      setMessages(MOCK_MESSAGES)
       setLoading(false)
       return
     }
@@ -189,19 +217,61 @@ export function useAdminData() {
       }
     }
 
-    // Listen to candidates collection
+    // Read any local cached contact messages from localStorage as baseline
+    let localMessages: ContactMessage[] = []
+    try {
+      const stored = localStorage.getItem('proxy_contact_messages')
+      if (stored) {
+        localMessages = JSON.parse(stored)
+      }
+    } catch {
+      // ignore
+    }
+
+    // Listen to candidates collection (stores candidates and contact messages)
     let candidatesFirstSnap = true
     unsubs.push(
       onSnapshot(
         query(collection(db, 'candidates'), orderBy('registeredAt', 'desc')),
         snap => {
-          const candidateList = snap.docs
-            .filter(d => {
-              const data = d.data()
-              return !data.isResumeChunk && data.fullName
-            })
-            .map(d => ({ id: d.id, ...d.data() } as Candidate))
+          const candidateList: Candidate[] = []
+          const messageList: ContactMessage[] = []
+
+          snap.docs.forEach(d => {
+            const data = d.data()
+            if (data.isResumeChunk) return
+
+            // Check if this document is a Contact Message
+            if (data.isContactMessage === true || data.subject || (data.message && data.role)) {
+              messageList.push({
+                id: d.id,
+                name: data.name || data.fullName || 'Anonymous',
+                fullName: data.name || data.fullName || 'Anonymous',
+                email: data.email || '—',
+                phone: data.phone || data.mobileNumber || '—',
+                mobileNumber: data.phone || data.mobileNumber || '—',
+                role: data.role || '—',
+                subject: data.subject || 'General Inquiry',
+                message: data.message || '',
+                status: data.status || 'new',
+                registeredAt: data.registeredAt || data.createdAt || new Date().toISOString(),
+                createdAt: data.createdAt || data.registeredAt || new Date().toISOString(),
+                isContactMessage: true,
+              })
+            } else if (data.fullName) {
+              candidateList.push({ id: d.id, ...data } as Candidate)
+            }
+          })
+
+          // Merge any local messages not in Firestore yet
+          localMessages.forEach(lm => {
+            if (!messageList.some(m => m.id === lm.id || (m.email === lm.email && m.message === lm.message))) {
+              messageList.unshift(lm)
+            }
+          })
+
           setCandidates(candidateList)
+          setMessages(messageList)
           if (candidatesFirstSnap) { candidatesFirstSnap = false; markResolved() }
         }
       )
@@ -219,7 +289,7 @@ export function useAdminData() {
       )
     )
 
-    // Listen to companies collection (derived from recruiters, or separate collection)
+    // Listen to companies collection
     let companiesFirstSnap = true
     unsubs.push(
       onSnapshot(
@@ -234,5 +304,5 @@ export function useAdminData() {
     return () => unsubs.forEach(u => u())
   }, [])
 
-  return { candidates, recruiters, companies, loading, isFirebaseConfigured: IS_FIREBASE_CONFIGURED }
+  return { candidates, recruiters, companies, messages, loading, isFirebaseConfigured: IS_FIREBASE_CONFIGURED }
 }

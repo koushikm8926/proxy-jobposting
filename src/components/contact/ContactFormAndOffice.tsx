@@ -1,5 +1,7 @@
 import React, { useState } from 'react'
 import { MapPin, Headphones, Clock, ArrowRight, CheckCircle2 } from 'lucide-react'
+import { db } from '../../firebase'
+import { collection, addDoc, serverTimestamp } from 'firebase/firestore'
 
 export const ContactFormAndOffice: React.FC = () => {
   const [formData, setFormData] = useState({
@@ -10,11 +12,73 @@ export const ContactFormAndOffice: React.FC = () => {
     subject: '',
     message: ''
   })
+  const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitted, setSubmitted] = useState(false)
+  const [submitError, setSubmitError] = useState<string | null>(null)
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    setSubmitted(true)
+    setIsSubmitting(true)
+    setSubmitError(null)
+
+    try {
+      // 1. Write to Firestore candidates collection tagged with isContactMessage: true
+      await addDoc(collection(db, 'candidates'), {
+        isContactMessage: true,
+        name: formData.name.trim(),
+        fullName: formData.name.trim(),
+        email: formData.email.trim().toLowerCase(),
+        phone: formData.phone.trim(),
+        mobileNumber: formData.phone.trim(),
+        role: formData.role,
+        subject: formData.subject,
+        message: formData.message.trim(),
+        status: 'new',
+        registeredAt: serverTimestamp(),
+        createdAt: serverTimestamp(),
+      })
+
+      // 2. Dual backup in companies collection
+      try {
+        await addDoc(collection(db, 'companies'), {
+          isContactMessage: true,
+          name: formData.name.trim(),
+          fullName: formData.name.trim(),
+          email: formData.email.trim().toLowerCase(),
+          phone: formData.phone.trim(),
+          mobileNumber: formData.phone.trim(),
+          role: formData.role,
+          subject: formData.subject,
+          message: formData.message.trim(),
+          status: 'new',
+          registeredAt: serverTimestamp(),
+        })
+      } catch {
+        // secondary backup note
+      }
+
+      // 3. LocalStorage backup for offline/local development preview
+      try {
+        const local = JSON.parse(localStorage.getItem('proxy_contact_messages') || '[]')
+        local.unshift({
+          id: 'local_' + Date.now(),
+          ...formData,
+          registeredAt: new Date().toISOString(),
+          status: 'new',
+          isContactMessage: true
+        })
+        localStorage.setItem('proxy_contact_messages', JSON.stringify(local))
+      } catch {
+        // storage quota
+      }
+
+      setSubmitted(true)
+    } catch (err: any) {
+      console.error('Contact message submission failed:', err)
+      setSubmitError('Failed to send your message. Please check your network and try again.')
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   return (
@@ -128,11 +192,18 @@ export const ContactFormAndOffice: React.FC = () => {
                   <span className="char-count">{formData.message.length}/500</span>
                 </div>
 
+                {submitError && (
+                  <div style={{ padding: '10px 14px', borderRadius: '8px', backgroundColor: '#fef2f2', color: '#b91c1c', fontSize: '13px', border: '1px solid #fecaca', marginBottom: '14px' }}>
+                    {submitError}
+                  </div>
+                )}
+
                 <button
                   type="submit"
+                  disabled={isSubmitting}
                   className="btn btn-primary submit-btn-full"
                 >
-                  <span>Send Message</span>
+                  <span>{isSubmitting ? 'Sending Message…' : 'Send Message'}</span>
                   <ArrowRight size={16} />
                 </button>
               </form>

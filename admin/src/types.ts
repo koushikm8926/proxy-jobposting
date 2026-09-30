@@ -52,4 +52,21 @@ export interface Company {
   openPositions?: number
 }
 
-export type AdminView = 'dashboard' | 'candidates' | 'recruiters'
+export interface ContactMessage {
+  id: string
+  name: string
+  fullName?: string
+  email: string
+  phone: string
+  mobileNumber?: string
+  role: string
+  subject: string
+  message: string
+  status?: UserStatus
+  viewed?: boolean
+  registeredAt: any
+  createdAt?: any
+  isContactMessage?: boolean
+}
+
+export type AdminView = 'dashboard' | 'candidates' | 'recruiters' | 'messages'

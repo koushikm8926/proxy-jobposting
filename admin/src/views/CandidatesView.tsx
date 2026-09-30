@@ -16,15 +16,16 @@ import {
   Search,
   Clock
 } from 'lucide-react'
-import type { Candidate, Recruiter, AdminView } from '../types'
+import type { Candidate, Recruiter, AdminView, ContactMessage } from '../types'
 import { db } from '../firebase'
 import { collection, query, where, getDocs } from 'firebase/firestore'
 
 interface CandidatesViewProps {
   candidates: Candidate[]
   recruiters?: Recruiter[]
+  messages?: ContactMessage[]
   loading: boolean
-  initialTab?: 'candidates' | 'recruiters'
+  initialTab?: 'candidates' | 'recruiters' | 'messages'
   onNavigate?: (view: AdminView) => void
 }
 
@@ -366,11 +367,12 @@ export async function downloadCandidateResume(
 export const CandidatesView: React.FC<CandidatesViewProps> = ({
   candidates,
   recruiters = [],
+  messages = [],
   loading,
   initialTab = 'candidates',
   onNavigate,
 }) => {
-  const [activeTab, setActiveTab] = useState<'candidates' | 'recruiters'>(initialTab)
+  const [activeTab, setActiveTab] = useState<'candidates' | 'recruiters' | 'messages'>(initialTab)
   const [search, setSearch] = useState('')
 
   // Date Range Filter States
@@ -389,9 +391,10 @@ export const CandidatesView: React.FC<CandidatesViewProps> = ({
     }
   })
 
-  // Selected candidate / recruiter for details modal
+  // Selected candidate / recruiter / message for details modal
   const [selectedCandidate, setSelectedCandidate] = useState<Candidate | null>(null)
   const [selectedRecruiter, setSelectedRecruiter] = useState<Recruiter | null>(null)
+  const [selectedMessage, setSelectedMessage] = useState<ContactMessage | null>(null)
   const [downloadingResume, setDownloadingResume] = useState(false)
 
   // Sync tab if initialTab changes
@@ -438,6 +441,39 @@ export const CandidatesView: React.FC<CandidatesViewProps> = ({
       return matchesSearch && matchesDate
     })
   }, [recruiters, search, datePreset, customStart, customEnd])
+
+  // Filter contact messages by search & date range
+  const filteredMessages = useMemo(() => {
+    return messages.filter(m => {
+      const q = search.toLowerCase()
+      const matchesSearch =
+        (m.name && m.name.toLowerCase().includes(q)) ||
+        (m.fullName && m.fullName.toLowerCase().includes(q)) ||
+        (m.email && m.email.toLowerCase().includes(q)) ||
+        (m.phone && m.phone.toLowerCase().includes(q)) ||
+        (m.mobileNumber && m.mobileNumber.toLowerCase().includes(q)) ||
+        (m.role && m.role.toLowerCase().includes(q)) ||
+        (m.subject && m.subject.toLowerCase().includes(q)) ||
+        (m.message && m.message.toLowerCase().includes(q))
+
+      const matchesDate = isWithinDateRange(m.registeredAt || m.createdAt, datePreset, customStart, customEnd)
+      return matchesSearch && matchesDate
+    })
+  }, [messages, search, datePreset, customStart, customEnd])
+
+  // Handler: Click View on Message
+  const handleViewMessage = (message: ContactMessage) => {
+    setSelectedMessage(message)
+    if (!viewedIds.includes(message.id)) {
+      const updated = [...viewedIds, message.id]
+      setViewedIds(updated)
+      try {
+        localStorage.setItem('admin_viewed_ids', JSON.stringify(updated))
+      } catch {
+        // ignore
+      }
+    }
+  }
 
   // Handler: Click View on Candidate
   const handleViewCandidate = async (candidate: Candidate) => {
@@ -664,13 +700,29 @@ export const CandidatesView: React.FC<CandidatesViewProps> = ({
             >
               Recruiters ({recruiters.length})
             </button>
+            <button
+              type="button"
+              className={`tab-pill ${activeTab === 'messages' ? 'active' : ''}`}
+              onClick={() => {
+                setActiveTab('messages')
+                if (onNavigate) onNavigate('messages')
+              }}
+            >
+              Messages ({messages.length})
+            </button>
           </div>
 
           <div className="search-wrap">
             <Search size={15} color="#94a3b8" />
             <input
               type="text"
-              placeholder={`Search ${activeTab === 'candidates' ? 'candidates by name, role, email…' : 'recruiters by name, company…'}`}
+              placeholder={
+                activeTab === 'candidates'
+                  ? 'Search candidates by name, role, email…'
+                  : activeTab === 'recruiters'
+                  ? 'Search recruiters by name, company…'
+                  : 'Search messages by name, email, subject, phone…'
+              }
               value={search}
               onChange={e => setSearch(e.target.value)}
               className="search-input"
@@ -849,6 +901,108 @@ export const CandidatesView: React.FC<CandidatesViewProps> = ({
                             type="button"
                             className="btn-action-view"
                             onClick={() => handleViewRecruiter(r)}
+                          >
+                            View
+                          </button>
+                        </td>
+                      </tr>
+                    )
+                  })}
+                </tbody>
+              </table>
+            )}
+          </div>
+        )}
+
+        {/* ================= MESSAGES TAB ================= */}
+        {activeTab === 'messages' && (
+          <div className="table-responsive">
+            {loading ? (
+              <div className="loading-state">
+                <div className="spinner" />
+                <span>Loading messages…</span>
+              </div>
+            ) : filteredMessages.length === 0 ? (
+              <div className="empty-state">
+                <h3>No messages found</h3>
+                <p>
+                  {search || datePreset !== 'all'
+                    ? 'No messages match your current search or date filter.'
+                    : 'Contact inquiries submitted by users will appear here.'}
+                </p>
+                {(search || datePreset !== 'all') && (
+                  <button
+                    type="button"
+                    className="btn btn-outline"
+                    onClick={() => {
+                      setSearch('')
+                      setDatePreset('all')
+                    }}
+                    style={{ marginTop: '12px', fontSize: '13px' }}
+                  >
+                    Clear Filters
+                  </button>
+                )}
+              </div>
+            ) : (
+              <table className="enquiries-table">
+                <thead>
+                  <tr>
+                    <th style={{ width: '40px' }}>#</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Mobile Number</th>
+                    <th>I am a</th>
+                    <th>Subject</th>
+                    <th>Received On</th>
+                    <th>Status</th>
+                    <th style={{ textAlign: 'center', width: '90px' }}>Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {filteredMessages.map((m, idx) => {
+                    const isViewed = viewedIds.includes(m.id) || m.status === 'viewed'
+                    return (
+                      <tr key={m.id}>
+                        <td className="cell-num">{idx + 1}</td>
+                        <td className="cell-name-bold">{m.name || m.fullName}</td>
+                        <td className="cell-email">{m.email}</td>
+                        <td className="cell-mobile">{m.phone || m.mobileNumber}</td>
+                        <td>
+                          <span style={{
+                            fontSize: '12px',
+                            padding: '3px 8px',
+                            background: '#f1f5f9',
+                            color: '#334155',
+                            borderRadius: '6px',
+                            fontWeight: 500,
+                            display: 'inline-block'
+                          }}>
+                            {m.role || 'General'}
+                          </span>
+                        </td>
+                        <td style={{ maxWidth: '200px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', fontWeight: 600 }}>
+                          {m.subject || '—'}
+                        </td>
+                        <td className="cell-date">{formatRegisteredOn(m.registeredAt || m.createdAt)}</td>
+                        <td>
+                          {isViewed ? (
+                            <span className="status-pill status-viewed">
+                              <span className="status-dot dot-viewed" />
+                              Viewed
+                            </span>
+                          ) : (
+                            <span className="status-pill status-new">
+                              <span className="status-dot dot-new" />
+                              New
+                            </span>
+                          )}
+                        </td>
+                        <td style={{ textAlign: 'center' }}>
+                          <button
+                            type="button"
+                            className="btn-action-view"
+                            onClick={() => handleViewMessage(m)}
                           >
                             View
                           </button>
@@ -1152,6 +1306,166 @@ export const CandidatesView: React.FC<CandidatesViewProps> = ({
                 type="button"
                 className="btn btn-outline"
                 onClick={() => setSelectedRecruiter(null)}
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* ================= CONTACT MESSAGE DETAILS MODAL ================= */}
+      {selectedMessage && (
+        <div className="details-modal-overlay" onClick={() => setSelectedMessage(null)}>
+          <div
+            className="details-modal-card"
+            onClick={e => e.stopPropagation()}
+            role="dialog"
+            aria-modal="true"
+          >
+            {/* Modal Header */}
+            <div className="details-modal-header">
+              <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
+                <div className="candidate-avatar" style={{ background: '#2563eb', color: '#ffffff' }}>
+                  {(selectedMessage.name || selectedMessage.fullName || 'M')
+                    .split(' ')
+                    .map(n => n[0])
+                    .slice(0, 2)
+                    .join('')
+                    .toUpperCase()}
+                </div>
+                <div>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                    <h3 className="modal-candidate-name">{selectedMessage.name || selectedMessage.fullName}</h3>
+                    <span className="status-pill status-viewed">
+                      <span className="status-dot dot-viewed" />
+                      Contact Inquiry
+                    </span>
+                  </div>
+                  <p className="modal-candidate-role">
+                    Role: <strong>{selectedMessage.role || 'Not specified'}</strong>
+                  </p>
+                </div>
+              </div>
+
+              <button
+                type="button"
+                className="modal-close-btn"
+                onClick={() => setSelectedMessage(null)}
+                aria-label="Close dialog"
+              >
+                <X size={18} />
+              </button>
+            </div>
+
+            {/* Modal Body */}
+            <div className="details-modal-body">
+              {/* Sender Details Grid */}
+              <div className="details-grid">
+                <div className="detail-field">
+                  <div className="field-title">
+                    <Mail size={14} color="#64748b" />
+                    <span>Email Address</span>
+                  </div>
+                  <a href={`mailto:${selectedMessage.email}`} className="field-value link">
+                    {selectedMessage.email}
+                  </a>
+                </div>
+
+                <div className="detail-field">
+                  <div className="field-title">
+                    <Phone size={14} color="#64748b" />
+                    <span>Mobile Number</span>
+                  </div>
+                  <a href={`tel:${selectedMessage.phone || selectedMessage.mobileNumber}`} className="field-value link">
+                    {selectedMessage.phone || selectedMessage.mobileNumber}
+                  </a>
+                </div>
+
+                <div className="detail-field">
+                  <div className="field-title">
+                    <Target size={14} color="#64748b" />
+                    <span>Category / I am a</span>
+                  </div>
+                  <div className="field-value">
+                    <strong>{selectedMessage.role || 'General Inquiry'}</strong>
+                  </div>
+                </div>
+
+                <div className="detail-field">
+                  <div className="field-title">
+                    <Clock size={14} color="#64748b" />
+                    <span>Received On</span>
+                  </div>
+                  <div className="field-value">
+                    {formatRegisteredOn(selectedMessage.registeredAt || selectedMessage.createdAt)}
+                  </div>
+                </div>
+              </div>
+
+              {/* Subject */}
+              <div style={{ marginTop: '20px' }}>
+                <div className="field-title" style={{ marginBottom: '6px' }}>
+                  <FileText size={14} color="#64748b" />
+                  <span>Subject</span>
+                </div>
+                <div style={{
+                  padding: '10px 14px',
+                  background: '#f8fafc',
+                  border: '1px solid #e2e8f0',
+                  borderRadius: '8px',
+                  fontWeight: 700,
+                  color: '#0f172a',
+                  fontSize: '15px'
+                }}>
+                  {selectedMessage.subject || 'General Inquiry'}
+                </div>
+              </div>
+
+              {/* Message */}
+              <div style={{ marginTop: '16px' }}>
+                <div className="field-title" style={{ marginBottom: '6px' }}>
+                  <Mail size={14} color="#64748b" />
+                  <span>Message</span>
+                </div>
+                <div style={{
+                  background: '#f8fafc',
+                  border: '1.5px solid #e2e8f0',
+                  borderRadius: '10px',
+                  padding: '16px 18px',
+                  fontSize: '14px',
+                  lineHeight: '1.6',
+                  color: '#1e293b',
+                  whiteSpace: 'pre-wrap',
+                  minHeight: '110px'
+                }}>
+                  {selectedMessage.message || 'No message content provided.'}
+                </div>
+              </div>
+            </div>
+
+            {/* Modal Footer */}
+            <div className="details-modal-footer">
+              <a
+                href={`mailto:${selectedMessage.email}?subject=${encodeURIComponent('Re: ' + (selectedMessage.subject || 'Your Inquiry to Proxy'))}`}
+                className="btn-download-resume"
+                style={{ background: '#2563eb', color: '#fff', textDecoration: 'none' }}
+              >
+                <Mail size={15} />
+                <span>Reply via Email</span>
+              </a>
+              <a
+                href={`tel:${selectedMessage.phone || selectedMessage.mobileNumber}`}
+                className="btn btn-outline"
+                style={{ textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: '6px' }}
+              >
+                <Phone size={15} />
+                <span>Call</span>
+              </a>
+              <button
+                type="button"
+                className="btn btn-outline"
+                onClick={() => setSelectedMessage(null)}
               >
                 Close
               </button>
