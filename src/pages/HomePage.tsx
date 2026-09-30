@@ -4,7 +4,6 @@ import { WhyProxy } from '../components/WhyProxy'
 import { CandidateRecruiterCards } from '../components/CandidateRecruiterCards'
 import { JobCategories } from '../components/JobCategories'
 import { HowItWorks } from '../components/HowItWorks'
-import { BengaluruFocus } from '../components/BengaluruFocus'
 import { WhyChooseProxy } from '../components/WhyChooseProxy'
 import { CallToAction } from '../components/CallToAction'
 import { Footer } from '../components/Footer'
@@ -13,14 +12,13 @@ interface HomePageProps {
   onJoinCandidate: () => void
   onHireTalent: () => void
   onSelectCategory: (category: string) => void
-  onKnowMore: () => void
+  onKnowMore?: () => void
 }
 
 export const HomePage: React.FC<HomePageProps> = ({
   onJoinCandidate,
   onHireTalent,
   onSelectCategory,
-  onKnowMore
 }) => {
   return (
     <div className="home-page animate-fade-in">
@@ -37,9 +35,6 @@ export const HomePage: React.FC<HomePageProps> = ({
         onSelectCategory={onSelectCategory}
       />
       <HowItWorks />
-      <BengaluruFocus
-        onKnowMore={onKnowMore}
-      />
       <WhyChooseProxy />
       <CallToAction
         onJoinCandidate={onJoinCandidate}
