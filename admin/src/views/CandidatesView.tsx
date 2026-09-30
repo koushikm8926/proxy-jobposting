@@ -14,11 +14,16 @@ import {
   Building2,
   Globe,
   Search,
-  Clock
+  Clock,
+  Edit,
+  Check,
+  Sliders,
+  Filter
 } from 'lucide-react'
 import type { Candidate, Recruiter, AdminView, ContactMessage } from '../types'
 import { db } from '../firebase'
-import { collection, query, where, getDocs } from 'firebase/firestore'
+import { collection, query, where, getDocs, doc, updateDoc } from 'firebase/firestore'
+import { useAdminFormOptions } from '../hooks/useAdminFormOptions'
 
 interface CandidatesViewProps {
   candidates: Candidate[]
@@ -374,6 +379,34 @@ export const CandidatesView: React.FC<CandidatesViewProps> = ({
 }) => {
   const [activeTab, setActiveTab] = useState<'candidates' | 'recruiters' | 'messages'>(initialTab)
   const [search, setSearch] = useState('')
+  const { options: formOptions } = useAdminFormOptions()
+
+  // Field-specific filter states
+  const [filterCandidateLocation, setFilterCandidateLocation] = useState('')
+  const [filterCandidateEducation, setFilterCandidateEducation] = useState('')
+  const [filterCandidateExperience, setFilterCandidateExperience] = useState('')
+  const [filterCandidateRole, setFilterCandidateRole] = useState('')
+
+  const [filterRecruiterIndustry, setFilterRecruiterIndustry] = useState('')
+  const [filterRecruiterSize, setFilterRecruiterSize] = useState('')
+
+  // Edit states for candidate modal
+  const [isEditingCandidate, setIsEditingCandidate] = useState(false)
+  const [editCandidateForm, setEditCandidateForm] = useState({
+    currentLocation: '',
+    highestEducation: '',
+    workExperience: '',
+    preferredRole: ''
+  })
+  const [isSavingCandidate, setIsSavingCandidate] = useState(false)
+
+  // Edit states for recruiter modal
+  const [isEditingRecruiter, setIsEditingRecruiter] = useState(false)
+  const [editRecruiterForm, setEditRecruiterForm] = useState({
+    industry: '',
+    companySize: ''
+  })
+  const [isSavingRecruiter, setIsSavingRecruiter] = useState(false)
 
   // Date Range Filter States
   const [datePreset, setDatePreset] = useState<DateRangePreset>('all')
@@ -413,34 +446,70 @@ export const CandidatesView: React.FC<CandidatesViewProps> = ({
     return () => document.removeEventListener('mousedown', handleOutsideClick)
   }, [])
 
-  // Filter candidates by search & date range
+  // Filter candidates by search, date range & specific field options
   const filteredCandidates = useMemo(() => {
     return candidates.filter(c => {
+      const q = search.toLowerCase().trim()
       const matchesSearch =
-        c.fullName.toLowerCase().includes(search.toLowerCase()) ||
-        c.email.toLowerCase().includes(search.toLowerCase()) ||
-        c.mobileNumber.toLowerCase().includes(search.toLowerCase()) ||
-        (c.currentLocation && c.currentLocation.toLowerCase().includes(search.toLowerCase())) ||
-        (c.preferredRole && c.preferredRole.toLowerCase().includes(search.toLowerCase()))
+        !q ||
+        c.fullName.toLowerCase().includes(q) ||
+        c.email.toLowerCase().includes(q) ||
+        c.mobileNumber.toLowerCase().includes(q) ||
+        (c.currentLocation && c.currentLocation.toLowerCase().includes(q)) ||
+        (c.highestEducation && c.highestEducation.toLowerCase().includes(q)) ||
+        (c.workExperience && c.workExperience.toLowerCase().includes(q)) ||
+        (c.preferredRole && c.preferredRole.toLowerCase().includes(q))
 
       const matchesDate = isWithinDateRange(c.registeredAt, datePreset, customStart, customEnd)
-      return matchesSearch && matchesDate
-    })
-  }, [candidates, search, datePreset, customStart, customEnd])
 
-  // Filter recruiters by search & date range
+      const matchesLocation = !filterCandidateLocation || c.currentLocation === filterCandidateLocation
+      const matchesEducation = !filterCandidateEducation || c.highestEducation === filterCandidateEducation
+      const matchesExperience = !filterCandidateExperience || c.workExperience === filterCandidateExperience
+      const matchesRole = !filterCandidateRole || c.preferredRole === filterCandidateRole
+
+      return matchesSearch && matchesDate && matchesLocation && matchesEducation && matchesExperience && matchesRole
+    })
+  }, [
+    candidates,
+    search,
+    datePreset,
+    customStart,
+    customEnd,
+    filterCandidateLocation,
+    filterCandidateEducation,
+    filterCandidateExperience,
+    filterCandidateRole
+  ])
+
+  // Filter recruiters by search, date range & specific field options
   const filteredRecruiters = useMemo(() => {
     return recruiters.filter(r => {
+      const q = search.toLowerCase().trim()
       const matchesSearch =
-        r.fullName.toLowerCase().includes(search.toLowerCase()) ||
-        r.email.toLowerCase().includes(search.toLowerCase()) ||
-        r.mobileNumber.toLowerCase().includes(search.toLowerCase()) ||
-        r.companyName.toLowerCase().includes(search.toLowerCase())
+        !q ||
+        r.fullName.toLowerCase().includes(q) ||
+        r.email.toLowerCase().includes(q) ||
+        r.mobileNumber.toLowerCase().includes(q) ||
+        r.companyName.toLowerCase().includes(q) ||
+        (r.industry && r.industry.toLowerCase().includes(q)) ||
+        (r.companySize && r.companySize.toLowerCase().includes(q))
 
       const matchesDate = isWithinDateRange(r.registeredAt, datePreset, customStart, customEnd)
-      return matchesSearch && matchesDate
+
+      const matchesIndustry = !filterRecruiterIndustry || r.industry === filterRecruiterIndustry
+      const matchesSize = !filterRecruiterSize || r.companySize === filterRecruiterSize
+
+      return matchesSearch && matchesDate && matchesIndustry && matchesSize
     })
-  }, [recruiters, search, datePreset, customStart, customEnd])
+  }, [
+    recruiters,
+    search,
+    datePreset,
+    customStart,
+    customEnd,
+    filterRecruiterIndustry,
+    filterRecruiterSize
+  ])
 
   // Filter contact messages by search & date range
   const filteredMessages = useMemo(() => {
@@ -478,6 +547,14 @@ export const CandidatesView: React.FC<CandidatesViewProps> = ({
   // Handler: Click View on Candidate
   const handleViewCandidate = async (candidate: Candidate) => {
     setSelectedCandidate(candidate)
+    setIsEditingCandidate(false)
+    setEditCandidateForm({
+      currentLocation: candidate.currentLocation || '',
+      highestEducation: candidate.highestEducation || '',
+      workExperience: candidate.workExperience || '',
+      preferredRole: candidate.preferredRole || '',
+    })
+
     if (!viewedIds.includes(candidate.id)) {
       const updated = [...viewedIds, candidate.id]
       setViewedIds(updated)
@@ -514,6 +591,12 @@ export const CandidatesView: React.FC<CandidatesViewProps> = ({
   // Handler: Click View on Recruiter
   const handleViewRecruiter = (recruiter: Recruiter) => {
     setSelectedRecruiter(recruiter)
+    setIsEditingRecruiter(false)
+    setEditRecruiterForm({
+      industry: recruiter.industry || '',
+      companySize: recruiter.companySize || '',
+    })
+
     if (!viewedIds.includes(recruiter.id)) {
       const updated = [...viewedIds, recruiter.id]
       setViewedIds(updated)
@@ -522,6 +605,50 @@ export const CandidatesView: React.FC<CandidatesViewProps> = ({
       } catch {
         // ignore
       }
+    }
+  }
+
+  // Handler: Save Candidate Field Edits to Firestore
+  const handleSaveCandidateEdit = async () => {
+    if (!selectedCandidate) return
+    setIsSavingCandidate(true)
+    try {
+      const candidateRef = doc(db, 'candidates', selectedCandidate.id)
+      await updateDoc(candidateRef, {
+        currentLocation: editCandidateForm.currentLocation,
+        highestEducation: editCandidateForm.highestEducation,
+        workExperience: editCandidateForm.workExperience,
+        preferredRole: editCandidateForm.preferredRole,
+      })
+      setSelectedCandidate(prev => (prev ? { ...prev, ...editCandidateForm } : null))
+      setIsEditingCandidate(false)
+    } catch (err) {
+      console.warn('Could not update Firestore document, updating locally:', err)
+      setSelectedCandidate(prev => (prev ? { ...prev, ...editCandidateForm } : null))
+      setIsEditingCandidate(false)
+    } finally {
+      setIsSavingCandidate(false)
+    }
+  }
+
+  // Handler: Save Recruiter Field Edits to Firestore
+  const handleSaveRecruiterEdit = async () => {
+    if (!selectedRecruiter) return
+    setIsSavingRecruiter(true)
+    try {
+      const recruiterRef = doc(db, 'recruiters', selectedRecruiter.id)
+      await updateDoc(recruiterRef, {
+        industry: editRecruiterForm.industry,
+        companySize: editRecruiterForm.companySize,
+      })
+      setSelectedRecruiter(prev => (prev ? { ...prev, ...editRecruiterForm } : null))
+      setIsEditingRecruiter(false)
+    } catch (err) {
+      console.warn('Could not update Firestore document, updating locally:', err)
+      setSelectedRecruiter(prev => (prev ? { ...prev, ...editRecruiterForm } : null))
+      setIsEditingRecruiter(false)
+    } finally {
+      setIsSavingRecruiter(false)
     }
   }
 
@@ -738,6 +865,156 @@ export const CandidatesView: React.FC<CandidatesViewProps> = ({
             )}
           </div>
         </div>
+
+        {/* Secondary Filter Bar for Candidate Dropdown Fields */}
+        {activeTab === 'candidates' && (
+          <div className="field-filters-bar">
+            <div className="field-filters-title">
+              <Filter size={13} color="#64748b" />
+              <span>Filter By:</span>
+            </div>
+
+            {/* Location Filter */}
+            <select
+              className={`filter-select ${filterCandidateLocation ? 'active' : ''}`}
+              value={filterCandidateLocation}
+              onChange={e => setFilterCandidateLocation(e.target.value)}
+            >
+              <option value="">All Locations</option>
+              {formOptions.currentLocation.map(loc => (
+                <option key={loc} value={loc}>{loc}</option>
+              ))}
+            </select>
+
+            {/* Highest Education Filter */}
+            <select
+              className={`filter-select ${filterCandidateEducation ? 'active' : ''}`}
+              value={filterCandidateEducation}
+              onChange={e => setFilterCandidateEducation(e.target.value)}
+            >
+              <option value="">All Qualifications</option>
+              {formOptions.highestEducation.map(edu => (
+                <option key={edu} value={edu}>{edu}</option>
+              ))}
+            </select>
+
+            {/* Work Experience Filter */}
+            <select
+              className={`filter-select ${filterCandidateExperience ? 'active' : ''}`}
+              value={filterCandidateExperience}
+              onChange={e => setFilterCandidateExperience(e.target.value)}
+            >
+              <option value="">All Experience</option>
+              {formOptions.workExperience.map(exp => (
+                <option key={exp} value={exp}>{exp}</option>
+              ))}
+            </select>
+
+            {/* Preferred Role / Industry Filter */}
+            <select
+              className={`filter-select ${filterCandidateRole ? 'active' : ''}`}
+              value={filterCandidateRole}
+              onChange={e => setFilterCandidateRole(e.target.value)}
+            >
+              <option value="">All Roles / Industries</option>
+              {formOptions.preferredRole.map(role => (
+                <option key={role} value={role}>{role}</option>
+              ))}
+            </select>
+
+            {/* Clear Filters Button */}
+            {(filterCandidateLocation || filterCandidateEducation || filterCandidateExperience || filterCandidateRole) && (
+              <button
+                type="button"
+                className="filter-clear-link"
+                onClick={() => {
+                  setFilterCandidateLocation('')
+                  setFilterCandidateEducation('')
+                  setFilterCandidateExperience('')
+                  setFilterCandidateRole('')
+                }}
+              >
+                <X size={13} />
+                <span>Reset Filters</span>
+              </button>
+            )}
+
+            {/* Manage Options Direct Link */}
+            {onNavigate && (
+              <button
+                type="button"
+                className="manage-fields-btn"
+                onClick={() => onNavigate('options')}
+                title="Configure Candidate & Recruiter Dropdown Field Options"
+              >
+                <Sliders size={13} />
+                <span>Manage Field Options</span>
+              </button>
+            )}
+          </div>
+        )}
+
+        {/* Secondary Filter Bar for Recruiter Dropdown Fields */}
+        {activeTab === 'recruiters' && (
+          <div className="field-filters-bar">
+            <div className="field-filters-title">
+              <Filter size={13} color="#64748b" />
+              <span>Filter By:</span>
+            </div>
+
+            {/* Industry Filter */}
+            <select
+              className={`filter-select ${filterRecruiterIndustry ? 'active' : ''}`}
+              value={filterRecruiterIndustry}
+              onChange={e => setFilterRecruiterIndustry(e.target.value)}
+            >
+              <option value="">All Industries</option>
+              {formOptions.industry.map(ind => (
+                <option key={ind} value={ind}>{ind}</option>
+              ))}
+            </select>
+
+            {/* Company Size Filter */}
+            <select
+              className={`filter-select ${filterRecruiterSize ? 'active' : ''}`}
+              value={filterRecruiterSize}
+              onChange={e => setFilterRecruiterSize(e.target.value)}
+            >
+              <option value="">All Company Sizes</option>
+              {formOptions.companySize.map(sz => (
+                <option key={sz} value={sz}>{sz}</option>
+              ))}
+            </select>
+
+            {/* Clear Filters Button */}
+            {(filterRecruiterIndustry || filterRecruiterSize) && (
+              <button
+                type="button"
+                className="filter-clear-link"
+                onClick={() => {
+                  setFilterRecruiterIndustry('')
+                  setFilterRecruiterSize('')
+                }}
+              >
+                <X size={13} />
+                <span>Reset Filters</span>
+              </button>
+            )}
+
+            {/* Manage Options Direct Link */}
+            {onNavigate && (
+              <button
+                type="button"
+                className="manage-fields-btn"
+                onClick={() => onNavigate('options')}
+                title="Configure Candidate & Recruiter Dropdown Field Options"
+              >
+                <Sliders size={13} />
+                <span>Manage Field Options</span>
+              </button>
+            )}
+          </div>
+        )}
 
         {/* ================= CANDIDATES TAB ================= */}
         {activeTab === 'candidates' && (
@@ -1090,9 +1367,22 @@ export const CandidatesView: React.FC<CandidatesViewProps> = ({
                     <MapPin size={14} color="#64748b" />
                     <span>Location</span>
                   </div>
-                  <div className="field-value">
-                    {selectedCandidate.currentLocation || 'Not provided'}
-                  </div>
+                  {isEditingCandidate ? (
+                    <select
+                      className="modal-edit-select"
+                      value={editCandidateForm.currentLocation}
+                      onChange={e => setEditCandidateForm(prev => ({ ...prev, currentLocation: e.target.value }))}
+                    >
+                      <option value="">Select Location</option>
+                      {formOptions.currentLocation.map(loc => (
+                        <option key={loc} value={loc}>{loc}</option>
+                      ))}
+                    </select>
+                  ) : (
+                    <div className="field-value">
+                      {selectedCandidate.currentLocation || 'Not provided'}
+                    </div>
+                  )}
                 </div>
 
                 <div className="detail-field">
@@ -1100,9 +1390,22 @@ export const CandidatesView: React.FC<CandidatesViewProps> = ({
                     <GraduationCap size={14} color="#64748b" />
                     <span>Highest Education</span>
                   </div>
-                  <div className="field-value">
-                    {selectedCandidate.highestEducation || 'Not provided'}
-                  </div>
+                  {isEditingCandidate ? (
+                    <select
+                      className="modal-edit-select"
+                      value={editCandidateForm.highestEducation}
+                      onChange={e => setEditCandidateForm(prev => ({ ...prev, highestEducation: e.target.value }))}
+                    >
+                      <option value="">Select Education</option>
+                      {formOptions.highestEducation.map(edu => (
+                        <option key={edu} value={edu}>{edu}</option>
+                      ))}
+                    </select>
+                  ) : (
+                    <div className="field-value">
+                      {selectedCandidate.highestEducation || 'Not provided'}
+                    </div>
+                  )}
                 </div>
 
                 <div className="detail-field">
@@ -1110,9 +1413,22 @@ export const CandidatesView: React.FC<CandidatesViewProps> = ({
                     <Briefcase size={14} color="#64748b" />
                     <span>Work Experience</span>
                   </div>
-                  <div className="field-value">
-                    {selectedCandidate.workExperience || 'Not provided'}
-                  </div>
+                  {isEditingCandidate ? (
+                    <select
+                      className="modal-edit-select"
+                      value={editCandidateForm.workExperience}
+                      onChange={e => setEditCandidateForm(prev => ({ ...prev, workExperience: e.target.value }))}
+                    >
+                      <option value="">Select Experience</option>
+                      {formOptions.workExperience.map(exp => (
+                        <option key={exp} value={exp}>{exp}</option>
+                      ))}
+                    </select>
+                  ) : (
+                    <div className="field-value">
+                      {selectedCandidate.workExperience || 'Not provided'}
+                    </div>
+                  )}
                 </div>
 
                 <div className="detail-field">
@@ -1120,9 +1436,22 @@ export const CandidatesView: React.FC<CandidatesViewProps> = ({
                     <Target size={14} color="#64748b" />
                     <span>Target Job Role</span>
                   </div>
-                  <div className="field-value">
-                    {selectedCandidate.preferredRole || 'Not provided'}
-                  </div>
+                  {isEditingCandidate ? (
+                    <select
+                      className="modal-edit-select"
+                      value={editCandidateForm.preferredRole}
+                      onChange={e => setEditCandidateForm(prev => ({ ...prev, preferredRole: e.target.value }))}
+                    >
+                      <option value="">Select Role</option>
+                      {formOptions.preferredRole.map(role => (
+                        <option key={role} value={role}>{role}</option>
+                      ))}
+                    </select>
+                  ) : (
+                    <div className="field-value">
+                      {selectedCandidate.preferredRole || 'Not provided'}
+                    </div>
+                  )}
                 </div>
 
                 <div className="detail-field full-width">
@@ -1171,22 +1500,54 @@ export const CandidatesView: React.FC<CandidatesViewProps> = ({
 
             {/* Modal Footer */}
             <div className="details-modal-footer">
-              <button
-                type="button"
-                className="btn btn-outline"
-                onClick={() => setSelectedCandidate(null)}
-              >
-                Close
-              </button>
-              <button
-                type="button"
-                className="btn btn-primary"
-                disabled={downloadingResume}
-                onClick={() => downloadCandidateResume(selectedCandidate, setDownloadingResume)}
-              >
-                <Download size={15} />
-                <span>{downloadingResume ? 'Downloading…' : 'Download Resume'}</span>
-              </button>
+              {isEditingCandidate ? (
+                <>
+                  <button
+                    type="button"
+                    className="btn btn-outline"
+                    onClick={() => setIsEditingCandidate(false)}
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    type="button"
+                    className="btn btn-primary"
+                    disabled={isSavingCandidate}
+                    onClick={handleSaveCandidateEdit}
+                  >
+                    <Check size={15} />
+                    <span>{isSavingCandidate ? 'Saving Changes…' : 'Save Changes'}</span>
+                  </button>
+                </>
+              ) : (
+                <>
+                  <button
+                    type="button"
+                    className="btn btn-outline"
+                    onClick={() => setSelectedCandidate(null)}
+                  >
+                    Close
+                  </button>
+                  <button
+                    type="button"
+                    className="btn btn-outline"
+                    onClick={() => setIsEditingCandidate(true)}
+                    title="Edit candidate location, education, experience and target role"
+                  >
+                    <Edit size={14} />
+                    <span>Edit Details</span>
+                  </button>
+                  <button
+                    type="button"
+                    className="btn btn-primary"
+                    disabled={downloadingResume}
+                    onClick={() => downloadCandidateResume(selectedCandidate, setDownloadingResume)}
+                  >
+                    <Download size={15} />
+                    <span>{downloadingResume ? 'Downloading…' : 'Download Resume'}</span>
+                  </button>
+                </>
+              )}
             </div>
           </div>
         </div>
@@ -1265,11 +1626,47 @@ export const CandidatesView: React.FC<CandidatesViewProps> = ({
                 <div className="detail-field">
                   <div className="field-title">
                     <Briefcase size={14} color="#64748b" />
-                    <span>Industry &amp; Size</span>
+                    <span>Industry</span>
                   </div>
-                  <div className="field-value">
-                    {selectedRecruiter.industry || 'Enterprise'} ({selectedRecruiter.companySize || 'Growing'} employees)
+                  {isEditingRecruiter ? (
+                    <select
+                      className="modal-edit-select"
+                      value={editRecruiterForm.industry}
+                      onChange={e => setEditRecruiterForm(prev => ({ ...prev, industry: e.target.value }))}
+                    >
+                      <option value="">Select Industry</option>
+                      {formOptions.industry.map(ind => (
+                        <option key={ind} value={ind}>{ind}</option>
+                      ))}
+                    </select>
+                  ) : (
+                    <div className="field-value">
+                      {selectedRecruiter.industry || 'Not specified'}
+                    </div>
+                  )}
+                </div>
+
+                <div className="detail-field">
+                  <div className="field-title">
+                    <Building2 size={14} color="#64748b" />
+                    <span>Company Size</span>
                   </div>
+                  {isEditingRecruiter ? (
+                    <select
+                      className="modal-edit-select"
+                      value={editRecruiterForm.companySize}
+                      onChange={e => setEditRecruiterForm(prev => ({ ...prev, companySize: e.target.value }))}
+                    >
+                      <option value="">Select Company Size</option>
+                      {formOptions.companySize.map(sz => (
+                        <option key={sz} value={sz}>{sz}</option>
+                      ))}
+                    </select>
+                  ) : (
+                    <div className="field-value">
+                      {selectedRecruiter.companySize || 'Not specified'}
+                    </div>
+                  )}
                 </div>
 
                 {selectedRecruiter.companyWebsite && (
@@ -1302,13 +1699,45 @@ export const CandidatesView: React.FC<CandidatesViewProps> = ({
             </div>
 
             <div className="details-modal-footer">
-              <button
-                type="button"
-                className="btn btn-outline"
-                onClick={() => setSelectedRecruiter(null)}
-              >
-                Close
-              </button>
+              {isEditingRecruiter ? (
+                <>
+                  <button
+                    type="button"
+                    className="btn btn-outline"
+                    onClick={() => setIsEditingRecruiter(false)}
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    type="button"
+                    className="btn btn-primary"
+                    disabled={isSavingRecruiter}
+                    onClick={handleSaveRecruiterEdit}
+                  >
+                    <Check size={15} />
+                    <span>{isSavingRecruiter ? 'Saving Changes…' : 'Save Changes'}</span>
+                  </button>
+                </>
+              ) : (
+                <>
+                  <button
+                    type="button"
+                    className="btn btn-outline"
+                    onClick={() => setSelectedRecruiter(null)}
+                  >
+                    Close
+                  </button>
+                  <button
+                    type="button"
+                    className="btn btn-primary"
+                    onClick={() => setIsEditingRecruiter(true)}
+                    title="Edit recruiter company industry and size"
+                  >
+                    <Edit size={14} />
+                    <span>Edit Details</span>
+                  </button>
+                </>
+              )}
             </div>
           </div>
         </div>
@@ -2094,6 +2523,112 @@ export const CandidatesView: React.FC<CandidatesViewProps> = ({
           gap: 10px;
         }
 
+        /* Field Filters Bar */
+        .field-filters-bar {
+          display: flex;
+          align-items: center;
+          gap: 10px;
+          flex-wrap: wrap;
+          padding: 12px 14px;
+          background: #f8fafc;
+          border: 1px solid #e2e8f0;
+          border-radius: 12px;
+          margin-bottom: 20px;
+        }
+
+        .field-filters-title {
+          display: flex;
+          align-items: center;
+          gap: 6px;
+          font-size: 12.5px;
+          font-weight: 700;
+          color: #475569;
+          text-transform: uppercase;
+          letter-spacing: 0.3px;
+        }
+
+        .filter-select {
+          padding: 6px 12px;
+          border-radius: 8px;
+          border: 1px solid #cbd5e1;
+          background: #ffffff;
+          color: #334155;
+          font-size: 13px;
+          font-family: inherit;
+          outline: none;
+          cursor: pointer;
+          transition: border-color 0.15s;
+          max-width: 220px;
+        }
+
+        .filter-select:focus {
+          border-color: #0c0d0e;
+        }
+
+        .filter-select.active {
+          border-color: #0c0d0e;
+          background: #0c0d0e;
+          color: #ffffff;
+          font-weight: 600;
+        }
+
+        .filter-select.active option {
+          background: #ffffff;
+          color: #0f172a;
+          font-weight: normal;
+        }
+
+        .filter-clear-link {
+          display: inline-flex;
+          align-items: center;
+          gap: 4px;
+          background: none;
+          border: none;
+          color: #ef4444;
+          font-size: 12.5px;
+          font-weight: 600;
+          cursor: pointer;
+          padding: 4px 6px;
+        }
+
+        .filter-clear-link:hover {
+          text-decoration: underline;
+        }
+
+        .manage-fields-btn {
+          margin-left: auto;
+          display: inline-flex;
+          align-items: center;
+          gap: 6px;
+          padding: 6px 12px;
+          border-radius: 8px;
+          border: 1px dashed #cbd5e1;
+          background: #ffffff;
+          color: #0c0d0e;
+          font-size: 12.5px;
+          font-weight: 600;
+          cursor: pointer;
+          transition: all 0.15s ease;
+        }
+
+        .manage-fields-btn:hover {
+          border-color: #0c0d0e;
+          background: #f1f5f9;
+        }
+
+        /* Modal inline edit select */
+        .modal-edit-select {
+          width: 100%;
+          padding: 7px 10px;
+          border-radius: 8px;
+          border: 1.5px solid #0c0d0e;
+          background: #ffffff;
+          color: #0f172a;
+          font-size: 13.5px;
+          font-family: inherit;
+          outline: none;
+        }
+
         @media (max-width: 768px) {
           .enquiries-card {
             padding: 18px 16px;
@@ -2106,6 +2641,11 @@ export const CandidatesView: React.FC<CandidatesViewProps> = ({
             align-items: flex-start;
           }
           .btn-download-resume {
+            width: 100%;
+            justify-content: center;
+          }
+          .manage-fields-btn {
+            margin-left: 0;
             width: 100%;
             justify-content: center;
           }

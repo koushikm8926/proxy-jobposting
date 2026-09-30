@@ -3,6 +3,7 @@ import './index.css'
 import { Sidebar } from './components/Sidebar'
 import { DashboardView } from './views/DashboardView'
 import { CandidatesView } from './views/CandidatesView'
+import { OptionsView } from './views/OptionsView'
 import { useAdminData } from './hooks/useAdminData'
 import { AuthProvider, useAuth } from './context/AuthContext'
 import { LoginPage } from './pages/LoginPage'
@@ -13,6 +14,7 @@ const PAGE_META: Record<AdminView, { title: string; subtitle: string }> = {
   candidates: { title: 'Registration Enquiries', subtitle: 'View candidate and recruiter registration requests.' },
   recruiters: { title: 'Registration Enquiries', subtitle: 'View candidate and recruiter registration requests.' },
   messages: { title: 'Contact Messages', subtitle: 'View inquiries submitted from the Contact Us form.' },
+  options: { title: 'Field & Dropdown Options', subtitle: 'Manage candidate qualifications, locations, and recruiter industry fields across the portal.' },
 }
 
 // ─── Inner app (only rendered when authenticated) ──────────────────────────
@@ -90,6 +92,9 @@ function AdminApp() {
               initialTab="messages"
               onNavigate={setCurrentView}
             />
+          )}
+          {currentView === 'options' && (
+            <OptionsView />
           )}
         </div>
       </div>

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { Briefcase, TrendingUp, UserCheck, ShieldCheck, CheckCircle2, Upload, FileText, X, ArrowRight, Sparkles, AlertTriangle, AlertCircle, Phone, Mail } from 'lucide-react'
 import { db } from '../../firebase'
 import { collection, addDoc, serverTimestamp, query, where, getDocs } from 'firebase/firestore'
+import { useFormOptions } from '../../hooks/useFormOptions'
 
 interface DuplicateInfo {
   isDuplicate: boolean
@@ -12,6 +13,7 @@ interface DuplicateInfo {
 }
 
 export const CandidateRegistrationForm: React.FC = () => {
+  const { options: formOptions } = useFormOptions()
   const [formData, setFormData] = useState({
     fullName: '',
     mobileNumber: '',
@@ -610,14 +612,9 @@ export const CandidateRegistrationForm: React.FC = () => {
                           className="form-select"
                         >
                           <option value="">Select Location</option>
-                          <option value="Bengaluru / Bangalore">Bengaluru / Bangalore</option>
-                          <option value="Hyderabad">Hyderabad</option>
-                          <option value="Chennai">Chennai</option>
-                          <option value="Pune">Pune</option>
-                          <option value="Mumbai">Mumbai</option>
-                          <option value="Delhi NCR">Delhi NCR</option>
-                          <option value="Kolkata">Kolkata</option>
-                          <option value="Other Location">Other Location</option>
+                          {formOptions.currentLocation.map(loc => (
+                            <option key={loc} value={loc}>{loc}</option>
+                          ))}
                         </select>
                       </div>
 
@@ -634,13 +631,9 @@ export const CandidateRegistrationForm: React.FC = () => {
                           className="form-select"
                         >
                           <option value="">Select Education</option>
-                          <option value="B.Tech / B.E.">B.Tech / B.E.</option>
-                          <option value="MCA / BCA / B.Sc (IT)">MCA / BCA / B.Sc (IT)</option>
-                          <option value="MBA / PGDM">MBA / PGDM</option>
-                          <option value="B.Com / M.Com / Finance">B.Com / M.Com / Finance</option>
-                          <option value="Diploma / Polytechnic">Diploma / Polytechnic</option>
-                          <option value="Any Graduate / Post Graduate">Any Graduate / Post Graduate</option>
-                          <option value="Other">Other</option>
+                          {formOptions.highestEducation.map(edu => (
+                            <option key={edu} value={edu}>{edu}</option>
+                          ))}
                         </select>
                       </div>
                     </div>
@@ -660,11 +653,9 @@ export const CandidateRegistrationForm: React.FC = () => {
                           className="form-select"
                         >
                           <option value="">Select Experience</option>
-                          <option value="Fresher / Entry Level (0-1 yrs)">Fresher / Entry Level (0-1 yrs)</option>
-                          <option value="1 - 3 Years">1 - 3 Years</option>
-                          <option value="3 - 5 Years">3 - 5 Years</option>
-                          <option value="5 - 8 Years">5 - 8 Years</option>
-                          <option value="8+ Years (Senior / Lead)">8+ Years (Senior / Lead)</option>
+                          {formOptions.workExperience.map(exp => (
+                            <option key={exp} value={exp}>{exp}</option>
+                          ))}
                         </select>
                       </div>
 
@@ -681,16 +672,9 @@ export const CandidateRegistrationForm: React.FC = () => {
                           className="form-select"
                         >
                           <option value="">Select Preferred Role</option>
-                          <option value="Software Engineer / Developer">Software Engineer / Developer</option>
-                          <option value="Frontend / UI Engineer">Frontend / UI Engineer</option>
-                          <option value="Backend / Fullstack Engineer">Backend / Fullstack Engineer</option>
-                          <option value="Data Analyst / Data Scientist">Data Analyst / Data Scientist</option>
-                          <option value="Business Development / Sales">Business Development / Sales</option>
-                          <option value="HR & Talent Acquisition">HR & Talent Acquisition</option>
-                          <option value="Finance & Accounting">Finance & Accounting</option>
-                          <option value="Operations & Logistics">Operations & Logistics</option>
-                          <option value="Customer Experience / Support">Customer Experience / Support</option>
-                          <option value="Mechanical / Core Engineering">Mechanical / Core Engineering</option>
+                          {formOptions.preferredRole.map(role => (
+                            <option key={role} value={role}>{role}</option>
+                          ))}
                         </select>
                       </div>
                     </div>

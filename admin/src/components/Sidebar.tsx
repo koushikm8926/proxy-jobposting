@@ -1,9 +1,9 @@
-import React from 'react'
 import {
   LayoutDashboard,
   Users,
   Briefcase,
   Mail,
+  Sliders,
   LogOut
 } from 'lucide-react'
 import type { AdminView } from '../types'
@@ -23,6 +23,7 @@ const navItems: { id: AdminView; label: string; icon: React.FC<{ size?: number }
   { id: 'candidates', label: 'Candidates', icon: Users },
   { id: 'recruiters', label: 'Recruiters', icon: Briefcase },
   { id: 'messages', label: 'Messages', icon: Mail },
+  { id: 'options', label: 'Field Options', icon: Sliders },
 ]
 
 export const Sidebar: React.FC<SidebarProps> = ({

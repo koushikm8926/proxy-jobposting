@@ -17,12 +17,14 @@ import {
 } from 'lucide-react'
 import { db } from '../../firebase'
 import { collection, addDoc, serverTimestamp } from 'firebase/firestore'
+import { useFormOptions } from '../../hooks/useFormOptions'
 
 interface RecruiterRegisterSectionProps {
   onLoginClick?: () => void
 }
 
 export const RecruiterRegisterSection: React.FC<RecruiterRegisterSectionProps> = () => {
+  const { options: formOptions } = useFormOptions()
   const [formData, setFormData] = useState({
     fullName: '',
     email: '',
@@ -368,15 +370,9 @@ export const RecruiterRegisterSection: React.FC<RecruiterRegisterSectionProps> =
                             className="text-input select-input"
                           >
                             <option value="">Select industry</option>
-                            <option value="IT & Software Services">IT & Software Services</option>
-                            <option value="Healthcare & Life Sciences">Healthcare & Life Sciences</option>
-                            <option value="BFSI (Banking & Financial)">BFSI (Banking & Financial)</option>
-                            <option value="Manufacturing & Engineering">Manufacturing & Engineering</option>
-                            <option value="Sales, Retail & E-commerce">Sales, Retail & E-commerce</option>
-                            <option value="Logistics & Supply Chain">Logistics & Supply Chain</option>
-                            <option value="Hospitality & Tourism">Hospitality & Tourism</option>
-                            <option value="Education & EdTech">Education & EdTech</option>
-                            <option value="Other Industry">Other Industry</option>
+                            {formOptions.industry.map(ind => (
+                              <option key={ind} value={ind}>{ind}</option>
+                            ))}
                           </select>
                         </div>
                       </div>
@@ -396,11 +392,9 @@ export const RecruiterRegisterSection: React.FC<RecruiterRegisterSectionProps> =
                             className="text-input select-input"
                           >
                             <option value="">Select company size</option>
-                            <option value="1-10 employees (Seed / Startup)">1-10 employees (Startup)</option>
-                            <option value="11-50 employees (Growing)">11-50 employees</option>
-                            <option value="51-200 employees (Mid-size)">51-200 employees</option>
-                            <option value="201-500 employees (Established)">201-500 employees</option>
-                            <option value="500+ employees (Enterprise)">500+ employees (Enterprise)</option>
+                            {formOptions.companySize.map(sz => (
+                              <option key={sz} value={sz}>{sz}</option>
+                            ))}
                           </select>
                         </div>
                       </div>
