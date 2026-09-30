@@ -195,7 +195,13 @@ export function useAdminData() {
       onSnapshot(
         query(collection(db, 'candidates'), orderBy('registeredAt', 'desc')),
         snap => {
-          setCandidates(snap.docs.map(d => ({ id: d.id, ...d.data() } as Candidate)))
+          const candidateList = snap.docs
+            .filter(d => {
+              const data = d.data()
+              return !data.isResumeChunk && data.fullName
+            })
+            .map(d => ({ id: d.id, ...d.data() } as Candidate))
+          setCandidates(candidateList)
           if (candidatesFirstSnap) { candidatesFirstSnap = false; markResolved() }
         }
       )

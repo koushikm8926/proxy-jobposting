@@ -12,11 +12,15 @@ export interface Candidate {
   preferredRole: string
   hasResume?: boolean
   resumeFileName?: string
+  resumeFileType?: string
+  resumeFileSize?: number
+  resumeChunkCount?: number
   resumeUrl?: string
   resumeDataUrl?: string
   registeredAt: any
   status?: UserStatus
   viewed?: boolean
+  isResumeChunk?: boolean
 }
 
 export interface Recruiter {

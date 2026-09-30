@@ -17,6 +17,8 @@ import {
   Clock
 } from 'lucide-react'
 import type { Candidate, Recruiter, AdminView } from '../types'
+import { db } from '../firebase'
+import { collection, query, where, getDocs } from 'firebase/firestore'
 
 interface CandidatesViewProps {
   candidates: Candidate[]
@@ -124,39 +126,47 @@ function isWithinDateRange(
   }
 }
 
-// Helper: Download candidate resume to user's local machine
-export function downloadCandidateResume(candidate: Candidate) {
-  const fileName = candidate.resumeFileName || `${candidate.fullName.replace(/\s+/g, '_')}_Resume.pdf`
-
-  // 1. Check if candidate has Base64 Data URL attached
-  let dataUrl: string | undefined | null = candidate.resumeDataUrl
-  if (!dataUrl && typeof window !== 'undefined') {
-    dataUrl = localStorage.getItem('resume_' + candidate.email)
+// Helper: Convert Base64 data URL to Blob and trigger native browser file download
+function downloadBlobOrDataUrl(dataUrl: string, fileName: string) {
+  try {
+    if (dataUrl.startsWith('data:')) {
+      const parts = dataUrl.split(',')
+      const mimeMatch = parts[0].match(/:(.*?);/)
+      const mime = mimeMatch ? mimeMatch[1] : 'application/octet-stream'
+      const base64Data = parts[1] || ''
+      const bstr = atob(base64Data)
+      let n = bstr.length
+      const u8arr = new Uint8Array(n)
+      while (n--) {
+        u8arr[n] = bstr.charCodeAt(n)
+      }
+      const blob = new Blob([u8arr], { type: mime })
+      const blobUrl = URL.createObjectURL(blob)
+      const link = document.createElement('a')
+      link.href = blobUrl
+      link.download = fileName
+      document.body.appendChild(link)
+      link.click()
+      setTimeout(() => {
+        document.body.removeChild(link)
+        URL.revokeObjectURL(blobUrl)
+      }, 1000)
+      return
+    }
+  } catch (err) {
+    console.warn('Blob conversion failed, using direct data link', err)
   }
 
-  if (dataUrl) {
-    const link = document.createElement('a')
-    link.href = dataUrl
-    link.download = fileName
-    document.body.appendChild(link)
-    link.click()
-    document.body.removeChild(link)
-    return
-  }
+  const link = document.createElement('a')
+  link.href = dataUrl
+  link.download = fileName
+  document.body.appendChild(link)
+  link.click()
+  document.body.removeChild(link)
+}
 
-  // 2. Check if candidate has direct web URL
-  if (candidate.resumeUrl) {
-    const link = document.createElement('a')
-    link.href = candidate.resumeUrl
-    link.target = '_blank'
-    link.download = fileName
-    document.body.appendChild(link)
-    link.click()
-    document.body.removeChild(link)
-    return
-  }
-
-  // 3. Fallback: Generate a clean, printable HTML document export
+// Fallback: Generate a clean, printable HTML document export if no resume file was uploaded
+function downloadProfileFallback(candidate: Candidate) {
   const registeredStr = formatRegisteredOn(candidate.registeredAt)
   const resumeHtml = `<!DOCTYPE html>
 <html>
@@ -291,6 +301,68 @@ export function downloadCandidateResume(candidate: Candidate) {
   setTimeout(() => URL.revokeObjectURL(url), 1000)
 }
 
+// Helper: Download candidate resume to user's local machine
+export async function downloadCandidateResume(
+  candidate: Candidate,
+  onLoading?: (loading: boolean) => void
+) {
+  if (onLoading) onLoading(true)
+  try {
+    const fileName = candidate.resumeFileName || `${candidate.fullName.replace(/\s+/g, '_')}_Resume.pdf`
+
+    // 1. Direct Base64 Data URL on candidate object
+    let dataUrl: string | undefined | null = candidate.resumeDataUrl
+
+    // 2. Query chunked resume data from Firestore if not directly attached
+    if (!dataUrl && candidate.email) {
+      try {
+        const cleanEmail = candidate.email.toLowerCase().trim()
+        const q = query(
+          collection(db, 'candidates'),
+          where('isResumeChunk', '==', true),
+          where('candidateEmail', '==', cleanEmail)
+        )
+        const snap = await getDocs(q)
+        if (!snap.empty) {
+          const chunks = snap.docs
+            .map(d => d.data())
+            .sort((a, b) => (a.chunkIndex ?? 0) - (b.chunkIndex ?? 0))
+          dataUrl = chunks.map(c => c.data).join('')
+        }
+      } catch (err) {
+        console.warn('Could not query resume chunks from Firestore', err)
+      }
+    }
+
+    // 3. Fallback to localStorage (for development preview)
+    if (!dataUrl && typeof window !== 'undefined' && candidate.email) {
+      dataUrl = localStorage.getItem('resume_' + candidate.email.toLowerCase().trim())
+    }
+
+    if (dataUrl) {
+      downloadBlobOrDataUrl(dataUrl, fileName)
+      return
+    }
+
+    // 4. Web URL if provided
+    if (candidate.resumeUrl) {
+      const link = document.createElement('a')
+      link.href = candidate.resumeUrl
+      link.target = '_blank'
+      link.download = fileName
+      document.body.appendChild(link)
+      link.click()
+      document.body.removeChild(link)
+      return
+    }
+
+    // 5. Fallback: Generate a clean, printable HTML document export if no resume was uploaded
+    downloadProfileFallback(candidate)
+  } finally {
+    if (onLoading) onLoading(false)
+  }
+}
+
 export const CandidatesView: React.FC<CandidatesViewProps> = ({
   candidates,
   recruiters = [],
@@ -320,6 +392,7 @@ export const CandidatesView: React.FC<CandidatesViewProps> = ({
   // Selected candidate / recruiter for details modal
   const [selectedCandidate, setSelectedCandidate] = useState<Candidate | null>(null)
   const [selectedRecruiter, setSelectedRecruiter] = useState<Recruiter | null>(null)
+  const [downloadingResume, setDownloadingResume] = useState(false)
 
   // Sync tab if initialTab changes
   useEffect(() => {
@@ -909,11 +982,12 @@ export const CandidatesView: React.FC<CandidatesViewProps> = ({
                   <button
                     type="button"
                     className="btn-download-resume"
-                    onClick={() => downloadCandidateResume(selectedCandidate)}
-                    title="Download resume file directly to your computer"
+                    disabled={downloadingResume}
+                    onClick={() => downloadCandidateResume(selectedCandidate, setDownloadingResume)}
+                    title="Download candidate's uploaded resume directly to your computer"
                   >
                     <Download size={15} />
-                    <span>Download Resume</span>
+                    <span>{downloadingResume ? 'Downloading…' : 'Download Resume'}</span>
                   </button>
                 </div>
               </div>
@@ -931,10 +1005,11 @@ export const CandidatesView: React.FC<CandidatesViewProps> = ({
               <button
                 type="button"
                 className="btn btn-primary"
-                onClick={() => downloadCandidateResume(selectedCandidate)}
+                disabled={downloadingResume}
+                onClick={() => downloadCandidateResume(selectedCandidate, setDownloadingResume)}
               >
                 <Download size={15} />
-                <span>Download Resume</span>
+                <span>{downloadingResume ? 'Downloading…' : 'Download Resume'}</span>
               </button>
             </div>
           </div>

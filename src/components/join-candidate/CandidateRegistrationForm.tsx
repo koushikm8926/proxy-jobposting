@@ -214,10 +214,34 @@ export const CandidateRegistrationForm: React.FC = () => {
             reader.readAsDataURL(resumeFile)
           })
           if (resumeDataUrl) {
-            localStorage.setItem('resume_' + cleanEmail, resumeDataUrl)
+            try {
+              localStorage.setItem('resume_' + cleanEmail, resumeDataUrl)
+            } catch {
+              // Local storage quota
+            }
           }
         } catch (e) {
           console.warn('Failed to read resume file', e)
+        }
+      }
+
+      // Check if resume fits in a single document (< 750 KB Base64) or needs chunking for larger files
+      const isSingleDoc = resumeDataUrl ? resumeDataUrl.length < 750 * 1024 : true
+      const CHUNK_SIZE = 500 * 1024
+      const totalChunks = (resumeDataUrl && !isSingleDoc) ? Math.ceil(resumeDataUrl.length / CHUNK_SIZE) : 1
+
+      // If file is larger, store chunks in Firestore so any resume up to 5MB is fully preserved
+      if (resumeDataUrl && !isSingleDoc) {
+        for (let i = 0; i < totalChunks; i++) {
+          const chunkStr = resumeDataUrl.substring(i * CHUNK_SIZE, (i + 1) * CHUNK_SIZE)
+          await addDoc(collection(db, 'candidates'), {
+            isResumeChunk:   true,
+            candidateEmail:  cleanEmail,
+            chunkIndex:      i,
+            totalChunks:     totalChunks,
+            data:            chunkStr,
+            createdAt:       serverTimestamp(),
+          })
         }
       }
 
@@ -232,7 +256,10 @@ export const CandidateRegistrationForm: React.FC = () => {
         preferredRole:    formData.preferredRole,
         hasResume:        !!resumeFile,
         resumeFileName:   resumeFile?.name ?? null,
-        resumeDataUrl:    resumeDataUrl && resumeFile && resumeFile.size < 600 * 1024 ? resumeDataUrl : null,
+        resumeFileType:   resumeFile?.type ?? 'application/pdf',
+        resumeFileSize:   resumeFile?.size ?? 0,
+        resumeChunkCount: totalChunks,
+        resumeDataUrl:    isSingleDoc ? resumeDataUrl : null,
         status:           'new',
         registeredAt:     serverTimestamp(),
       })
