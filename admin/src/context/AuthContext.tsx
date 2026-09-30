@@ -21,7 +21,12 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [authLoading, setAuthLoading] = useState(true)
 
   useEffect(() => {
+    // Safety timeout: if Firebase never responds (e.g. missing env vars on Vercel),
+    // resolve authLoading after 5 s so we don't show a permanent blank screen.
+    const timeout = setTimeout(() => setAuthLoading(false), 5000)
+
     const unsub = onAuthStateChanged(auth, async (firebaseUser) => {
+      clearTimeout(timeout)
       if (firebaseUser && firebaseUser.email?.toLowerCase() !== 'proxyapplicationcode@gmail.com'.toLowerCase()) {
         await fbSignOut(auth)
         setUser(null)
@@ -31,7 +36,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       setUser(firebaseUser)
       setAuthLoading(false)
     })
-    return unsub
+    return () => { unsub(); clearTimeout(timeout) }
   }, [])
 
   const signOut = () => fbSignOut(auth)
