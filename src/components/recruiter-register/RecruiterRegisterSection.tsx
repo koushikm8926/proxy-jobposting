@@ -22,7 +22,7 @@ interface RecruiterRegisterSectionProps {
   onLoginClick?: () => void
 }
 
-export const RecruiterRegisterSection: React.FC<RecruiterRegisterSectionProps> = ({ onLoginClick }) => {
+export const RecruiterRegisterSection: React.FC<RecruiterRegisterSectionProps> = () => {
   const [formData, setFormData] = useState({
     fullName: '',
     email: '',
@@ -44,10 +44,6 @@ export const RecruiterRegisterSection: React.FC<RecruiterRegisterSectionProps> =
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [isSubmitted, setIsSubmitted] = useState(false)
   const [submitError, setSubmitError] = useState<string | null>(null)
-  const [showLoginModal, setShowLoginModal] = useState(false)
-  const [loginEmail, setLoginEmail] = useState('')
-  const [loginPassword, setLoginPassword] = useState('')
-  const [loginSuccess, setLoginSuccess] = useState(false)
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target
@@ -115,17 +111,6 @@ export const RecruiterRegisterSection: React.FC<RecruiterRegisterSectionProps> =
       hearAboutUs: '',
       agreeTerms: true
     })
-  }
-
-  const handleLoginSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-    setLoginSuccess(true)
-    setTimeout(() => {
-      setShowLoginModal(false)
-      setLoginSuccess(false)
-      setLoginEmail('')
-      setLoginPassword('')
-    }, 1500)
   }
 
   const features = [
@@ -586,39 +571,6 @@ export const RecruiterRegisterSection: React.FC<RecruiterRegisterSectionProps> =
                       <ArrowRight size={18} />
                     </button>
                   </form>
-
-                  {/* OR Divider */}
-                  <div className="or-divider">
-                    <span className="or-line" />
-                    <span className="or-text">OR</span>
-                    <span className="or-line" />
-                  </div>
-
-                  {/* Already a member card */}
-                  <div className="already-member-card">
-                    <div className="member-left">
-                      <div className="shield-icon-pill">
-                        <Shield size={20} color="#0c0d0e" />
-                      </div>
-                      <div>
-                        <h4 className="member-title">Already a member?</h4>
-                        <p className="member-desc">Log in to your recruiter account.</p>
-                      </div>
-                    </div>
-                    <button
-                      type="button"
-                      onClick={() => {
-                        if (onLoginClick) {
-                          onLoginClick()
-                        } else {
-                          setShowLoginModal(true)
-                        }
-                      }}
-                      className="btn btn-outline member-login-btn"
-                    >
-                      Login
-                    </button>
-                  </div>
                 </>
               )}
             </div>
@@ -626,87 +578,7 @@ export const RecruiterRegisterSection: React.FC<RecruiterRegisterSectionProps> =
         </div>
       </div>
 
-      {/* Inline Recruiter Login Modal */}
-      {showLoginModal && (
-        <div className="login-modal-backdrop" onClick={() => setShowLoginModal(false)}>
-          <div className="login-modal-box" onClick={e => e.stopPropagation()}>
-            <div style={{ textAlign: 'center', marginBottom: '20px' }}>
-              <div style={{ width: '44px', height: '44px', borderRadius: '50%', backgroundColor: '#f4f4f5', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 12px' }}>
-                <Shield size={24} color="#0c0d0e" />
-              </div>
-              <h3 style={{ fontSize: '20px', fontWeight: 800, color: '#0c0d0e', margin: 0 }}>
-                Recruiter Portal Login
-              </h3>
-              <p style={{ fontSize: '13.5px', color: '#71717a', margin: '4px 0 0' }}>
-                Access your candidate pipeline &amp; job listings
-              </p>
-            </div>
-
-            {loginSuccess ? (
-              <div style={{ textAlign: 'center', padding: '16px 0' }}>
-                <CheckCircle2 size={40} color="#16a34a" style={{ margin: '0 auto 10px' }} />
-                <h4 style={{ fontSize: '17px', fontWeight: 700, color: '#0c0d0e', margin: '0 0 4px' }}>
-                  Welcome back!
-                </h4>
-                <p style={{ fontSize: '13px', color: '#52525b', margin: 0 }}>
-                  Redirecting to your Recruiter Dashboard...
-                </p>
-              </div>
-            ) : (
-              <form onSubmit={handleLoginSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
-                <div>
-                  <label style={{ fontSize: '12.5px', fontWeight: 600, color: '#18181b', display: 'block', marginBottom: '4px' }}>
-                    Email Address
-                  </label>
-                  <input
-                    type="email"
-                    required
-                    placeholder="recruiter@company.com"
-                    value={loginEmail}
-                    onChange={e => setLoginEmail(e.target.value)}
-                    className="text-input"
-                    style={{ width: '100%' }}
-                  />
-                </div>
-                <div>
-                  <label style={{ fontSize: '12.5px', fontWeight: 600, color: '#18181b', display: 'block', marginBottom: '4px' }}>
-                    Password
-                  </label>
-                  <input
-                    type="password"
-                    required
-                    placeholder="Enter password"
-                    value={loginPassword}
-                    onChange={e => setLoginPassword(e.target.value)}
-                    className="text-input"
-                    style={{ width: '100%' }}
-                  />
-                </div>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: '12px' }}>
-                  <label style={{ display: 'flex', alignItems: 'center', gap: '6px', cursor: 'pointer', color: '#52525b' }}>
-                    <input type="checkbox" defaultChecked /> Remember me
-                  </label>
-                  <a href="#contact" style={{ color: '#0c0d0e', textDecoration: 'underline' }}>Forgot password?</a>
-                </div>
-                <button
-                  type="submit"
-                  className="btn btn-primary"
-                  style={{ width: '100%', height: '44px', marginTop: '6px' }}
-                >
-                  Log In to Dashboard
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setShowLoginModal(false)}
-                  style={{ fontSize: '13px', color: '#71717a', background: 'none', border: 'none', cursor: 'pointer', textAlign: 'center' }}
-                >
-                  Cancel
-                </button>
-              </form>
-            )}
-          </div>
-        </div>
-      )}
+      {/* Section Styles */}
 
       <style>{`
         .recruiter-reg-page-section {

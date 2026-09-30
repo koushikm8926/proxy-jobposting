@@ -7,7 +7,6 @@ import { useAdminData } from './hooks/useAdminData'
 import { AuthProvider, useAuth } from './context/AuthContext'
 import { LoginPage } from './pages/LoginPage'
 import type { AdminView } from './types'
-import { LogOut } from 'lucide-react'
 
 const PAGE_META: Record<AdminView, { title: string; subtitle: string }> = {
   dashboard: { title: 'Dashboard', subtitle: 'Overview of all registrations and activity' },
@@ -31,6 +30,8 @@ function AdminApp() {
         onNavigate={setCurrentView}
         candidateCount={candidates.length}
         recruiterCount={recruiters.length}
+        userEmail={user?.email}
+        onSignOut={signOut}
       />
 
       {/* Main content area */}
@@ -46,37 +47,6 @@ function AdminApp() {
               <span style={{ width: 7, height: 7, borderRadius: '50%', background: isFirebaseConfigured ? '#22c55e' : '#f59e0b', display: 'inline-block' }} />
               {isFirebaseConfigured ? 'Live data' : 'Mock data'}
             </span>
-            {/* Show user email + sign-out button only when Firebase auth is configured */}
-            {isFirebaseConfigured && user && (
-              <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                <span style={{ fontSize: 13, color: '#52525b', fontWeight: 500 }}>{user.email}</span>
-                <button
-                  id="admin-signout-btn"
-                  onClick={signOut}
-                  title="Sign out"
-                  style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: 6,
-                    padding: '6px 12px',
-                    borderRadius: 8,
-                    fontSize: 13,
-                    fontWeight: 600,
-                    color: '#52525b',
-                    background: '#f3f4f6',
-                    border: '1px solid #e4e4e7',
-                    cursor: 'pointer',
-                    fontFamily: 'inherit',
-                    transition: 'background 0.15s',
-                  }}
-                  onMouseEnter={e => (e.currentTarget.style.background = '#e4e4e7')}
-                  onMouseLeave={e => (e.currentTarget.style.background = '#f3f4f6')}
-                >
-                  <LogOut size={14} />
-                  Sign out
-                </button>
-              </div>
-            )}
           </div>
         </header>
 

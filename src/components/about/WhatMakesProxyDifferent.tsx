@@ -4,22 +4,22 @@ import { ShieldCheck, Users, Zap, TrendingUp } from 'lucide-react'
 export const WhatMakesProxyDifferent: React.FC = () => {
   const differentiators = [
     {
-      icon: <ShieldCheck size={24} color="#0c0d0e" strokeWidth={2.2} />,
+      icon: <ShieldCheck size={36} strokeWidth={2.8} />,
       title: 'Trust & Transparency',
       description: 'Genuine opportunities and verified connections.'
     },
     {
-      icon: <Users size={24} color="#0c0d0e" strokeWidth={2.2} />,
+      icon: <Users size={36} strokeWidth={2.8} />,
       title: 'People First Approach',
       description: 'Focused on candidates and employers.'
     },
     {
-      icon: <Zap size={24} color="#0c0d0e" strokeWidth={2.2} />,
+      icon: <Zap size={36} strokeWidth={2.8} />,
       title: 'Efficient Hiring',
       description: 'Technology-driven for faster and better results.'
     },
     {
-      icon: <TrendingUp size={24} color="#0c0d0e" strokeWidth={2.2} />,
+      icon: <TrendingUp size={36} strokeWidth={2.8} />,
       title: 'Growing Ecosystem',
       description: 'Starting from Bengaluru, expanding across India.'
     }
@@ -88,7 +88,7 @@ export const WhatMakesProxyDifferent: React.FC = () => {
         .different-pillars-grid {
           display: grid;
           grid-template-columns: 1fr 1fr;
-          gap: 32px 28px;
+          gap: 36px 32px;
         }
 
         .diff-pillar-item {
@@ -97,22 +97,38 @@ export const WhatMakesProxyDifferent: React.FC = () => {
         }
 
         .diff-icon-box {
-          margin-bottom: 12px;
+          width: 58px;
+          height: 58px;
+          border-radius: 16px;
+          background-color: #f4f4f5;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          margin-bottom: 16px;
           color: #0c0d0e;
+          transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .diff-pillar-item:hover .diff-icon-box {
+          background-color: #0c0d0e;
+          color: #ffffff;
+          transform: translateY(-2px);
+          box-shadow: 0 8px 18px rgba(0, 0, 0, 0.12);
         }
 
         .diff-pillar-title {
-          font-size: 16px;
-          font-weight: 700;
+          font-size: 21px;
+          font-weight: 800;
           color: #0c0d0e;
-          margin-bottom: 6px;
-          letter-spacing: -0.01em;
+          margin-bottom: 8px;
+          letter-spacing: -0.025em;
+          line-height: 1.25;
         }
 
         .diff-pillar-desc {
-          font-size: 13.5px;
-          color: #64748b;
-          line-height: 1.5;
+          font-size: 14.5px;
+          color: #52525b;
+          line-height: 1.55;
         }
 
         @media (max-width: 900px) {

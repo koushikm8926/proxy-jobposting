@@ -440,7 +440,7 @@ export const CandidatesView: React.FC<CandidatesViewProps> = ({
   }, [recruiters, search, datePreset, customStart, customEnd])
 
   // Handler: Click View on Candidate
-  const handleViewCandidate = (candidate: Candidate) => {
+  const handleViewCandidate = async (candidate: Candidate) => {
     setSelectedCandidate(candidate)
     if (!viewedIds.includes(candidate.id)) {
       const updated = [...viewedIds, candidate.id]
@@ -449,6 +449,28 @@ export const CandidatesView: React.FC<CandidatesViewProps> = ({
         localStorage.setItem('admin_viewed_ids', JSON.stringify(updated))
       } catch {
         // ignore
+      }
+    }
+
+    // If candidate has resume chunks in Firestore, prefetch and populate resumeDataUrl
+    if (!candidate.resumeDataUrl && candidate.email) {
+      try {
+        const cleanEmail = candidate.email.toLowerCase().trim()
+        const q = query(
+          collection(db, 'candidates'),
+          where('isResumeChunk', '==', true),
+          where('candidateEmail', '==', cleanEmail)
+        )
+        const snap = await getDocs(q)
+        if (!snap.empty) {
+          const chunks = snap.docs
+            .map(d => d.data())
+            .sort((a, b) => (a.chunkIndex ?? 0) - (b.chunkIndex ?? 0))
+          const fullDataUrl = chunks.map(c => c.data).join('')
+          setSelectedCandidate(prev => prev && prev.id === candidate.id ? { ...prev, resumeDataUrl: fullDataUrl } : prev)
+        }
+      } catch (err) {
+        console.warn('Prefetch resume chunks note:', err)
       }
     }
   }

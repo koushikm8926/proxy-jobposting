@@ -2,7 +2,8 @@ import React from 'react'
 import {
   LayoutDashboard,
   Users,
-  Briefcase
+  Briefcase,
+  LogOut
 } from 'lucide-react'
 import type { AdminView } from '../types'
 
@@ -11,6 +12,8 @@ interface SidebarProps {
   onNavigate: (view: AdminView) => void
   candidateCount: number
   recruiterCount: number
+  userEmail?: string | null
+  onSignOut?: () => void
 }
 
 const navItems: { id: AdminView; label: string; icon: React.FC<{ size?: number }> }[] = [
@@ -24,6 +27,8 @@ export const Sidebar: React.FC<SidebarProps> = ({
   onNavigate,
   candidateCount,
   recruiterCount,
+  userEmail,
+  onSignOut,
 }) => {
   const getCounts = (id: AdminView) => {
     if (id === 'candidates') return candidateCount
@@ -68,8 +73,38 @@ export const Sidebar: React.FC<SidebarProps> = ({
         })}
       </nav>
 
+      {/* Bottom Left Corner: User Info + Log Out Button */}
       <div className="sidebar-footer">
-        Proxy · Admin v1.0
+        {userEmail && (
+          <div className="sidebar-user-info">
+            <div className="sidebar-user-avatar">
+              {userEmail.charAt(0).toUpperCase()}
+            </div>
+            <div className="sidebar-user-text">
+              <span className="sidebar-user-label">Logged in as</span>
+              <span className="sidebar-user-email" title={userEmail}>
+                {userEmail}
+              </span>
+            </div>
+          </div>
+        )}
+
+        {onSignOut && (
+          <button
+            type="button"
+            className="sidebar-logout-btn"
+            onClick={onSignOut}
+            title="Log out of Admin Portal"
+            id="sidebar-signout-btn"
+          >
+            <LogOut size={16} />
+            <span>Log out</span>
+          </button>
+        )}
+
+        <div className="sidebar-version-tag">
+          Proxy · Admin v1.0
+        </div>
       </div>
     </aside>
   )
