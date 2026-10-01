@@ -31,7 +31,7 @@ export const RecruiterHero: React.FC<RecruiterHeroProps> = ({ onRegister }) => {
             </h1>
 
             <p className="rec-hero-desc">
-              Build your talent pipeline, connect with verified candidates, and simplify your hiring process with Proxy.
+              Build your talent pipeline, connect with verified candidates, and simplify your hiring process with ProxHire.
             </p>
 
             <div className="rec-hero-btn-wrap">

@@ -34,8 +34,8 @@ export const NeedSupport: React.FC = () => {
               <Mail size={20} color="#0c0d0e" />
             </div>
             <div className="support-item-info">
-              <a href="mailto:info@proxyservices.in" className="support-contact-link">
-                info@proxyservices.in
+              <a href="mailto:info@proxhire.in" className="support-contact-link">
+                info@proxhire.in
               </a>
               <span className="support-item-sub">We reply within 24 hours</span>
             </div>

@@ -86,7 +86,7 @@ export const Modal: React.FC<ModalProps> = ({ type, categoryName, onClose }) => 
                   ? 'Access pre-verified candidates in Bengaluru and scale your hiring pipeline seamlessly.'
                   : isCategory
                   ? `Explore open positions and specialized hiring for ${categoryName || 'this sector'}.`
-                  : 'Proxy is pioneering an ethical, technology-first hiring ecosystem born in Bengaluru.'}
+                  : 'ProxHire is pioneering an ethical, technology-first hiring ecosystem born in Bengaluru.'}
               </p>
             </div>
 
@@ -96,7 +96,7 @@ export const Modal: React.FC<ModalProps> = ({ type, categoryName, onClose }) => 
                   <p style={{ fontSize: '14px', color: '#475467', lineHeight: '1.6' }}>
                     {isCategory
                       ? `We have active job requirements and pre-screened talent across ${categoryName || 'various roles'}. Sign up below to get prioritized matching!`
-                      : 'Bengaluru is India’s technology and talent capital. Proxy is establishing our ground operations here before scaling across Mumbai, Delhi-NCR, Hyderabad, and Pune.'}
+                      : 'Bengaluru is India’s technology and talent capital. ProxHire is establishing our ground operations here before scaling across Mumbai, Delhi-NCR, Hyderabad, and Pune.'}
                   </p>
                 </div>
                 <div style={{ display: 'flex', gap: '12px' }}>

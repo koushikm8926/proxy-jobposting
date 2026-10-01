@@ -103,13 +103,13 @@ export const WhyProxy: React.FC = () => {
         {/* Section Header */}
         <div className="section-header reveal-on-scroll" style={{ textAlign: 'center', marginBottom: '48px' }}>
           <span className="section-kicker" style={{ color: '#52525b', letterSpacing: '0.18em', fontWeight: 800 }}>
-            WHY PROXY
+            WHY PROXHIRE
           </span>
           <h2 className="why-proxy-title">
             A Smarter Way to Build Careers and Teams
           </h2>
           <p className="why-proxy-subtitle">
-            Proxy is a recruitment platform designed to make hiring simple, transparent and technology-driven for both candidates and employers.
+            ProxHire is a recruitment platform designed to make hiring simple, transparent and technology-driven for both candidates and employers.
           </p>
         </div>
 

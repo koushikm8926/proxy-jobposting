@@ -236,7 +236,7 @@ export const RecruiterRegisterSection: React.FC<RecruiterRegisterSectionProps> =
                   </div>
 
                   <p className="success-hint">
-                    A dedicated Proxy account manager will verify your corporate credentials and contact you within 2 business hours to activate your talent pipeline.
+                    A dedicated ProxHire account manager will verify your corporate credentials and contact you within 2 business hours to activate your talent pipeline.
                   </p>
 
                   <button

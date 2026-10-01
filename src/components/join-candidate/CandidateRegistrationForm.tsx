@@ -431,15 +431,15 @@ export const CandidateRegistrationForm: React.FC = () => {
 
       <div className="container">
         <div className="candidate-reg-grid">
-          {/* Left Column: Why Join Proxy Benefits */}
+          {/* Left Column: Why Join ProxHire Benefits */}
           <div className="candidate-benefits-col">
-            <span className="section-kicker">WHY JOIN PROXY?</span>
+            <span className="section-kicker">WHY JOIN PROXHIRE?</span>
             <h2 className="candidate-benefits-title">
               More Opportunities.<br />
               <span style={{ color: '#52525b' }}>A Brighter Tomorrow.</span>
             </h2>
             <p className="candidate-benefits-subtitle">
-              We eliminate fake job postings, recruiter ghosting, and endless portals. When you register with Proxy, our dedicated recruiters champion your profile to companies that value your talent.
+              We eliminate fake job postings, recruiter ghosting, and endless portals. When you register with ProxHire, our dedicated recruiters champion your profile to companies that value your talent.
             </p>
 
             <div className="candidate-benefit-cards">
@@ -470,7 +470,7 @@ export const CandidateRegistrationForm: React.FC = () => {
                     100% Free for All Job Seekers
                   </h4>
                   <p style={{ fontSize: '13px', color: '#52525b', margin: '4px 0 0', lineHeight: 1.4 }}>
-                    Proxy never charges candidates any fee for registration, matching, or placement interviews.
+                    ProxHire never charges candidates any fee for registration, matching, or placement interviews.
                   </p>
                 </div>
               </div>
@@ -511,7 +511,7 @@ export const CandidateRegistrationForm: React.FC = () => {
                   </div>
 
                   <p className="success-next-note">
-                    A Proxy talent acquisition specialist will review your credentials and call you when a verified opening matches your profile.
+                    A ProxHire talent acquisition specialist will review your credentials and call you when a verified opening matches your profile.
                   </p>
 
                   <button

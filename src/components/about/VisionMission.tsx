@@ -29,7 +29,7 @@ export const VisionMission: React.FC = () => {
               <span className="section-kicker">OUR MISSION</span>
               <h3 className="vm-title">To Simplify the Hiring Journey</h3>
               <p className="vm-text">
-                At Proxy, our mission is to simplify the hiring journey by connecting candidates with relevant career opportunities and helping employers find the right talent through a trusted, transparent, and technology-driven platform. We are committed to making recruitment more accessible, efficient, and convenient for everyone.
+                At ProxHire, our mission is to simplify the hiring journey by connecting candidates with relevant career opportunities and helping employers find the right talent through a trusted, transparent, and technology-driven platform. We are committed to making recruitment more accessible, efficient, and convenient for everyone.
               </p>
             </div>
           </div>

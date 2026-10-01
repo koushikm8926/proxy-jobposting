@@ -38,7 +38,7 @@ export const Hero: React.FC<HeroProps> = ({ onFindJobs, onHireTalent }) => {
           <span className="hero-kicker">THE DESIRE TO ACHIEVE</span>
 
           <h1 className="hero-main-title">
-            <span className="title-brand">PROXY</span>
+            <span className="title-brand">ProxHire</span>
             <span className="title-tagline">The Desire to Achieve.</span>
           </h1>
 
@@ -80,7 +80,7 @@ export const Hero: React.FC<HeroProps> = ({ onFindJobs, onHireTalent }) => {
         <div className="hero-panoramic-visual">
           <img
             src="/images/hero_highway_billboard.png"
-            alt="Build Your Career with proXHire Highway Billboard"
+            alt="Build Your Career with ProxHire Highway Billboard"
             className="hero-feathered-img"
           />
         </div>

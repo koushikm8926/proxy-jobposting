@@ -26,7 +26,7 @@ export const ContactHero: React.FC = () => {
             </h1>
 
             <p className="contact-hero-desc">
-              Have questions or need assistance? Our team is here to help you with candidate registrations, recruiter registrations, or any other queries about Proxy.
+              Have questions or need assistance? Our team is here to help you with candidate registrations, recruiter registrations, or any other queries about ProxHire.
             </p>
           </div>
 
@@ -35,7 +35,7 @@ export const ContactHero: React.FC = () => {
             <div className="contact-hero-card">
               <img
                 src="/images/contact_hero_office.jpg"
-                alt="Proxy corporate headquarters in Bengaluru"
+                alt="ProxHire corporate headquarters in Bengaluru"
                 className="contact-hero-img"
               />
             </div>

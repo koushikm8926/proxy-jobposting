@@ -42,7 +42,7 @@ export const ModernRecruitmentNeeds: React.FC = () => {
 
           {/* Right: Content & 4 Features */}
           <div className="needs-content">
-            <span className="section-kicker">WHY CHOOSE PROXY</span>
+            <span className="section-kicker">WHY CHOOSE PROXHIRE</span>
             <h2 className="needs-title">Designed for Modern Recruitment Needs</h2>
 
             <div className="needs-points-list">

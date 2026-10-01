@@ -91,7 +91,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             window.scrollTo({ top: 0, behavior: 'smooth' })
           }}
           style={{ display: 'inline-flex', cursor: 'pointer', textAlign: 'left', background: 'transparent', border: 'none', padding: 0 }}
-          aria-label="proXHire Home"
+          aria-label="ProxHire Home"
         >
           <Logo />
         </button>

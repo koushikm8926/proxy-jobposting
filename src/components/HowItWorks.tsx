@@ -106,7 +106,7 @@ export const HowItWorks: React.FC = () => {
         {/* Section Header */}
         <div className="section-header reveal-on-scroll" style={{ textAlign: 'center', marginBottom: '28px' }}>
           <span className="section-kicker" style={{ color: '#52525b', letterSpacing: '0.18em', fontWeight: 800 }}>
-            HOW PROXY WORKS
+            HOW PROXHIRE WORKS
           </span>
           <h2 className="how-it-works-title">
             A Simple Journey for a Brighter Future

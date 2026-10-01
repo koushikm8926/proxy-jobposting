@@ -40,7 +40,7 @@ export const WhatHappensNext: React.FC = () => {
             What Happens Next?
           </h2>
           <p style={{ fontSize: '15.5px', color: '#52525b', lineHeight: 1.6, margin: 0 }}>
-            Here is what you can expect after submitting your registration with Proxy.
+            Here is what you can expect after submitting your registration with ProxHire.
           </p>
         </div>
 

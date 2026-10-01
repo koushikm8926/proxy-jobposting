@@ -23,7 +23,7 @@ export const AboutHero: React.FC<AboutHeroProps> = ({ onScrollToStory }) => {
             </h1>
 
             <p className="about-hero-desc">
-              Proxy is a recruitment platform designed to connect candidates and employers through a simple, trusted and technology-driven hiring experience.
+              ProxHire is a recruitment platform designed to connect candidates and employers through a simple, trusted and technology-driven hiring experience.
             </p>
 
             <div>
@@ -42,7 +42,7 @@ export const AboutHero: React.FC<AboutHeroProps> = ({ onScrollToStory }) => {
           <div className="about-hero-image-wrapper">
             <img
               src="/images/about_hero_professionals_fullwidth.png"
-              alt="Proxy team - Building a Brighter Tomorrow Through People"
+              alt="ProxHire team - Building a Brighter Tomorrow Through People"
               className="about-hero-fullwidth-img"
             />
           </div>

@@ -16,10 +16,10 @@ export const CallToAction: React.FC<CallToActionProps> = ({
         <div className="cta-box reveal-scale">
           {/* Left Text */}
           <div className="cta-text-wrapper">
-            <span className="section-kicker">BE A PART OF PROXY</span>
+            <span className="section-kicker">BE A PART OF PROXHIRE</span>
             <h2 className="cta-heading">Let's Build Better Opportunities Together</h2>
             <p className="cta-sub">
-              Whether you are looking for your next opportunity or the right talent for your team, Proxy is here to support your journey.
+              Whether you are looking for your next opportunity or the right talent for your team, ProxHire is here to support your journey.
             </p>
           </div>
 

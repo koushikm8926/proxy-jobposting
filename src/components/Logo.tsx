@@ -26,7 +26,7 @@ export const Logo: React.FC<LogoProps> = ({
     >
       <img
         src={isLight ? '/logo-white.png' : '/logo.png'}
-        alt="proXHire - India's Ultimate Career Bridge"
+        alt="ProxHire - India's Ultimate Career Bridge"
         style={{
           height: `${height}px`,
           width: 'auto',

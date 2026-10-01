@@ -52,7 +52,7 @@ export const JobCategories: React.FC<JobCategoriesProps> = ({ onSelectCategory }
             Job Categories Across Industries
           </h2>
           <p className="categories-main-subtitle">
-            From IT to Healthcare, from Retail to Manufacturing — Proxy connects talent and opportunities across a wide range of industries.
+            From IT to Healthcare, from Retail to Manufacturing — ProxHire connects talent and opportunities across a wide range of industries.
           </p>
         </div>
 

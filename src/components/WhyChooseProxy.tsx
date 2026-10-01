@@ -26,7 +26,7 @@ export const WhyChooseProxy: React.FC = () => {
         {/* Section Header */}
         <div className="section-header reveal-on-scroll" style={{ textAlign: 'center', marginBottom: '52px' }}>
           <span className="section-kicker" style={{ color: '#52525b', letterSpacing: '0.18em', fontWeight: 800 }}>
-            WHY CHOOSE PROXY
+            WHY CHOOSE PROXHIRE
           </span>
           <h2 className="why-choose-title">
             Built for People. Designed for Growth.

@@ -31,10 +31,10 @@ export const WhatMakesProxyDifferent: React.FC = () => {
         <div className="different-grid">
           {/* Left Column: Heading & Philosophy */}
           <div className="different-left">
-            <span className="section-kicker">WHAT MAKES PROXY DIFFERENT</span>
+            <span className="section-kicker">WHAT MAKES PROXHIRE DIFFERENT</span>
             <h2 className="different-title">Trust at the Core of Recruitment</h2>
             <p className="different-desc">
-              At Proxy, we believe recruitment should be simple, transparent and trustworthy. Our focus is on creating genuine opportunities for candidates and helping employers connect with relevant talent through a technology-driven platform.
+              At ProxHire, we believe recruitment should be simple, transparent and trustworthy. Our focus is on creating genuine opportunities for candidates and helping employers connect with relevant talent through a technology-driven platform.
             </p>
           </div>
 

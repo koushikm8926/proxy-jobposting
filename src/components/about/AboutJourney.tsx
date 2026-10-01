@@ -12,7 +12,7 @@ export const AboutJourney: React.FC = () => {
               Starting from Bengaluru,<br />Growing Across India
             </h2>
             <p className="journey-description">
-              Proxy is currently focused on building our network of candidates, recruiters and employers across India. We are starting from Bengaluru with a long-term vision to expand nationwide and create a stronger, more connected recruitment ecosystem.
+              ProxHire is currently focused on building our network of candidates, recruiters and employers across India. We are starting from Bengaluru with a long-term vision to expand nationwide and create a stronger, more connected recruitment ecosystem.
             </p>
           </div>
 

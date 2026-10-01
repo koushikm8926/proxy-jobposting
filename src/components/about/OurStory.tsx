@@ -12,19 +12,19 @@ export const OurStory: React.FC = () => {
             
             <div className="story-paragraphs">
               <p>
-                Proxy was started with a simple vision: to make the hiring journey easier, more transparent and accessible for both candidates and employers.
+                ProxHire was started with a simple vision: to make the hiring journey easier, more transparent and accessible for both candidates and employers.
               </p>
               <p>
                 We saw that candidates often struggle to <strong>discover relevant opportunities</strong> and present their skills effectively, while employers spend significant time searching for suitable talent.
               </p>
               <p>
-                Proxy is being built to bring both sides together on one platform.
+                ProxHire is being built to bring both sides together on one platform.
               </p>
               <p>
                 Our goal is to create a <strong>trusted recruitment ecosystem where candidates can build their professional profiles</strong>, discover opportunities and connect with employers, while recruiters can find relevant talent and manage their hiring more efficiently.
               </p>
               <p>
-                Starting from Bengaluru, Proxy is being developed with a long-term vision to expand across India and make recruitment more technology-driven, accessible and efficient.
+                Starting from Bengaluru, ProxHire is being developed with a long-term vision to expand across India and make recruitment more technology-driven, accessible and efficient.
               </p>
             </div>
           </div>
@@ -34,7 +34,7 @@ export const OurStory: React.FC = () => {
             <div className="story-image-card">
               <img
                 src="/images/about_office.jpg"
-                alt="Proxy corporate office in Bengaluru"
+                alt="ProxHire corporate office in Bengaluru"
                 className="story-office-img"
               />
             </div>

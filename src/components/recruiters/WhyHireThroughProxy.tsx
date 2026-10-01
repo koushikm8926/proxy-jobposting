@@ -31,10 +31,10 @@ export const WhyHireThroughProxy: React.FC = () => {
         <div className="why-hire-grid">
           {/* Left Text */}
           <div className="why-hire-left">
-            <span className="section-kicker">WHY HIRE THROUGH PROXY</span>
+            <span className="section-kicker">WHY HIRE THROUGH PROXHIRE</span>
             <h2 className="why-hire-title">A Smarter Way to Hire</h2>
             <p className="why-hire-desc">
-              Proxy helps you discover relevant talent, reduce hiring time, and connect with candidates who match your requirements. Our platform is designed to make recruitment more efficient, transparent and convenient for businesses of all sizes.
+              ProxHire helps you discover relevant talent, reduce hiring time, and connect with candidates who match your requirements. Our platform is designed to make recruitment more efficient, transparent and convenient for businesses of all sizes.
             </p>
           </div>
 

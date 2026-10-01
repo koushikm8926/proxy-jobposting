@@ -31,10 +31,10 @@ export const WhyChooseProxyCareer: React.FC = () => {
         <div className="why-career-grid">
           {/* Left Text */}
           <div className="why-career-left">
-            <span className="section-kicker">WHY CHOOSE PROXY</span>
+            <span className="section-kicker">WHY CHOOSE PROXHIRE</span>
             <h2 className="why-career-title">A Better Way for Your Career</h2>
             <p className="why-career-desc">
-              Proxy connects you with relevant job opportunities across industries, helping you take the next step in your career with confidence.
+              ProxHire connects you with relevant job opportunities across industries, helping you take the next step in your career with confidence.
             </p>
           </div>
 

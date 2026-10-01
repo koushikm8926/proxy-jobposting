@@ -33,7 +33,7 @@ export const RecruiterProcess: React.FC = () => {
           <span className="section-kicker">HOW IT WORKS</span>
           <h2 className="section-title">A Simple Recruitment Process</h2>
           <p className="section-subtitle">
-            From registration to connecting with candidates, Proxy makes hiring simple and efficient.
+            From registration to connecting with candidates, ProxHire makes hiring simple and efficient.
           </p>
         </div>
 
