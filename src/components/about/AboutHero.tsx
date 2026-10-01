@@ -7,18 +7,9 @@ interface AboutHeroProps {
 
 export const AboutHero: React.FC<AboutHeroProps> = ({ onScrollToStory }) => {
   return (
-    <section
-      id="about-hero"
-      style={{
-        position: 'relative',
-        paddingTop: '32px',
-        paddingBottom: '80px',
-        overflow: 'hidden',
-        background: 'linear-gradient(180deg, #ffffff 0%, #fafafa 100%)'
-      }}
-    >
-      <div className="container" style={{ position: 'relative', zIndex: 1 }}>
-        <div className="about-hero-grid">
+    <section id="about-hero" className="about-hero-fullwidth-section">
+      <div className="about-hero-screen-wrapper">
+        <div className="about-hero-banner">
           {/* Left Text Content */}
           <div className="about-hero-content">
             <span className="section-kicker" style={{ color: '#52525b', letterSpacing: '0.18em' }}>
@@ -38,9 +29,8 @@ export const AboutHero: React.FC<AboutHeroProps> = ({ onScrollToStory }) => {
             <div>
               <button
                 type="button"
-                className="btn btn-primary"
+                className="btn btn-primary about-hero-btn"
                 onClick={onScrollToStory}
-                style={{ padding: '12px 28px', fontSize: '15px' }}
               >
                 <span>Our Story</span>
                 <ArrowDown size={16} />
@@ -48,108 +38,145 @@ export const AboutHero: React.FC<AboutHeroProps> = ({ onScrollToStory }) => {
             </div>
           </div>
 
-          {/* Right Visual with Script text */}
-          <div className="about-hero-visual-wrapper">
-            <div className="about-hero-card">
-              <img
-                src="/images/hero_professionals.jpg"
-                alt="Proxy founders and corporate team"
-                className="about-hero-img"
-              />
-
-              {/* Handwritten script badge on top-right */}
-              <div className="about-handwritten-badge">
-                <span className="hw-line">People</span>
-                <span className="hw-line">Opportunities</span>
-                <span className="hw-line">Growth</span>
-                <span className="hw-line">Together</span>
-              </div>
-            </div>
+          {/* Right Visual Spanning to Edge with Smooth Fade */}
+          <div className="about-hero-image-wrapper">
+            <img
+              src="/images/about_hero_professionals_fullwidth.png"
+              alt="Proxy team - Building a Brighter Tomorrow Through People"
+              className="about-hero-fullwidth-img"
+            />
           </div>
         </div>
       </div>
 
       <style>{`
-        .about-hero-grid {
-          display: grid;
-          grid-template-columns: 1.1fr 0.9fr;
-          gap: 48px;
-          align-items: center;
+        .about-hero-fullwidth-section {
+          width: 100%;
+          padding: 0;
+          margin: 0;
+          background-color: #fafafb;
+          border-bottom: 1px solid #e4e7ec;
+          overflow: hidden;
+          position: relative;
+        }
+
+        .about-hero-screen-wrapper {
+          width: 100%;
+          padding: 0;
+          margin: 0;
+          box-sizing: border-box;
+        }
+
+        .about-hero-banner {
+          width: 100%;
+          background-color: #fafafb;
+          display: flex;
+          align-items: stretch;
+          position: relative;
           min-height: 480px;
         }
 
         .about-hero-content {
-          max-width: 540px;
+          flex: 1.1;
+          padding: 72px 48px 72px max(32px, calc((100vw - 1200px) / 2 + 24px));
+          z-index: 2;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
           animation: heroSlideUp 0.75s cubic-bezier(0.16, 1, 0.3, 1) both;
         }
 
         .about-hero-heading {
-          font-size: 56px;
+          font-size: 52px;
           font-weight: 800;
           letter-spacing: -0.035em;
-          line-height: 1.08;
+          line-height: 1.12;
           color: #0c0d0e;
-          margin: 16px 0 24px;
+          margin: 14px 0 20px;
         }
 
         .about-hero-desc {
           font-size: 16px;
           color: #475467;
-          line-height: 1.6;
-          margin-bottom: 36px;
-          max-width: 480px;
+          line-height: 1.65;
+          margin-bottom: 32px;
+          max-width: 500px;
         }
 
-        .about-hero-visual-wrapper {
-          display: flex;
-          justify-content: center;
-          animation: heroSlideRight 0.85s cubic-bezier(0.16, 1, 0.3, 1) both;
-          animation-delay: 0.15s;
+        .about-hero-btn {
+          height: 48px;
+          padding: 0 28px;
+          border-radius: 9999px;
+          font-size: 15px;
+          font-weight: 600;
+          display: inline-flex;
+          align-items: center;
+          gap: 10px;
+          box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12);
+          transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        .about-hero-card {
+        .about-hero-btn:hover {
+          transform: translateY(-2px);
+          box-shadow: 0 8px 20px rgba(0, 0, 0, 0.16);
+          background-color: #27272a;
+        }
+
+        /* Right image spanning 100% to screen edge with smooth mask fade */
+        .about-hero-image-wrapper {
+          flex: 1.35;
+          height: 100%;
+          min-height: 480px;
           position: relative;
-          width: 100%;
-          max-width: 480px;
-          border-radius: 28px;
-          overflow: hidden;
-          box-shadow: 0 20px 48px -12px rgba(0, 0, 0, 0.12);
-        }
-
-        .about-hero-img {
-          width: 100%;
-          height: 460px;
-          object-fit: cover;
-          object-position: center top;
-        }
-
-        .about-handwritten-badge {
-          position: absolute;
-          top: 24px;
-          right: 24px;
-          font-family: var(--font-script);
-          font-size: 24px;
-          line-height: 1.15;
-          color: #1f2937;
           display: flex;
-          flex-direction: column;
-          align-items: flex-end;
-          text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8);
-          pointer-events: none;
-          transform: rotate(3deg);
-          animation: floatBadgeSlow 4s ease-in-out infinite;
+          align-items: stretch;
+          justify-content: flex-end;
+          overflow: hidden;
+          background-color: #fafafb;
+          -webkit-mask-image: linear-gradient(to right, transparent 0%, rgba(0, 0, 0, 0.2) 10%, rgba(0, 0, 0, 0.85) 26%, #000000 42%);
+          mask-image: linear-gradient(to right, transparent 0%, rgba(0, 0, 0, 0.2) 10%, rgba(0, 0, 0, 0.85) 26%, #000000 42%);
+        }
+
+        .about-hero-fullwidth-img {
+          width: 100%;
+          height: 100%;
+          min-height: 480px;
+          object-fit: cover;
+          object-position: right center;
+          display: block;
+          transition: transform 0.6s ease;
+        }
+
+        .about-hero-banner:hover .about-hero-fullwidth-img {
+          transform: scale(1.02);
+        }
+
+        @media (max-width: 1200px) {
+          .about-hero-content {
+            padding: 56px 32px;
+          }
+          .about-hero-heading {
+            font-size: 42px;
+          }
         }
 
         @media (max-width: 960px) {
-          .about-hero-grid {
-            grid-template-columns: 1fr;
-            gap: 40px;
+          .about-hero-banner {
+            flex-direction: column;
+            min-height: auto;
+          }
+          .about-hero-content {
+            padding: 48px 24px;
           }
           .about-hero-heading {
-            font-size: 40px;
+            font-size: 36px;
           }
-          .about-hero-img {
-            height: 360px;
+          .about-hero-image-wrapper {
+            width: 100%;
+            height: 320px;
+            min-height: 320px;
+            -webkit-mask-image: linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 1) 25%);
+            mask-image: linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 1) 25%);
           }
         }
       `}</style>
