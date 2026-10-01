@@ -7,7 +7,7 @@ export const MeetFounders: React.FC = () => {
       role: 'Founder & Director',
       company: 'Proxy Services India Pvt. Ltd.',
       bio: 'Building Proxy with a vision to make recruitment simpler, more accessible and technology-driven for candidates and employers.',
-      image: '/images/founder_vineela.jpg',
+      image: '/images/founder.jpeg',
       alt: 'Renati Venkata Vineela - Founder & Director'
     },
     {
@@ -15,7 +15,7 @@ export const MeetFounders: React.FC = () => {
       role: 'Co-Founder & Director',
       company: 'Proxy Services India Pvt. Ltd.',
       bio: 'Working alongside the founding team to build Proxy into a trusted, technology-driven recruitment platform that connects candidates with employers and simplifies the hiring journey.',
-      image: '/images/founder_varma.jpg',
+      image: '/images/co-founder.jpeg',
       alt: 'Chiranjeevi Sai Lakshmi Narasimha Varma - Co-Founder & Director'
     }
   ]
