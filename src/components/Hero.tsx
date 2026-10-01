@@ -76,11 +76,11 @@ export const Hero: React.FC<HeroProps> = ({ onFindJobs, onHireTalent }) => {
           </div>
         </div>
 
-        {/* Right Side: Panoramic Integrated Visual of Professionals & Modern Bengaluru */}
+        {/* Right Side: Panoramic Integrated Visual of Highway Billboard */}
         <div className="hero-panoramic-visual">
           <img
-            src="/images/hero_chatgpt_clean_cut.png"
-            alt="Proxy ambitious professionals in modern Bengaluru"
+            src="/images/hero_highway_billboard.png"
+            alt="Build Your Career with proXHire Highway Billboard"
             className="hero-feathered-img"
           />
         </div>
@@ -283,17 +283,19 @@ export const Hero: React.FC<HeroProps> = ({ onFindJobs, onHireTalent }) => {
           width: 100%;
           max-width: 100%;
           height: auto;
-          max-height: 560px;
+          max-height: 580px;
           object-fit: cover;
           object-position: right center;
           display: block;
           margin: 0;
           padding: 0;
           transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+          -webkit-mask-image: linear-gradient(to right, transparent 0%, rgba(0, 0, 0, 0.15) 5%, rgba(0, 0, 0, 0.85) 15%, #000000 24%);
+          mask-image: linear-gradient(to right, transparent 0%, rgba(0, 0, 0, 0.15) 5%, rgba(0, 0, 0, 0.85) 15%, #000000 24%);
         }
 
         .hero-panoramic-visual:hover .hero-feathered-img {
-          transform: scale(1.012);
+          transform: scale(1.015);
         }
 
         @media (max-width: 990px) {
