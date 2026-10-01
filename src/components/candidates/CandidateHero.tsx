@@ -85,8 +85,8 @@ export const CandidateHero: React.FC<CandidateHeroProps> = ({ onJoinCandidate })
           <div className="cand-hero-visual-wrap">
             <div className="cand-hero-card">
               <img
-                src="/images/candidate_page_hero.jpg"
-                alt="Candidate aspiring for opportunities"
+                src="/images/candidate_journey_hero.png"
+                alt="Launch Your Career Journey - Your Career Starts Here"
                 className="cand-hero-img"
               />
             </div>
@@ -97,14 +97,14 @@ export const CandidateHero: React.FC<CandidateHeroProps> = ({ onJoinCandidate })
       <style>{`
         .cand-hero-grid {
           display: grid;
-          grid-template-columns: 1.1fr 0.9fr;
+          grid-template-columns: minmax(340px, 0.95fr) minmax(440px, 1.25fr);
           gap: 48px;
           align-items: center;
           min-height: 480px;
         }
 
         .cand-hero-content {
-          max-width: 540px;
+          max-width: 520px;
         }
 
         .cand-hero-heading {
@@ -132,6 +132,7 @@ export const CandidateHero: React.FC<CandidateHeroProps> = ({ onJoinCandidate })
           display: flex;
           align-items: center;
           gap: 28px;
+          flex-wrap: wrap;
         }
 
         .cand-badge-item {
@@ -157,23 +158,32 @@ export const CandidateHero: React.FC<CandidateHeroProps> = ({ onJoinCandidate })
 
         .cand-hero-visual-wrap {
           display: flex;
-          justify-content: center;
+          justify-content: flex-end;
+          width: 100%;
         }
 
         .cand-hero-card {
           position: relative;
           width: 100%;
-          max-width: 480px;
-          border-radius: 28px;
+          max-width: 660px;
+          border-radius: 24px;
           overflow: hidden;
-          box-shadow: 0 20px 48px -12px rgba(0, 0, 0, 0.12);
+          box-shadow: 0 24px 60px -12px rgba(12, 13, 14, 0.16), 0 0 0 1px rgba(12, 13, 14, 0.05);
+          background-color: #0c0d0e;
+          transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease;
+        }
+
+        .cand-hero-card:hover {
+          transform: translateY(-4px) scale(1.008);
+          box-shadow: 0 32px 68px -12px rgba(12, 13, 14, 0.22), 0 0 0 1px rgba(12, 13, 14, 0.08);
         }
 
         .cand-hero-img {
           width: 100%;
-          height: 460px;
+          height: auto;
+          aspect-ratio: 1884 / 835;
           object-fit: cover;
-          object-position: center;
+          display: block;
         }
 
         @media (max-width: 960px) {
@@ -184,8 +194,11 @@ export const CandidateHero: React.FC<CandidateHeroProps> = ({ onJoinCandidate })
           .cand-hero-heading {
             font-size: 40px;
           }
-          .cand-hero-img {
-            height: 360px;
+          .cand-hero-visual-wrap {
+            justify-content: center;
+          }
+          .cand-hero-card {
+            max-width: 100%;
           }
         }
       `}</style>

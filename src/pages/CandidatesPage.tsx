@@ -1,7 +1,6 @@
 import React from 'react'
 import { CandidateHero } from '../components/candidates/CandidateHero'
 import { WhyChooseProxyCareer } from '../components/candidates/WhyChooseProxyCareer'
-import { CandidateBengaluruBanner } from '../components/candidates/CandidateBengaluruBanner'
 import { JobCategories } from '../components/JobCategories'
 import { CandidateHowItWorks } from '../components/candidates/CandidateHowItWorks'
 import { CandidateRegisterCard } from '../components/candidates/CandidateRegisterCard'
@@ -25,10 +24,7 @@ export const CandidatesPage: React.FC<CandidatesPageProps> = ({
       {/* 2. Why Choose Proxy for Career */}
       <WhyChooseProxyCareer />
 
-      {/* 3. Bengaluru Launch Dark Banner */}
-      <CandidateBengaluruBanner />
-
-      {/* 4. 12 Job Categories Grid */}
+      {/* 3. 12 Job Categories Grid */}
       <JobCategories onSelectCategory={onSelectCategory} />
 
       {/* 5. How It Works - 4 Steps for Candidates */}
