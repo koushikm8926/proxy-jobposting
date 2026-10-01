@@ -4,7 +4,6 @@ import { OurStory } from '../components/about/OurStory'
 import { VisionMission } from '../components/about/VisionMission'
 import { WhatMakesProxyDifferent } from '../components/about/WhatMakesProxyDifferent'
 import { MeetFounders } from '../components/about/MeetFounders'
-import { AboutJourney } from '../components/about/AboutJourney'
 import { CallToAction } from '../components/CallToAction'
 import { Footer } from '../components/Footer'
 
@@ -41,16 +40,13 @@ export const AboutPage: React.FC<AboutPageProps> = ({
       {/* 5. Meet Our Founders */}
       <MeetFounders />
 
-      {/* 6. Our Journey - Bengaluru to Nationwide */}
-      <AboutJourney />
-
-      {/* 7. CTA Banner */}
+      {/* 6. CTA Banner */}
       <CallToAction
         onJoinCandidate={onJoinCandidate}
         onRegisterRecruiter={onRegisterRecruiter}
       />
 
-      {/* 8. Footer */}
+      {/* 7. Footer */}
       <Footer />
     </div>
   )
