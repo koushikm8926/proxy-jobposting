@@ -12,12 +12,12 @@ export const CandidateRegisterCard: React.FC<CandidateRegisterCardProps> = ({
     <section className="cand-register-section">
       <div className="container">
         <div className="cand-register-grid">
-          {/* Left: Male Candidate Photo */}
+          {/* Left: Launch Your Career Journey Visual */}
           <div className="cand-reg-image-wrapper">
             <div className="cand-reg-image-card">
               <img
-                src="/images/candidate_male_laptop.jpg"
-                alt="Candidate preparing for career opportunity"
+                src="/images/candidate_journey_hero.png"
+                alt="Launch Your Career Journey - Start Your Career"
                 className="cand-reg-photo"
               />
             </div>
@@ -47,35 +47,42 @@ export const CandidateRegisterCard: React.FC<CandidateRegisterCardProps> = ({
 
       <style>{`
         .cand-register-section {
-          padding: 40px 0 80px;
+          padding: 60px 0 90px;
           background-color: #ffffff;
         }
 
         .cand-register-grid {
           display: grid;
-          grid-template-columns: 0.95fr 1.05fr;
-          gap: 60px;
+          grid-template-columns: minmax(420px, 1.15fr) minmax(340px, 0.85fr);
+          gap: 56px;
           align-items: center;
         }
 
         .cand-reg-image-wrapper {
           display: flex;
-          justify-content: center;
+          justify-content: flex-start;
+          width: 100%;
         }
 
         .cand-reg-image-card {
           width: 100%;
-          max-width: 480px;
+          max-width: 620px;
           border-radius: 24px;
           overflow: hidden;
-          box-shadow: 0 20px 48px -12px rgba(0, 0, 0, 0.1);
-          border: 1px solid #f0f0f4;
+          box-shadow: 0 20px 48px -12px rgba(0, 0, 0, 0.12), 0 0 0 1px rgba(0, 0, 0, 0.05);
+          background-color: #0c0d0e;
+          transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease;
+        }
+
+        .cand-reg-image-card:hover {
+          transform: translateY(-4px);
+          box-shadow: 0 28px 60px -12px rgba(0, 0, 0, 0.18), 0 0 0 1px rgba(0, 0, 0, 0.06);
         }
 
         .cand-reg-photo {
           width: 100%;
-          height: 100%;
-          max-height: 420px;
+          height: auto;
+          aspect-ratio: 1884 / 835;
           object-fit: cover;
           display: block;
         }
@@ -104,6 +111,12 @@ export const CandidateRegisterCard: React.FC<CandidateRegisterCardProps> = ({
           .cand-register-grid {
             grid-template-columns: 1fr;
             gap: 40px;
+          }
+          .cand-reg-image-wrapper {
+            justify-content: center;
+          }
+          .cand-reg-image-card {
+            max-width: 100%;
           }
         }
       `}</style>
