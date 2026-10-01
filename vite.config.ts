@@ -2,7 +2,7 @@ import react from '@vitejs/plugin-react'
 import { defineConfig } from 'vite'
 
 // https://vite.dev/config/
-// Port 3000 = Main Job Portal  |  Port 3001 = Admin Portal (see admin/vite.config.ts)
+// Port 3000 = Main Job Portal
 export default defineConfig({
   plugins: [react()],
   server: {
