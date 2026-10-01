@@ -22,7 +22,7 @@ export const FAQSidebar: React.FC<FAQSidebarProps> = ({ onContactClick }) => {
         </div>
 
         <p className="still-q-desc">
-          Our team is here to help you with any queries about candidate registrations, recruiter registrations, or general information about Proxy.
+          Our team is here to help you with any queries about candidate registrations, recruiter registrations, or general information about ProxHire.
         </p>
 
         <button
@@ -58,7 +58,7 @@ export const FAQSidebar: React.FC<FAQSidebarProps> = ({ onContactClick }) => {
           <div className="faq-info-row">
             <Mail size={18} className="faq-info-icon" />
             <div className="faq-info-text">
-              <a href="mailto:info@proxyservices.in" className="faq-info-link">info@proxyservices.in</a>
+              <a href="mailto:info@proxhire.in" className="faq-info-link">info@proxhire.in</a>
               <span className="faq-info-sub">We reply within 24 hours</span>
             </div>
           </div>
@@ -81,7 +81,7 @@ export const FAQSidebar: React.FC<FAQSidebarProps> = ({ onContactClick }) => {
           <MapPin size={20} className="faq-info-icon" style={{ marginTop: '2px' }} />
           <div className="faq-info-text">
             <strong style={{ fontSize: '13px', color: '#0c0d0e', marginBottom: '4px' }}>
-              Proxy Services India Private Limited (Proxy Hire)
+              ProxHire Services India Private Limited
             </strong>
             <span className="faq-info-sub" style={{ lineHeight: '1.5' }}>
               No. 224, 3rd Floor, Ranka Junction, 80/3 Vijnapura Village Hobli, Krishnarajapuram R S, Bangalore North, Bengaluru, Karnataka, India - 560016.

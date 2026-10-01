@@ -98,7 +98,7 @@ export const ContactFormAndOffice: React.FC = () => {
                 <CheckCircle2 size={48} color="#10b981" />
                 <h3>Message Sent Successfully!</h3>
                 <p>
-                  Thank you for reaching out to Proxy. One of our Bengaluru team members will get back to you within 24 hours.
+                  Thank you for reaching out to ProxHire. One of our Bengaluru team members will get back to you within 24 hours.
                 </p>
                 <button
                   type="button"
@@ -214,7 +214,7 @@ export const ContactFormAndOffice: React.FC = () => {
           <div className="office-info-card">
             <span className="section-kicker">Our Office</span>
             <h3 className="office-title">
-              Proxy Services India Private Limited<br />(Proxy Hire)
+              ProxHire Services India Private Limited
             </h3>
 
             <div className="office-address-row">
@@ -229,7 +229,7 @@ export const ContactFormAndOffice: React.FC = () => {
             <div className="office-map-container">
               <img
                 src="/images/office_location_map.jpg"
-                alt="Map showing Proxy Services India Private Limited at Krishnarajapura Bengaluru"
+                alt="Map showing ProxHire Services India Private Limited at Krishnarajapura Bengaluru"
                 className="office-map-img"
               />
             </div>
@@ -243,7 +243,7 @@ export const ContactFormAndOffice: React.FC = () => {
                 <div className="meta-text">
                   <h4 className="meta-title">Our Support Team</h4>
                   <p className="meta-desc">
-                    Our team is available from 8 AM to 9 PM, every day to assist you with any queries related to candidate or recruiter registration, or general information about Proxy.
+                    Our team is available from 8 AM to 9 PM, every day to assist you with any queries related to candidate or recruiter registration, or general information about ProxHire.
                   </p>
                 </div>
               </div>

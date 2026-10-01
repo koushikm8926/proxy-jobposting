@@ -28,37 +28,37 @@ export const FAQAccordionList: React.FC<FAQAccordionListProps> = ({
     {
       id: 'gen-1',
       category: 'general',
-      question: 'What is Proxy?',
+      question: 'What is ProxHire?',
       answer:
-        'Proxy is a recruitment platform designed to connect candidates and employers through a simple, trusted, and technology-driven hiring experience. We aim to make recruitment more efficient by connecting job seekers with genuine opportunities and helping employers discover relevant talent.'
+        'ProxHire is a recruitment platform designed to connect candidates and employers through a simple, trusted, and technology-driven hiring experience. We aim to make recruitment more efficient by connecting job seekers with genuine opportunities and helping employers discover relevant talent.'
     },
     {
       id: 'gen-2',
       category: 'general',
-      question: 'What is the meaning behind the name "Proxy"?',
+      question: 'What is the meaning behind the name "ProxHire"?',
       answer:
-        'The name "Proxy" represents standing in on behalf of our candidates and recruiters — acting as a trusted, reliable bridge that simplifies every step of hiring, verification, and career advancement.'
+        'The name "ProxHire" represents standing in as a trusted proxy on behalf of our candidates and recruiters — acting as a reliable bridge that simplifies every step of hiring, verification, and career advancement.'
     },
     {
       id: 'gen-3',
       category: 'general',
-      question: 'Where is Proxy currently focused?',
+      question: 'Where is ProxHire currently focused?',
       answer:
-        'Proxy is currently launched and focused on the Bengaluru tech and commercial ecosystem, with a long-term vision to expand nationwide across India.'
+        'ProxHire is currently launched and focused on the Bengaluru tech and commercial ecosystem, with a long-term vision to expand nationwide across India.'
     },
     {
       id: 'gen-4',
       category: 'general',
-      question: 'What industries and job categories does Proxy cover?',
+      question: 'What industries and job categories does ProxHire cover?',
       answer:
-        'Proxy connects talent across a diverse range of industries including IT & Software, Data & Analytics, Engineering, BPO & Support, Sales & Marketing, Finance & Banking, Healthcare, Education, Manufacturing, Retail & Ecommerce, and Hospitality & Travel.'
+        'ProxHire connects talent across a diverse range of industries including IT & Software, Data & Analytics, Engineering, BPO & Support, Sales & Marketing, Finance & Banking, Healthcare, Education, Manufacturing, Retail & Ecommerce, and Hospitality & Travel.'
     },
     {
       id: 'gen-5',
       category: 'general',
-      question: 'Is Proxy a job consultancy or a job portal?',
+      question: 'Is ProxHire a job consultancy or a job portal?',
       answer:
-        'Proxy combines the speed and accessibility of a modern digital portal with the personalized curation, rigorous verification, and advisory support of an expert recruitment partner.'
+        'ProxHire combines the speed and accessibility of a modern digital portal with the personalized curation, rigorous verification, and advisory support of an expert recruitment partner.'
     },
     {
       id: 'gen-6',
@@ -70,16 +70,16 @@ export const FAQAccordionList: React.FC<FAQAccordionListProps> = ({
     {
       id: 'gen-7',
       category: 'general',
-      question: 'Does Proxy guarantee a job?',
+      question: 'Does ProxHire guarantee a job?',
       answer:
-        'While no ethical platform can guarantee job placement, Proxy guarantees that all posted job openings and employer connections are genuine and verified, dramatically increasing your chances of landing the right role.'
+        'While no ethical platform can guarantee job placement, ProxHire guarantees that all posted job openings and employer connections are genuine and verified, dramatically increasing your chances of landing the right role.'
     },
 
     // Candidates
     {
       id: 'cand-1',
       category: 'candidates',
-      question: 'How do I register as a candidate on Proxy?',
+      question: 'How do I register as a candidate on ProxHire?',
       answer:
         'Click the "Join as Candidate" button, enter your basic contact details and professional skills, and submit your profile. Our team will verify your details and connect you with matching employers.'
     },
@@ -88,7 +88,7 @@ export const FAQAccordionList: React.FC<FAQAccordionListProps> = ({
       category: 'candidates',
       question: 'Can freshers and recent college graduates apply?',
       answer:
-        'Yes! Proxy has dedicated opportunities tailored for freshers, entry-level candidates, internships, and experienced professionals alike.'
+        'Yes! ProxHire has dedicated opportunities tailored for freshers, entry-level candidates, internships, and experienced professionals alike.'
     },
     {
       id: 'cand-3',
@@ -102,7 +102,7 @@ export const FAQAccordionList: React.FC<FAQAccordionListProps> = ({
     {
       id: 'rec-1',
       category: 'recruiters',
-      question: 'How does Proxy verify candidates before matching?',
+      question: 'How does ProxHire verify candidates before matching?',
       answer:
         'Our team reviews candidate credentials, work history, and contact details to ensure genuine profiles and reduce recruiter screening time.'
     },
@@ -136,16 +136,16 @@ export const FAQAccordionList: React.FC<FAQAccordionListProps> = ({
       category: 'privacy',
       question: 'Is my personal and contact information secure?',
       answer:
-        'Yes. Proxy adheres strictly to data security and privacy best practices. Your information is never sold to third parties and is shared only with verified employers for legitimate hiring purposes.'
+        'Yes. ProxHire adheres strictly to data security and privacy best practices. Your information is never sold to third parties and is shared only with verified employers for legitimate hiring purposes.'
     },
 
     // Support
     {
       id: 'sup-1',
       category: 'support',
-      question: 'What are the working hours of the Proxy support desk?',
+      question: 'What are the working hours of the ProxHire support desk?',
       answer:
-        'Our customer support team is available every day (Monday to Sunday) from 8:00 AM to 9:00 PM at 9100729332 or via email at info@proxyservices.in.'
+        'Our customer support team is available every day (Monday to Sunday) from 8:00 AM to 9:00 PM at 9100729332 or via email at info@proxhire.in.'
     }
   ]
 
@@ -184,7 +184,7 @@ export const FAQAccordionList: React.FC<FAQAccordionListProps> = ({
         <p className="faq-list-subtitle">
           {searchQuery.trim()
             ? `Found ${filteredFaqs.length} matching questions.`
-            : 'Learn more about Proxy and how our platform works.'}
+            : 'Learn more about ProxHire and how our platform works.'}
         </p>
       </div>
 

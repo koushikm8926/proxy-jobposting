@@ -34,7 +34,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({
       {/* 3. Vision & Mission Cards */}
       <VisionMission />
 
-      {/* 4. What Makes Proxy Different */}
+      {/* 4. What Makes ProxHire Different */}
       <WhatMakesProxyDifferent />
 
       {/* 5. Meet Our Founders */}

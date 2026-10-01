@@ -18,7 +18,7 @@ export const RecruitersPage: React.FC<RecruitersPageProps> = ({ onRegisterRecrui
       {/* 1. Recruiter Hero */}
       <RecruiterHero onRegister={onRegisterRecruiter} />
 
-      {/* 2. Why Hire Through Proxy */}
+      {/* 2. Why Hire Through ProxHire */}
       <WhyHireThroughProxy />
 
       {/* 3. Recruiter Process (4 steps) */}

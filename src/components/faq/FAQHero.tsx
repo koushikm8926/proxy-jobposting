@@ -32,7 +32,7 @@ export const FAQHero: React.FC<FAQHeroProps> = ({ searchQuery, onSearchChange })
             </h1>
 
             <p className="faq-hero-desc">
-              Everything you need to know about Proxy, our registration process, how it works, and what to expect next.
+              Everything you need to know about ProxHire, our registration process, how it works, and what to expect next.
             </p>
 
             {/* Search Box */}
@@ -53,7 +53,7 @@ export const FAQHero: React.FC<FAQHeroProps> = ({ searchQuery, onSearchChange })
             <div className="faq-hero-card">
               <img
                 src="/images/faq_hero_woman.jpg"
-                alt="Proxy customer seeking answers"
+                alt="ProxHire customer seeking answers"
                 className="faq-hero-img"
               />
             </div>

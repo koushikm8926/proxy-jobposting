@@ -21,7 +21,7 @@ export const CandidatesPage: React.FC<CandidatesPageProps> = ({
       {/* 1. Candidate Hero */}
       <CandidateHero onJoinCandidate={onJoinCandidate} />
 
-      {/* 2. Why Choose Proxy for Career */}
+      {/* 2. Why Choose ProxHire for Career */}
       <WhyChooseProxyCareer />
 
       {/* 3. 12 Job Categories Grid */}
