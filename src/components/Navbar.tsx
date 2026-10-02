@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Logo } from './Logo'
-import { Menu, X, ArrowRight } from 'lucide-react'
+import { Menu, X, ArrowRight, Sparkles, ShieldCheck, MapPin, Phone, Mail } from 'lucide-react'
 
 export type NavPage =
   | 'home'
@@ -74,6 +74,46 @@ export const Navbar: React.FC<NavbarProps> = ({
         transition: 'all 0.25s ease'
       }}
     >
+      {/* Sleek Top Highlights Bar */}
+      <div className="navbar-top-bar">
+        <div className="container top-bar-inner">
+          <div className="top-bar-left">
+            <span className="top-bar-badge">
+              <Sparkles size={11} className="badge-sparkle-icon" />
+              <span>ProxHire</span>
+            </span>
+
+            <div className="top-bar-highlights">
+              <span className="highlight-item">
+                <ShieldCheck size={13} className="highlight-icon green-icon" />
+                <span>Verified Talent &amp; Direct Matching</span>
+              </span>
+              <span className="top-bar-dot">•</span>
+              <span className="highlight-item">
+                <MapPin size={13} className="highlight-icon blue-icon" />
+                <span>Bengaluru's Trusted Career Bridge</span>
+              </span>
+              <span className="top-bar-dot">•</span>
+              <span className="highlight-item">
+                <span>DPDP Act, 2023 Aligned</span>
+              </span>
+            </div>
+          </div>
+
+          <div className="top-bar-right">
+            <a href="mailto:info@proxhire.in" className="top-bar-link" aria-label="Email ProxHire Support">
+              <Mail size={12} />
+              <span>info@proxhire.in</span>
+            </a>
+            <span className="top-bar-sep">|</span>
+            <a href="tel:9100729332" className="top-bar-link" aria-label="Call ProxHire Support">
+              <Phone size={12} />
+              <span>9100729332</span>
+            </a>
+          </div>
+        </div>
+      </div>
+
       <div
         className="container"
         style={{
@@ -252,9 +292,134 @@ export const Navbar: React.FC<NavbarProps> = ({
       )}
 
       <style>{`
+        .navbar-top-bar {
+          background-color: #0c0d0e;
+          border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+          font-size: 11.5px;
+          color: #a1a1aa;
+          padding: 6px 0;
+          line-height: 1;
+        }
+
+        .top-bar-inner {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          gap: 16px;
+        }
+
+        .top-bar-left {
+          display: flex;
+          align-items: center;
+          gap: 10px;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+        }
+
+        .top-bar-badge {
+          display: inline-flex;
+          align-items: center;
+          gap: 4px;
+          background: rgba(255, 255, 255, 0.1);
+          color: #ffffff;
+          padding: 2.5px 8px;
+          border-radius: 9999px;
+          font-size: 10px;
+          font-weight: 700;
+          text-transform: uppercase;
+          letter-spacing: 0.05em;
+          flex-shrink: 0;
+        }
+
+        .badge-sparkle-icon {
+          color: #f59e0b;
+        }
+
+        .top-bar-highlights {
+          display: flex;
+          align-items: center;
+          gap: 10px;
+          color: #d4d4d8;
+          font-weight: 500;
+          font-size: 11.5px;
+        }
+
+        .highlight-item {
+          display: inline-flex;
+          align-items: center;
+          gap: 5px;
+        }
+
+        .highlight-icon {
+          flex-shrink: 0;
+        }
+
+        .green-icon {
+          color: #10b981;
+        }
+
+        .blue-icon {
+          color: #60a5fa;
+        }
+
+        .top-bar-dot {
+          color: #52525b;
+          font-size: 9px;
+        }
+
+        .top-bar-right {
+          display: flex;
+          align-items: center;
+          gap: 12px;
+          flex-shrink: 0;
+        }
+
+        .top-bar-link {
+          display: inline-flex;
+          align-items: center;
+          gap: 5px;
+          color: #a1a1aa;
+          text-decoration: none;
+          font-size: 11.5px;
+          transition: color 0.15s ease;
+        }
+
+        .top-bar-link:hover {
+          color: #ffffff;
+        }
+
+        .top-bar-sep {
+          color: #3f3f46;
+          font-size: 10px;
+        }
+
         .nav-link-item:hover {
           color: #0c0d0e !important;
         }
+
+        @media (max-width: 990px) {
+          .top-bar-right {
+            display: none;
+          }
+          .top-bar-inner {
+            justify-content: center;
+          }
+        }
+
+        @media (max-width: 680px) {
+          .top-bar-highlights span:nth-child(n+3) {
+            display: none;
+          }
+          .top-bar-badge {
+            display: none;
+          }
+          .navbar-top-bar {
+            padding: 5px 0;
+            font-size: 11px;
+          }
+        }
+
         @media (max-width: 900px) {
           .desktop-nav, .desktop-actions {
             display: none !important;
