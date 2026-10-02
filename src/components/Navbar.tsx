@@ -91,11 +91,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               <span className="top-bar-dot">•</span>
               <span className="highlight-item">
                 <MapPin size={13} className="highlight-icon blue-icon" />
-                <span>Bengaluru's Trusted Career Bridge</span>
-              </span>
-              <span className="top-bar-dot">•</span>
-              <span className="highlight-item">
-                <span>DPDP Act, 2023 Aligned</span>
+                <span>India's Trusted Career Bridge</span>
               </span>
             </div>
           </div>
