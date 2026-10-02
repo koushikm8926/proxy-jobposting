@@ -82,7 +82,7 @@ export const ContactFormAndOffice: React.FC = () => {
   }
 
   return (
-    <section className="contact-form-office-section">
+    <section id="contact-form-section" className="contact-form-office-section">
       <div className="container">
         <div className="contact-main-grid">
           {/* Left Column: Contact Form */}

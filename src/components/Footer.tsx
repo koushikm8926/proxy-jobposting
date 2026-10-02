@@ -30,8 +30,8 @@ export const Footer: React.FC<FooterProps> = ({ variant = 'dark' }) => {
         <div className="footer-grid">
           {/* Column 1: Brand & Socials */}
           <div className="footer-brand-col">
-            <div style={{ marginBottom: '16px' }}>
-              <Logo variant={isDark ? 'light' : 'dark'} size="large" />
+            <div style={{ marginBottom: '20px' }}>
+              <Logo variant={isDark ? 'light' : 'dark'} height={54} />
             </div>
             <p className="footer-brand-desc" style={{ color: isDark ? '#9ca3af' : '#64748b' }}>
               A recruitment platform designed to connect candidates and employers through a simple, trusted and technology-driven experience.
