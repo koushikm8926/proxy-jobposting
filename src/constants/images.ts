@@ -36,7 +36,7 @@ export const IMAGES = {
     registerHero: '/images/recruiters/recruiter-register.jpg',
   },
   contact: {
-    hero: '/images/contact/contact-hero.jpg',
+    hero: '/images/contact/contact-support-workspace.png',
     officeMap: '/images/contact/office-map.jpg',
   },
   faq: {

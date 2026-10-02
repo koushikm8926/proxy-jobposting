@@ -30,12 +30,12 @@ export const ContactHero: React.FC = () => {
             </p>
           </div>
 
-          {/* Right Column: Reception Office Visual */}
+          {/* Right Column: Global Contact Support Workspace Visual */}
           <div className="contact-hero-visual-wrap">
             <div className="contact-hero-card">
               <img
-                src="/images/contact/contact-hero.jpg"
-                alt="ProxHire corporate headquarters in Bengaluru"
+                src="/images/contact/contact-support-workspace.png"
+                alt="ProxHire Global Contact Support Workspace"
                 className="contact-hero-img"
               />
             </div>
@@ -81,16 +81,18 @@ export const ContactHero: React.FC = () => {
           position: relative;
           width: 100%;
           max-width: 560px;
-          border-radius: 28px;
+          border-radius: 24px;
           overflow: hidden;
           box-shadow: 0 20px 48px -12px rgba(0, 0, 0, 0.12);
+          border: 1px solid rgba(0, 0, 0, 0.06);
         }
 
         .contact-hero-img {
           width: 100%;
-          height: 320px;
+          height: 350px;
           object-fit: cover;
           object-position: center;
+          display: block;
         }
 
         @media (max-width: 960px) {
@@ -102,7 +104,7 @@ export const ContactHero: React.FC = () => {
             font-size: 40px;
           }
           .contact-hero-img {
-            height: 240px;
+            height: 260px;
           }
         }
       `}</style>
