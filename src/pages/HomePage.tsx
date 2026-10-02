@@ -5,6 +5,7 @@ import {
   CandidateRecruiterCards,
   JobCategories,
   HowItWorks,
+  PreVerifiedHiring,
   WhyChooseProxy,
   CallToAction
 } from '../components/home'
@@ -37,6 +38,7 @@ export const HomePage: React.FC<HomePageProps> = ({
         onSelectCategory={onSelectCategory}
       />
       <HowItWorks />
+      <PreVerifiedHiring onRegisterRecruiter={onHireTalent} />
       <WhyChooseProxy />
       <CallToAction
         onJoinCandidate={onJoinCandidate}

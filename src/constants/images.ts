@@ -16,6 +16,9 @@ export const IMAGES = {
     candidateCard: '/images/home/candidate-card.png',
     recruiterCard: '/images/home/recruiter-card.png',
     bengaluruSkyline: '/images/common/bengaluru-skyline.png',
+    verifiedHiringJourney: '/images/home/from-registration-to-verified-hiring.png',
+    verifiedJourneyTrack: '/images/home/verified-journey-track.png',
+    preVerifiedTalentShowcase: '/images/home/pre-verified-talent-showcase.png',
   },
   about: {
     hero: '/images/about/about-hero.png',
