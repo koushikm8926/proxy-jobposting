@@ -91,6 +91,11 @@ export const HowItWorks: React.FC = () => {
 
         {/* Unified 3D Stage with Cards Integrated Inside Over the Highway Track */}
         <div className="hiw-unified-stage-card">
+          {/* Smooth Fade Overlays for seamless edge blending */}
+          <div className="hiw-stage-edge-fade hiw-fade-left" />
+          <div className="hiw-stage-edge-fade hiw-fade-right" />
+          <div className="hiw-stage-edge-fade hiw-fade-top" />
+
           {/* Background 3D Track Render */}
           <img
             src={IMAGES.home.verifiedJourneyTrack}
@@ -228,8 +233,8 @@ export const HowItWorks: React.FC = () => {
           border-radius: 28px;
           overflow: hidden;
           background: #ffffff;
-          border: 1px solid #eaecf0;
-          box-shadow: 0 20px 50px -12px rgba(12, 13, 14, 0.08);
+          border: 1px solid rgba(234, 236, 240, 0.5);
+          box-shadow: 0 20px 50px -15px rgba(12, 13, 14, 0.05);
           min-height: 640px;
         }
 
@@ -242,6 +247,59 @@ export const HowItWorks: React.FC = () => {
           object-position: center bottom;
           pointer-events: none;
           z-index: 1;
+          -webkit-mask-image: linear-gradient(
+            to right,
+            transparent 0%,
+            rgba(0, 0, 0, 0.15) 2%,
+            rgba(0, 0, 0, 0.8) 6.5%,
+            #000000 12%,
+            #000000 88%,
+            rgba(0, 0, 0, 0.8) 93.5%,
+            rgba(0, 0, 0, 0.15) 98%,
+            transparent 100%
+          );
+          mask-image: linear-gradient(
+            to right,
+            transparent 0%,
+            rgba(0, 0, 0, 0.15) 2%,
+            rgba(0, 0, 0, 0.8) 6.5%,
+            #000000 12%,
+            #000000 88%,
+            rgba(0, 0, 0, 0.8) 93.5%,
+            rgba(0, 0, 0, 0.15) 98%,
+            transparent 100%
+          );
+        }
+
+        /* Smooth Edge Fade Overlays */
+        .hiw-stage-edge-fade {
+          position: absolute;
+          pointer-events: none;
+          z-index: 2;
+        }
+
+        .hiw-fade-left {
+          top: 0;
+          left: 0;
+          bottom: 0;
+          width: 130px;
+          background: linear-gradient(to right, #ffffff 0%, rgba(255, 255, 255, 0.75) 40%, rgba(255, 255, 255, 0) 100%);
+        }
+
+        .hiw-fade-right {
+          top: 0;
+          right: 0;
+          bottom: 0;
+          width: 130px;
+          background: linear-gradient(to left, #ffffff 0%, rgba(255, 255, 255, 0.75) 40%, rgba(255, 255, 255, 0) 100%);
+        }
+
+        .hiw-fade-top {
+          top: 0;
+          left: 0;
+          right: 0;
+          height: 60px;
+          background: linear-gradient(to bottom, #ffffff 0%, rgba(255, 255, 255, 0) 100%);
         }
 
         /* Cards Overlay placed directly inside the 3D Stage */

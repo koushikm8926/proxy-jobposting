@@ -97,7 +97,7 @@ export const PreVerifiedHiring: React.FC<PreVerifiedHiringProps> = ({
             </div>
           </div>
 
-          {/* Right Column: 3D Architectural Visual */}
+          {/* Right Column: 3D Architectural Visual with Integrated Floating Trust Badge */}
           <div className="verified-right-col">
             <div className="visual-card-frame">
               <img
@@ -187,14 +187,14 @@ export const PreVerifiedHiring: React.FC<PreVerifiedHiringProps> = ({
           font-size: 16px;
           line-height: 1.65;
           color: #475467;
-          margin: 0 0 32px;
+          margin: 0 0 28px;
         }
 
         .verified-action-row {
           display: flex;
           align-items: center;
           gap: 16px;
-          margin-bottom: 0;
+          margin-bottom: 24px;
         }
 
         .btn-recruiter-cta {
@@ -219,7 +219,6 @@ export const PreVerifiedHiring: React.FC<PreVerifiedHiringProps> = ({
           box-shadow: 0 8px 20px rgba(12, 13, 14, 0.18);
         }
 
-
         /* Right Column Visual Frame */
         .verified-right-col {
           display: flex;
@@ -228,12 +227,13 @@ export const PreVerifiedHiring: React.FC<PreVerifiedHiringProps> = ({
         }
 
         .visual-card-frame {
+          position: relative;
           width: 100%;
           max-width: 580px;
           border-radius: 24px;
           overflow: hidden;
           background: #ffffff;
-          border: 1px solid #eaecf0;
+          border: 1px solid rgba(234, 236, 240, 0.7);
           box-shadow: 0 20px 48px -12px rgba(12, 13, 14, 0.08);
           transition: transform 0.35s ease, box-shadow 0.35s ease;
         }
