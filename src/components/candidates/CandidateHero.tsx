@@ -95,7 +95,7 @@ export const CandidateHero: React.FC<CandidateHeroProps> = ({ onJoinCandidate })
         <div className="cand-panoramic-visual">
           <img
             src="/images/candidates/candidate-hero.png"
-            alt="ProxHire Candidate Matching Dashboard"
+            alt="ProxHire Candidate Career Dashboard Journey"
             className="cand-feathered-img"
           />
         </div>

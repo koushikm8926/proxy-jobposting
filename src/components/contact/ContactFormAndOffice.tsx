@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { MapPin, Headphones, Clock, ArrowRight, CheckCircle2 } from 'lucide-react'
+import { MapPin, Headphones, Clock, ArrowRight, CheckCircle2, ExternalLink } from 'lucide-react'
 import { db } from '../../firebase'
 import { collection, addDoc, serverTimestamp } from 'firebase/firestore'
 
@@ -225,13 +225,28 @@ export const ContactFormAndOffice: React.FC = () => {
               </p>
             </div>
 
-            {/* Map Visual */}
+            {/* Interactive Dynamic Google Map */}
             <div className="office-map-container">
-              <img
-                src="/images/contact/office-map.jpg"
-                alt="Map showing ProxHire Services India Private Limited at Krishnarajapura Bengaluru"
-                className="office-map-img"
+              <iframe
+                title="ProxHire Services India Private Limited - Office Location"
+                src="https://maps.google.com/maps?q=Ranka+Junction,+Old+Madras+Rd,+Vijinapura,+Dooravani+Nagar,+Bengaluru,+Karnataka+560016&t=&z=15&ie=UTF8&iwloc=&output=embed"
+                width="100%"
+                height="100%"
+                style={{ border: 0, display: 'block' }}
+                allowFullScreen={true}
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
               />
+              <a
+                href="https://www.google.com/maps/search/?api=1&query=Ranka+Junction,+Old+Madras+Rd,+Vijinapura,+Bengaluru,+Karnataka+560016"
+                target="_blank"
+                rel="noreferrer"
+                className="office-map-directions-btn"
+                aria-label="Open in Google Maps for directions"
+              >
+                <ExternalLink size={13} />
+                <span>Open in Google Maps</span>
+              </a>
             </div>
 
             {/* Support Team & Business Hours info */}
@@ -424,17 +439,50 @@ export const ContactFormAndOffice: React.FC = () => {
         }
 
         .office-map-container {
+          position: relative;
+          width: 100%;
+          height: 280px;
           border-radius: 16px;
           overflow: hidden;
           margin-bottom: 24px;
           border: 1px solid #e4e7ec;
-          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+          box-shadow: 0 4px 16px -2px rgba(0, 0, 0, 0.06);
+          background-color: #f1f3f5;
         }
 
-        .office-map-img {
+        .office-map-container iframe {
           width: 100%;
-          height: auto;
+          height: 100%;
+          border: 0;
           display: block;
+        }
+
+        .office-map-directions-btn {
+          position: absolute;
+          bottom: 12px;
+          right: 12px;
+          background: rgba(255, 255, 255, 0.95);
+          backdrop-filter: blur(8px);
+          color: #0c0d0e;
+          font-size: 11.5px;
+          font-weight: 600;
+          padding: 6px 12px;
+          border-radius: 9999px;
+          border: 1px solid rgba(0, 0, 0, 0.1);
+          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+          display: inline-flex;
+          align-items: center;
+          gap: 6px;
+          text-decoration: none;
+          transition: all 0.2s ease;
+          z-index: 2;
+        }
+
+        .office-map-directions-btn:hover {
+          background: #0c0d0e;
+          color: #ffffff;
+          transform: translateY(-1px);
+          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
         }
 
         .office-bottom-meta {
