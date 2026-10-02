@@ -1,11 +1,13 @@
 import React from 'react'
-import { Hero } from '../components/Hero'
-import { WhyProxy } from '../components/WhyProxy'
-import { CandidateRecruiterCards } from '../components/CandidateRecruiterCards'
-import { JobCategories } from '../components/JobCategories'
-import { HowItWorks } from '../components/HowItWorks'
-import { WhyChooseProxy } from '../components/WhyChooseProxy'
-import { CallToAction } from '../components/CallToAction'
+import {
+  Hero,
+  WhyProxy,
+  CandidateRecruiterCards,
+  JobCategories,
+  HowItWorks,
+  WhyChooseProxy,
+  CallToAction
+} from '../components/home'
 import { Footer } from '../components/Footer'
 
 interface HomePageProps {

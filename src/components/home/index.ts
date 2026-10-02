@@ -1,0 +1,8 @@
+export { Hero } from './Hero'
+export { CandidateRecruiterCards } from './CandidateRecruiterCards'
+export { WhyProxy } from './WhyProxy'
+export { JobCategories } from './JobCategories'
+export { HowItWorks } from './HowItWorks'
+export { WhyChooseProxy } from './WhyChooseProxy'
+export { BengaluruFocus } from './BengaluruFocus'
+export { CallToAction } from './CallToAction'

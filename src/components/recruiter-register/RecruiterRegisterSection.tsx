@@ -196,7 +196,7 @@ export const RecruiterRegisterSection: React.FC<RecruiterRegisterSectionProps> =
             {/* Recruiter Photo matching visual */}
             <div className="recruiter-photo-container">
               <img
-                src="/images/recruiter_register_man.jpg"
+                src="/images/recruiters/recruiter-register.jpg"
                 alt="Executive recruiter at modern workstation"
                 className="recruiter-photo-img"
               />

@@ -19,7 +19,7 @@ export const AboutJourney: React.FC = () => {
           {/* Right Skyline Image - Spans 100% to screen edge */}
           <div className="journey-image-wrapper">
             <img
-              src="/images/bengaluru_skyline_new.png"
+              src="/images/common/bengaluru-skyline.png"
               alt="Bengaluru Skyline Growth"
               className="journey-skyline-img"
             />

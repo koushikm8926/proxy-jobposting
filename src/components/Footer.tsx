@@ -4,7 +4,8 @@ import {
   Phone,
   Mail,
   MapPin,
-  Clock
+  ShieldCheck,
+  Info
 } from 'lucide-react'
 
 interface FooterProps {
@@ -121,16 +122,59 @@ export const Footer: React.FC<FooterProps> = ({ variant = 'dark' }) => {
               </div>
             </div>
           </div>
+        </div>
 
-          {/* Column 5: Business Hours */}
-          <div className="footer-hours-col">
-            <h4 className="footer-col-title" style={{ color: isDark ? '#ffffff' : '#0c0d0e' }}>Business Hours</h4>
-            <div className="hours-box">
-              <Clock size={20} className="hours-icon" color={isDark ? '#9ca3af' : '#0c0d0e'} />
-              <div className="hours-details">
-                <span className="hours-days" style={{ color: isDark ? '#ffffff' : '#0c0d0e' }}>Mon - Sun</span>
-                <span className="hours-time" style={{ color: isDark ? '#9ca3af' : '#64748b' }}>8:00 AM - 9:00 PM</span>
+        {/* Compliance & Disclaimers Strip (2-Column Compact Layout) */}
+        <div
+          className="footer-disclaimers-strip"
+          style={{
+            borderTop: isDark ? '1px solid #1a1b1e' : '1px solid #edf0f4',
+            paddingTop: '18px',
+            paddingBottom: '18px',
+            marginTop: '28px'
+          }}
+        >
+          <div className="footer-disclaimers-grid">
+            <div className="disclaimer-col">
+              <div className="disclaimer-header">
+                <ShieldCheck size={14} color={isDark ? '#a1a1aa' : '#475569'} style={{ flexShrink: 0 }} />
+                <span className="disclaimer-title" style={{ color: isDark ? '#e4e4e7' : '#1e293b' }}>
+                  Privacy &amp; Verification
+                </span>
+                <span
+                  className="disclaimer-tag"
+                  style={{
+                    backgroundColor: isDark ? 'rgba(255, 255, 255, 0.06)' : '#f1f5f9',
+                    color: isDark ? '#a1a1aa' : '#64748b'
+                  }}
+                >
+                  DPDP Act, 2023
+                </span>
               </div>
+              <p className="disclaimer-text" style={{ color: isDark ? '#71717a' : '#64748b' }}>
+                Candidate verification and background checks are initiated only with the candidate’s explicit consent. ProxHire uses authorized verification and API-based workflows, where applicable, for identity, employment and background verification. Our data-handling practices are designed in alignment with applicable requirements under India’s Digital Personal Data Protection Act, 2023.
+              </p>
+            </div>
+
+            <div className="disclaimer-col">
+              <div className="disclaimer-header">
+                <Info size={14} color={isDark ? '#a1a1aa' : '#475569'} style={{ flexShrink: 0 }} />
+                <span className="disclaimer-title" style={{ color: isDark ? '#e4e4e7' : '#1e293b' }}>
+                  Platform &amp; Third-Party Services
+                </span>
+                <span
+                  className="disclaimer-tag"
+                  style={{
+                    backgroundColor: isDark ? 'rgba(255, 255, 255, 0.06)' : '#f1f5f9',
+                    color: isDark ? '#a1a1aa' : '#64748b'
+                  }}
+                >
+                  Independent Platform
+                </span>
+              </div>
+              <p className="disclaimer-text" style={{ color: isDark ? '#71717a' : '#64748b' }}>
+                ProxHire is an independent recruitment technology platform. References to DigiLocker, EPFO/UAN, e-Courts or other third-party services indicate supported or applicable verification integrations and do not imply ownership, endorsement or affiliation. All respective names and trademarks belong to their respective owners.
+              </p>
             </div>
           </div>
         </div>
@@ -139,7 +183,7 @@ export const Footer: React.FC<FooterProps> = ({ variant = 'dark' }) => {
         <div
           className="footer-bottom-bar"
           style={{
-            borderTopColor: isDark ? '#1f2024' : '#f0f0f4',
+            borderTopColor: isDark ? '#1a1b1e' : '#edf0f4',
             color: isDark ? '#71717a' : '#64748b'
           }}
         >
@@ -156,15 +200,15 @@ export const Footer: React.FC<FooterProps> = ({ variant = 'dark' }) => {
 
       <style>{`
         .site-footer {
-          padding-top: 64px;
-          padding-bottom: 28px;
+          padding-top: 50px;
+          padding-bottom: 24px;
         }
 
         .footer-grid {
           display: grid;
-          grid-template-columns: 2.2fr 1fr 1.2fr 2fr 1.4fr;
+          grid-template-columns: 2.3fr 1.1fr 1.3fr 2.3fr;
           gap: 36px;
-          margin-bottom: 56px;
+          margin-bottom: 12px;
         }
 
         .footer-brand-desc {
@@ -249,34 +293,43 @@ export const Footer: React.FC<FooterProps> = ({ variant = 'dark' }) => {
           line-height: 1.5;
         }
 
-        .hours-box {
+        .footer-disclaimers-grid {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 32px;
+        }
+
+        .disclaimer-header {
           display: flex;
-          align-items: flex-start;
-          gap: 12px;
+          align-items: center;
+          gap: 7px;
+          margin-bottom: 6px;
         }
 
-        .hours-icon {
-          margin-top: 2px;
-        }
-
-        .hours-details {
-          display: flex;
-          flex-direction: column;
-          gap: 4px;
-        }
-
-        .hours-days {
-          font-size: 13px;
+        .disclaimer-title {
+          font-size: 12px;
           font-weight: 600;
+          letter-spacing: -0.01em;
         }
 
-        .hours-time {
-          font-size: 12.5px;
+        .disclaimer-tag {
+          font-size: 9.5px;
+          font-weight: 600;
+          text-transform: uppercase;
+          letter-spacing: 0.04em;
+          padding: 1.5px 6px;
+          border-radius: 9999px;
+        }
+
+        .disclaimer-text {
+          font-size: 11.5px;
+          line-height: 1.6;
+          margin: 0;
         }
 
         .footer-bottom-bar {
           border-top: 1px solid;
-          padding-top: 24px;
+          padding-top: 18px;
           display: flex;
           align-items: center;
           justify-content: space-between;
@@ -304,9 +357,17 @@ export const Footer: React.FC<FooterProps> = ({ variant = 'dark' }) => {
           }
         }
 
+        @media (max-width: 768px) {
+          .footer-disclaimers-grid {
+            grid-template-columns: 1fr;
+            gap: 14px;
+          }
+        }
+
         @media (max-width: 640px) {
           .footer-grid {
             grid-template-columns: 1fr;
+            margin-bottom: 20px;
           }
           .footer-bottom-bar {
             flex-direction: column;

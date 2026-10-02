@@ -1,0 +1,6 @@
+export { AboutHero } from './AboutHero'
+export { AboutJourney } from './AboutJourney'
+export { MeetFounders } from './MeetFounders'
+export { OurStory } from './OurStory'
+export { VisionMission } from './VisionMission'
+export { WhatMakesProxyDifferent } from './WhatMakesProxyDifferent'

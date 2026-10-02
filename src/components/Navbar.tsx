@@ -90,10 +90,10 @@ export const Navbar: React.FC<NavbarProps> = ({
             onPageChange('home')
             window.scrollTo({ top: 0, behavior: 'smooth' })
           }}
-          style={{ display: 'inline-flex', cursor: 'pointer', textAlign: 'left', background: 'transparent', border: 'none', padding: 0 }}
+          style={{ display: 'inline-flex', alignItems: 'center', cursor: 'pointer', textAlign: 'left', background: 'transparent', border: 'none', padding: 0 }}
           aria-label="ProxHire Home"
         >
-          <Logo />
+          <Logo height={54} />
         </button>
 
         {/* Desktop Navigation Links */}

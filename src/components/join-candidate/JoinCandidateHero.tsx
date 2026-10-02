@@ -34,7 +34,7 @@ export const JoinCandidateHero: React.FC = () => {
           <div className="join-hero-visual-wrap">
             <div className="join-hero-card">
               <img
-                src="/images/join_candidate_hero.jpg"
+                src="/images/candidates/join-hero.jpg"
                 alt="Candidate aspiring for next career step"
                 className="join-hero-img"
               />

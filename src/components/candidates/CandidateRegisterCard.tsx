@@ -16,7 +16,7 @@ export const CandidateRegisterCard: React.FC<CandidateRegisterCardProps> = ({
           <div className="cand-reg-image-wrapper">
             <div className="cand-reg-image-card">
               <img
-                src="/images/candidate_journey_hero.png"
+                src="/images/candidates/candidate-journey.png"
                 alt="Launch Your Career Journey - Start Your Career"
                 className="cand-reg-photo"
               />

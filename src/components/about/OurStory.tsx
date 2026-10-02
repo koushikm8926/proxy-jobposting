@@ -33,7 +33,7 @@ export const OurStory: React.FC = () => {
           <div className="story-image-wrap">
             <div className="story-image-card">
               <img
-                src="/images/candidate_recruiter_network.png"
+                src="/images/about/our-story.png"
                 alt="ProxHire Candidate-Recruiter Network Ecosystem"
                 className="story-network-img"
               />

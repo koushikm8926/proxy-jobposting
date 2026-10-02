@@ -93,7 +93,7 @@ export const RecruiterHero: React.FC<RecruiterHeroProps> = ({ onRegister }) => {
         {/* Right Side: Panoramic Integrated Visual spanning to right screen edge */}
         <div className="rec-panoramic-visual">
           <img
-            src="/images/recruiter_matching_dashboard.png"
+            src="/images/recruiters/recruiter-hero.png"
             alt="ProxHire Recruiter Talent Matching Dashboard"
             className="rec-feathered-img"
           />

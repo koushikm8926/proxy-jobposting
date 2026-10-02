@@ -33,7 +33,7 @@ export const ModernRecruitmentNeeds: React.FC = () => {
           <div className="needs-image-wrapper">
             <div className="needs-image-card">
               <img
-                src="/images/recruiter_feature_woman.jpg"
+                src="/images/recruiters/recruiter-needs.jpg"
                 alt="Modern recruitment professional in office"
                 className="needs-photo"
               />

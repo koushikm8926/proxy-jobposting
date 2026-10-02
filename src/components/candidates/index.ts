@@ -1,0 +1,6 @@
+export { CandidateBengaluruBanner } from './CandidateBengaluruBanner'
+export { CandidateHero } from './CandidateHero'
+export { CandidateHowItWorks } from './CandidateHowItWorks'
+export { CandidateRegisterCard } from './CandidateRegisterCard'
+export { WhoCanApply } from './WhoCanApply'
+export { WhyChooseProxyCareer } from './WhyChooseProxyCareer'

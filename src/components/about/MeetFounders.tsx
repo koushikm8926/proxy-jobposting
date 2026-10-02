@@ -7,7 +7,7 @@ export const MeetFounders: React.FC = () => {
       role: 'Founder & Director',
       company: 'ProxHire Services India Pvt. Ltd.',
       bio: 'Building ProxHire with a vision to make recruitment simpler, more accessible and technology-driven for candidates and employers.',
-      image: '/images/founder.jpeg',
+      image: '/images/about/founder.jpeg',
       alt: 'Renati Venkata Vineela - Founder & Director'
     },
     {
@@ -15,7 +15,7 @@ export const MeetFounders: React.FC = () => {
       role: 'Co-Founder & Director',
       company: 'ProxHire Services India Pvt. Ltd.',
       bio: 'Working alongside the founding team to build ProxHire into a trusted, technology-driven recruitment platform that connects candidates with employers and simplifies the hiring journey.',
-      image: '/images/co-founder.jpeg',
+      image: '/images/about/co-founder.jpeg',
       alt: 'Chiranjeevi Sai Lakshmi Narasimha Varma - Co-Founder & Director'
     }
   ]

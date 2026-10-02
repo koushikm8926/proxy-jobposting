@@ -94,7 +94,7 @@ export const CandidateHero: React.FC<CandidateHeroProps> = ({ onJoinCandidate })
         {/* Right Side: Panoramic Integrated Visual spanning to right screen edge */}
         <div className="cand-panoramic-visual">
           <img
-            src="/images/candidate_matching_dashboard.png"
+            src="/images/candidates/candidate-hero.png"
             alt="ProxHire Candidate Matching Dashboard"
             className="cand-feathered-img"
           />

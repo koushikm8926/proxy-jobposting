@@ -18,7 +18,7 @@ export const FAQSplitCards: React.FC<FAQSplitCardsProps> = ({
           <div className="faq-audience-card">
             <div className="faq-audience-image-box">
               <img
-                src="/images/faq_candidate_woman.jpg"
+                src="/images/faq/faq-candidate.jpg"
                 alt="Candidate with questions"
                 className="faq-audience-photo"
               />
@@ -61,7 +61,7 @@ export const FAQSplitCards: React.FC<FAQSplitCardsProps> = ({
             </div>
             <div className="faq-audience-image-box">
               <img
-                src="/images/faq_recruiter_man.jpg"
+                src="/images/faq/faq-recruiter.jpg"
                 alt="Recruiter with questions"
                 className="faq-audience-photo"
               />

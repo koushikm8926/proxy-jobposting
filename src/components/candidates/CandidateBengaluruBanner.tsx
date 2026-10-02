@@ -23,7 +23,7 @@ export const CandidateBengaluruBanner: React.FC = () => {
           {/* Right Skyline & City Badge */}
           <div className="cand-city-image-wrapper">
             <img
-              src="/images/bengaluru_skyline_new.png"
+              src="/images/common/bengaluru-skyline.png"
               alt="Bengaluru Skyline City"
               className="cand-city-skyline"
             />

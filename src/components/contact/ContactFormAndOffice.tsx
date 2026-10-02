@@ -228,7 +228,7 @@ export const ContactFormAndOffice: React.FC = () => {
             {/* Map Visual */}
             <div className="office-map-container">
               <img
-                src="/images/office_location_map.jpg"
+                src="/images/contact/office-map.jpg"
                 alt="Map showing ProxHire Services India Private Limited at Krishnarajapura Bengaluru"
                 className="office-map-img"
               />

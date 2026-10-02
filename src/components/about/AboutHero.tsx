@@ -41,7 +41,7 @@ export const AboutHero: React.FC<AboutHeroProps> = ({ onScrollToStory }) => {
           {/* Right Visual Spanning to Edge with Smooth Fade */}
           <div className="about-hero-image-wrapper">
             <img
-              src="/images/collaborative_teamwork_office.png"
+              src="/images/about/about-hero.png"
               alt="ProxHire team - Building a Brighter Tomorrow Through People"
               className="about-hero-fullwidth-img"
             />

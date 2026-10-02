@@ -1,14 +1,15 @@
 import { useState, useEffect } from 'react'
-import { Navbar, type NavPage } from './components/Navbar'
-import { HomePage } from './pages/HomePage'
-import { AboutPage } from './pages/AboutPage'
-import { RecruitersPage } from './pages/RecruitersPage'
-import { CandidatesPage } from './pages/CandidatesPage'
-import { ContactPage } from './pages/ContactPage'
-import { FAQPage } from './pages/FAQPage'
-import { JoinCandidatePage } from './pages/JoinCandidatePage'
-import { RecruiterRegisterPage } from './pages/RecruiterRegisterPage'
-import { Modal, type ModalType } from './components/Modal'
+import { Navbar, type NavPage, Modal, type ModalType } from './components'
+import {
+  HomePage,
+  AboutPage,
+  RecruitersPage,
+  CandidatesPage,
+  ContactPage,
+  FAQPage,
+  JoinCandidatePage,
+  RecruiterRegisterPage
+} from './pages'
 import { useScrollReveal } from './hooks/useScrollReveal'
 
 export function App() {

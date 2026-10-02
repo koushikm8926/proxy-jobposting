@@ -34,7 +34,7 @@ export const ContactHero: React.FC = () => {
           <div className="contact-hero-visual-wrap">
             <div className="contact-hero-card">
               <img
-                src="/images/contact_hero_office.jpg"
+                src="/images/contact/contact-hero.jpg"
                 alt="ProxHire corporate headquarters in Bengaluru"
                 className="contact-hero-img"
               />

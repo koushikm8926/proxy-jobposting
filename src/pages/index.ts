@@ -1,0 +1,8 @@
+export { HomePage } from './HomePage'
+export { AboutPage } from './AboutPage'
+export { CandidatesPage } from './CandidatesPage'
+export { RecruitersPage } from './RecruitersPage'
+export { ContactPage } from './ContactPage'
+export { FAQPage } from './FAQPage'
+export { JoinCandidatePage } from './JoinCandidatePage'
+export { RecruiterRegisterPage } from './RecruiterRegisterPage'

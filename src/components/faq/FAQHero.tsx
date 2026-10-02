@@ -52,7 +52,7 @@ export const FAQHero: React.FC<FAQHeroProps> = ({ searchQuery, onSearchChange })
           <div className="faq-hero-visual-wrap">
             <div className="faq-hero-card">
               <img
-                src="/images/faq_hero_woman.jpg"
+                src="/images/faq/faq-hero.jpg"
                 alt="ProxHire customer seeking answers"
                 className="faq-hero-img"
               />
