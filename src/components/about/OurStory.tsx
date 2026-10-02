@@ -29,13 +29,13 @@ export const OurStory: React.FC = () => {
             </div>
           </div>
 
-          {/* Right Office Image */}
+          {/* Right Visual Placement */}
           <div className="story-image-wrap">
             <div className="story-image-card">
               <img
-                src="/images/about_office.jpg"
-                alt="ProxHire corporate office in Bengaluru"
-                className="story-office-img"
+                src="/images/candidate_recruiter_network.png"
+                alt="ProxHire Candidate-Recruiter Network Ecosystem"
+                className="story-network-img"
               />
             </div>
           </div>
@@ -44,40 +44,43 @@ export const OurStory: React.FC = () => {
 
       <style>{`
         .our-story-section {
-          padding: 80px 0;
+          padding: 84px 0;
           background-color: #ffffff;
         }
 
         .our-story-grid {
           display: grid;
-          grid-template-columns: 1.15fr 0.85fr;
+          grid-template-columns: 1.08fr 0.92fr;
           gap: 56px;
-          align-items: center;
+          align-items: stretch;
         }
 
         .story-content {
-          max-width: 600px;
+          max-width: 580px;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
         }
 
         .story-title {
-          font-size: 36px;
+          font-size: 38px;
           font-weight: 800;
           color: #0c0d0e;
           letter-spacing: -0.03em;
-          line-height: 1.2;
-          margin-bottom: 24px;
+          line-height: 1.18;
+          margin: 8px 0 24px;
         }
 
         .story-paragraphs {
           display: flex;
           flex-direction: column;
-          gap: 16px;
+          gap: 18px;
         }
 
         .story-paragraphs p {
-          font-size: 15px;
+          font-size: 15.5px;
           color: #475467;
-          line-height: 1.65;
+          line-height: 1.68;
         }
 
         .story-paragraphs strong {
@@ -85,24 +88,40 @@ export const OurStory: React.FC = () => {
           font-weight: 600;
         }
 
+        /* Right Image Placement Design */
         .story-image-wrap {
           display: flex;
-          justify-content: center;
+          align-items: stretch;
+          width: 100%;
         }
 
         .story-image-card {
           width: 100%;
+          min-height: 480px;
           border-radius: 24px;
           overflow: hidden;
-          box-shadow: 0 20px 40px -12px rgba(0, 0, 0, 0.1);
-          border: 1px solid #f0f0f4;
+          background-color: #fafafb;
+          border: 1px solid #eaebf0;
+          box-shadow: 
+            0 20px 40px -12px rgba(12, 13, 14, 0.08),
+            0 1px 3px 0 rgba(12, 13, 14, 0.04);
+          display: flex;
+          transition: transform 0.4s ease, box-shadow 0.4s ease;
         }
 
-        .story-office-img {
+        .story-image-card:hover {
+          transform: translateY(-3px);
+          box-shadow: 
+            0 28px 56px -14px rgba(12, 13, 14, 0.12),
+            0 2px 6px 0 rgba(12, 13, 14, 0.04);
+        }
+
+        .story-network-img {
           width: 100%;
           height: 100%;
-          max-height: 520px;
+          min-height: 480px;
           object-fit: cover;
+          object-position: center;
           display: block;
         }
 
@@ -110,6 +129,14 @@ export const OurStory: React.FC = () => {
           .our-story-grid {
             grid-template-columns: 1fr;
             gap: 40px;
+          }
+          .story-content {
+            max-width: 100%;
+          }
+          .story-image-card,
+          .story-network-img {
+            min-height: 340px;
+            height: 360px;
           }
         }
       `}</style>

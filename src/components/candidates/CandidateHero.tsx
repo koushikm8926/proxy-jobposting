@@ -7,131 +7,217 @@ interface CandidateHeroProps {
 
 export const CandidateHero: React.FC<CandidateHeroProps> = ({ onJoinCandidate }) => {
   return (
-    <section
-      id="candidate-hero"
-      style={{
-        position: 'relative',
-        paddingTop: '32px',
-        paddingBottom: '80px',
-        overflow: 'hidden',
-        background: 'linear-gradient(180deg, #ffffff 0%, #fafafa 100%)'
-      }}
-    >
-      <div className="container" style={{ position: 'relative', zIndex: 1 }}>
-        <div className="cand-hero-grid">
-          {/* Left Column */}
-          <div className="cand-hero-content">
-            <span className="section-kicker" style={{ color: '#52525b', letterSpacing: '0.18em' }}>
-              FOR CANDIDATES
-            </span>
+    <section id="candidate-hero" className="cand-hero-root">
+      {/* Subtle organic contour wave in top-left corner like Home Hero */}
+      <div className="cand-contour-waves">
+        <svg
+          viewBox="0 0 400 300"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+          className="contour-svg"
+        >
+          <path
+            d="M-50 40C60 40 120 90 140 160C160 230 220 270 320 270"
+            stroke="rgba(0, 0, 0, 0.04)"
+            strokeWidth="32"
+            strokeLinecap="round"
+          />
+          <path
+            d="M-80 120C40 120 90 160 110 220C130 280 190 320 280 320"
+            stroke="rgba(0, 0, 0, 0.025)"
+            strokeWidth="24"
+            strokeLinecap="round"
+          />
+        </svg>
+      </div>
 
-            <h1 className="cand-hero-heading">
-              Your Next<br />
-              Opportunity<br />
-              Starts Here.
-            </h1>
+      <div className="cand-container-fluid">
+        {/* Left Side: Content & Actions */}
+        <div className="cand-text-block">
+          <span className="cand-kicker">FOR CANDIDATES</span>
 
-            <p className="cand-hero-desc">
-              Find genuine job opportunities, create your professional profile, and connect with trusted employers through one simple platform.
-            </p>
+          <h1 className="cand-main-title">
+            Your Next<br />
+            Opportunity<br />
+            Starts Here.
+          </h1>
 
-            <div className="cand-hero-btn-wrap">
-              <button
-                type="button"
-                className="btn btn-primary"
-                onClick={onJoinCandidate}
-                style={{ padding: '12px 28px', fontSize: '15px' }}
-              >
-                <span>Join as a Candidate</span>
-                <ArrowRight size={16} />
-              </button>
+          <p className="cand-paragraph">
+            Find genuine job opportunities, create your professional profile, and connect with trusted employers through one simple platform.
+          </p>
+
+          <div className="cand-cta-group">
+            <button
+              type="button"
+              className="btn btn-primary cand-pill-btn cand-pill-black"
+              onClick={onJoinCandidate}
+            >
+              <span>Join as a Candidate</span>
+              <ArrowRight size={17} />
+            </button>
+          </div>
+
+          {/* 3 Horizontal Badges */}
+          <div className="cand-badges-row">
+            <div className="cand-badge-item">
+              <div className="cand-badge-icon">
+                <ShieldCheck size={18} color="#0c0d0e" strokeWidth={2.2} />
+              </div>
+              <div className="cand-badge-text">
+                <span>Verified</span>
+                <span>Employers</span>
+              </div>
             </div>
 
-            {/* 3 Horizontal Badges */}
-            <div className="cand-hero-badges-row">
-              <div className="cand-badge-item">
-                <div className="cand-badge-icon">
-                  <ShieldCheck size={18} color="#0c0d0e" strokeWidth={2.2} />
-                </div>
-                <div className="cand-badge-text">
-                  <span>Verified</span>
-                  <span>Employers</span>
-                </div>
+            <div className="cand-badge-item">
+              <div className="cand-badge-icon">
+                <Briefcase size={18} color="#0c0d0e" strokeWidth={2.2} />
               </div>
-
-              <div className="cand-badge-item">
-                <div className="cand-badge-icon">
-                  <Briefcase size={18} color="#0c0d0e" strokeWidth={2.2} />
-                </div>
-                <div className="cand-badge-text">
-                  <span>Genuine</span>
-                  <span>Opportunities</span>
-                </div>
+              <div className="cand-badge-text">
+                <span>Genuine</span>
+                <span>Opportunities</span>
               </div>
+            </div>
 
-              <div className="cand-badge-item">
-                <div className="cand-badge-icon">
-                  <TrendingUp size={18} color="#0c0d0e" strokeWidth={2.2} />
-                </div>
-                <div className="cand-badge-text">
-                  <span>Career</span>
-                  <span>Growth</span>
-                </div>
+            <div className="cand-badge-item">
+              <div className="cand-badge-icon">
+                <TrendingUp size={18} color="#0c0d0e" strokeWidth={2.2} />
+              </div>
+              <div className="cand-badge-text">
+                <span>Career</span>
+                <span>Growth</span>
               </div>
             </div>
           </div>
+        </div>
 
-          {/* Right Column: Visual */}
-          <div className="cand-hero-visual-wrap">
-            <div className="cand-hero-card">
-              <img
-                src="/images/candidate_page_hero.jpg"
-                alt="Candidate aspiring for opportunities"
-                className="cand-hero-img"
-              />
-            </div>
-          </div>
+        {/* Right Side: Panoramic Integrated Visual spanning to right screen edge */}
+        <div className="cand-panoramic-visual">
+          <img
+            src="/images/candidate_matching_dashboard.png"
+            alt="ProxHire Candidate Matching Dashboard"
+            className="cand-feathered-img"
+          />
         </div>
       </div>
 
       <style>{`
-        .cand-hero-grid {
-          display: grid;
-          grid-template-columns: 1.1fr 0.9fr;
-          gap: 48px;
+        .cand-hero-root {
+          position: relative;
+          background-color: #ffffff;
+          overflow: hidden;
+          width: 100%;
+          min-height: 520px;
+          display: flex;
           align-items: center;
-          min-height: 480px;
+          border-bottom: 1px solid #f4f4f5;
         }
 
-        .cand-hero-content {
-          max-width: 540px;
+        .cand-contour-waves {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 380px;
+          height: 300px;
+          pointer-events: none;
+          z-index: 0;
+          transform-origin: top left;
         }
 
-        .cand-hero-heading {
-          font-size: 56px;
+        .contour-svg {
+          width: 100%;
+          height: 100%;
+        }
+
+        /* Fluid container with ZERO right margin/padding so visual touches right edge */
+        .cand-container-fluid {
+          position: relative;
+          z-index: 1;
+          display: grid;
+          grid-template-columns: minmax(460px, 1.05fr) minmax(480px, 1.25fr);
+          align-items: center;
+          gap: 0;
+          width: 100%;
+          padding-left: clamp(24px, 5vw, 72px);
+          padding-right: 0;
+          box-sizing: border-box;
+        }
+
+        /* Left Content */
+        .cand-text-block {
+          max-width: 520px;
+          padding-top: 40px;
+          padding-bottom: 48px;
+          padding-right: 32px;
+        }
+
+        .cand-kicker {
+          font-size: 13px;
+          font-weight: 800;
+          letter-spacing: 0.16em;
+          color: #52525b;
+          text-transform: uppercase;
+          display: block;
+          margin-bottom: 12px;
+        }
+
+        .cand-main-title {
+          font-size: 58px;
           font-weight: 800;
           letter-spacing: -0.035em;
           line-height: 1.08;
           color: #0c0d0e;
-          margin: 16px 0 20px;
+          margin: 0 0 20px;
         }
 
-        .cand-hero-desc {
+        .cand-paragraph {
           font-size: 16px;
           color: #475467;
           line-height: 1.6;
-          margin-bottom: 32px;
-          max-width: 480px;
+          margin: 0 0 32px;
+          max-width: 460px;
         }
 
-        .cand-hero-btn-wrap {
-          margin-bottom: 40px;
+        .cand-cta-group {
+          display: flex;
+          align-items: center;
+          gap: 16px;
+          margin-bottom: 36px;
         }
 
-        .cand-hero-badges-row {
+        .cand-pill-btn {
+          height: 48px;
+          padding: 0 28px;
+          border-radius: 9999px;
+          font-size: 15px;
+          font-weight: 600;
+          display: inline-flex;
+          align-items: center;
+          gap: 10px;
+          cursor: pointer;
+          transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .cand-pill-black {
+          background-color: #0c0d0e;
+          color: #ffffff;
+          border: 1px solid #0c0d0e;
+          box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12);
+        }
+
+        .cand-pill-black:hover {
+          background-color: #27272a;
+          transform: translateY(-2px);
+          box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+        }
+
+        /* 3 Badges Row */
+        .cand-badges-row {
           display: flex;
           align-items: center;
           gap: 28px;
+          padding-top: 8px;
+          border-top: 1px solid #f4f4f6;
         }
 
         .cand-badge-item {
@@ -155,37 +241,78 @@ export const CandidateHero: React.FC<CandidateHeroProps> = ({ onJoinCandidate })
           line-height: 1.25;
         }
 
-        .cand-hero-visual-wrap {
-          display: flex;
-          justify-content: center;
-        }
-
-        .cand-hero-card {
+        /* Right Panoramic Visual: 100% Flush to the Right Edge of the Screen with Smooth Fade */
+        .cand-panoramic-visual {
           position: relative;
+          display: flex;
+          justify-content: flex-end;
+          align-items: center;
           width: 100%;
-          max-width: 480px;
-          border-radius: 28px;
+          height: 100%;
+          min-height: 520px;
+          margin: 0;
+          padding: 0;
           overflow: hidden;
-          box-shadow: 0 20px 48px -12px rgba(0, 0, 0, 0.12);
+          background-color: #ffffff;
         }
 
-        .cand-hero-img {
+        .cand-feathered-img {
           width: 100%;
-          height: 460px;
+          height: 100%;
+          min-height: 520px;
+          max-height: 580px;
           object-fit: cover;
           object-position: center;
+          display: block;
+          margin: 0;
+          padding: 0;
+          transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+          -webkit-mask-image: linear-gradient(to right, transparent 0%, rgba(0, 0, 0, 0.15) 5%, rgba(0, 0, 0, 0.85) 16%, #000000 26%);
+          mask-image: linear-gradient(to right, transparent 0%, rgba(0, 0, 0, 0.15) 5%, rgba(0, 0, 0, 0.85) 16%, #000000 26%);
         }
 
-        @media (max-width: 960px) {
-          .cand-hero-grid {
+        .cand-panoramic-visual:hover .cand-feathered-img {
+          transform: scale(1.02);
+        }
+
+        @media (max-width: 990px) {
+          .cand-container-fluid {
             grid-template-columns: 1fr;
-            gap: 40px;
+            padding-left: 20px;
+            padding-right: 0;
+            padding-top: 24px;
+            padding-bottom: 0;
           }
-          .cand-hero-heading {
-            font-size: 40px;
+          .cand-text-block {
+            max-width: 100%;
+            padding-right: 20px;
           }
-          .cand-hero-img {
-            height: 360px;
+          .cand-main-title {
+            font-size: 42px;
+          }
+          .cand-panoramic-visual {
+            justify-content: center;
+            min-height: 360px;
+          }
+          .cand-feathered-img {
+            min-height: 360px;
+            max-height: 400px;
+            -webkit-mask-image: linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 1) 20%);
+            mask-image: linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 1) 20%);
+          }
+        }
+
+        @media (max-width: 600px) {
+          .cand-main-title {
+            font-size: 36px;
+          }
+          .cand-badges-row {
+            flex-wrap: wrap;
+            gap: 16px;
+          }
+          .cand-pill-btn {
+            width: 100%;
+            justify-content: center;
           }
         }
       `}</style>
