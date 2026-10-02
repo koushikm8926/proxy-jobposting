@@ -32,7 +32,7 @@ export const IMAGES = {
   },
   recruiters: {
     hero: '/images/recruiters/recruiter-hero.png',
-    needs: '/images/recruiters/recruiter-needs.jpg',
+    needs: '/images/recruiters/verified-talent-recruitment-dashboard.png',
     registerHero: '/images/recruiters/recruiter-register.jpg',
   },
   contact: {

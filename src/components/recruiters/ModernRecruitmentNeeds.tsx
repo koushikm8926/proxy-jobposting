@@ -29,12 +29,12 @@ export const ModernRecruitmentNeeds: React.FC = () => {
     <section className="modern-needs-section">
       <div className="container">
         <div className="modern-needs-grid">
-          {/* Left: Professional Working Image */}
+          {/* Left: Verified Talent Recruitment Dashboard */}
           <div className="needs-image-wrapper">
             <div className="needs-image-card">
               <img
-                src="/images/recruiters/recruiter-needs.jpg"
-                alt="Modern recruitment professional in office"
+                src="/images/recruiters/verified-talent-recruitment-dashboard.png"
+                alt="ProxHire Verified Talent Recruitment Dashboard"
                 className="needs-photo"
               />
             </div>
@@ -82,19 +82,24 @@ export const ModernRecruitmentNeeds: React.FC = () => {
 
         .needs-image-card {
           width: 100%;
-          max-width: 480px;
-          border-radius: 24px;
+          max-width: 520px;
+          border-radius: 20px;
           overflow: hidden;
           box-shadow: 0 20px 48px -12px rgba(0, 0, 0, 0.1);
-          border: 1px solid #f0f0f4;
+          border: 1px solid #e4e7ec;
+          background-color: #f8fafc;
         }
 
         .needs-photo {
           width: 100%;
-          height: 100%;
-          max-height: 460px;
-          object-fit: cover;
+          height: auto;
           display: block;
+          object-fit: cover;
+          transition: transform 0.4s ease;
+        }
+
+        .needs-image-card:hover .needs-photo {
+          transform: scale(1.02);
         }
 
         .needs-content {
