@@ -39,7 +39,7 @@ export const Hero: React.FC<HeroProps> = ({ onFindJobs, onHireTalent }) => {
 
           <h1 className="hero-main-title">
             <span className="title-brand">ProxHire</span>
-            <span className="title-tagline">The Desire to Achieve.</span>
+            <span className="title-tagline">India’s Ultimate Career Bridge</span>
           </h1>
 
           <p className="hero-paragraph">
@@ -120,7 +120,7 @@ export const Hero: React.FC<HeroProps> = ({ onFindJobs, onHireTalent }) => {
           position: relative;
           z-index: 1;
           display: grid;
-          grid-template-columns: minmax(460px, 1.05fr) minmax(480px, 1.25fr);
+          grid-template-columns: minmax(500px, 1.15fr) minmax(440px, 1.25fr);
           align-items: center;
           gap: 0;
           width: 100%;
@@ -131,7 +131,7 @@ export const Hero: React.FC<HeroProps> = ({ onFindJobs, onHireTalent }) => {
 
         /* Left Content */
         .hero-text-block {
-          max-width: 520px;
+          max-width: 580px;
           padding-top: 36px;
           padding-bottom: 44px;
           padding-right: 24px;
@@ -166,12 +166,13 @@ export const Hero: React.FC<HeroProps> = ({ onFindJobs, onHireTalent }) => {
         }
 
         .title-tagline {
-          font-size: 36px;
+          font-size: clamp(28px, 2.3vw, 34px);
           font-weight: 800;
           letter-spacing: -0.025em;
           color: #0c0d0e;
           margin-top: 8px;
           line-height: 1.15;
+          white-space: nowrap;
         }
 
         .hero-paragraph {
@@ -313,7 +314,8 @@ export const Hero: React.FC<HeroProps> = ({ onFindJobs, onHireTalent }) => {
             font-size: 54px;
           }
           .title-tagline {
-            font-size: 28px;
+            font-size: clamp(22px, 3.8vw, 28px);
+            white-space: nowrap;
           }
           .hero-panoramic-visual {
             justify-content: center;
@@ -330,7 +332,8 @@ export const Hero: React.FC<HeroProps> = ({ onFindJobs, onHireTalent }) => {
             font-size: 44px;
           }
           .title-tagline {
-            font-size: 24px;
+            font-size: clamp(17px, 4.8vw, 22px);
+            white-space: nowrap;
           }
           .hero-cta-group {
             flex-direction: column;
