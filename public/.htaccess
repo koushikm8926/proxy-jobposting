@@ -2,12 +2,7 @@
   RewriteEngine On
   RewriteBase /
 
-  # 1. Redirect non-www to www and enforce HTTPS
-  RewriteCond %{HTTPS} off [OR]
-  RewriteCond %{HTTP_HOST} !^www\. [NC]
-  RewriteRule ^(.*)$ https://www.proxhire.in/$1 [L,R=301]
-
-  # 2. React Router SPA Fallback (prevents 404 on page refresh)
+  # React Router SPA Fallback
   RewriteRule ^index\.html$ - [L]
   RewriteCond %{REQUEST_FILENAME} !-f
   RewriteCond %{REQUEST_FILENAME} !-d
