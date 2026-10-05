@@ -53,7 +53,7 @@ export const CandidateRegisterCard: React.FC<CandidateRegisterCardProps> = ({
 
         .cand-register-grid {
           display: grid;
-          grid-template-columns: minmax(420px, 1.15fr) minmax(340px, 0.85fr);
+          grid-template-columns: 1.15fr 0.85fr;
           gap: 56px;
           align-items: center;
         }
@@ -110,13 +110,31 @@ export const CandidateRegisterCard: React.FC<CandidateRegisterCardProps> = ({
         @media (max-width: 960px) {
           .cand-register-grid {
             grid-template-columns: 1fr;
-            gap: 40px;
+            gap: 36px;
           }
           .cand-reg-image-wrapper {
             justify-content: center;
           }
           .cand-reg-image-card {
             max-width: 100%;
+          }
+        }
+
+        @media (max-width: 640px) {
+          .cand-register-section {
+            padding: 40px 0 64px;
+          }
+          .cand-reg-title {
+            font-size: 28px;
+          }
+          .cand-reg-desc {
+            font-size: 14px;
+          }
+        }
+
+        @media (max-width: 480px) {
+          .cand-reg-title {
+            font-size: 24px;
           }
         }
       `}</style>

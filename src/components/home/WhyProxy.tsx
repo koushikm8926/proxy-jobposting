@@ -220,7 +220,7 @@ export const WhyProxy: React.FC = () => {
             gap: 20px;
           }
           .why-proxy-title {
-            font-size: 32px;
+            font-size: 30px;
           }
         }
 
@@ -229,13 +229,33 @@ export const WhyProxy: React.FC = () => {
             padding: 20px 0 20px;
           }
           .features-grid {
-            grid-template-columns: 1fr;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
           }
           .why-proxy-title {
-            font-size: 28px;
+            font-size: 26px;
           }
           .feature-card {
-            padding: 32px 20px;
+            padding: 28px 16px;
+          }
+        }
+
+        @media (max-width: 480px) {
+          .features-grid {
+            grid-template-columns: 1fr;
+            gap: 12px;
+          }
+          .why-proxy-title {
+            font-size: 24px;
+          }
+          .why-proxy-subtitle {
+            font-size: 14px;
+          }
+          .feature-title {
+            font-size: 18px;
+          }
+          .feature-description {
+            font-size: 13.5px;
           }
         }
       `}</style>

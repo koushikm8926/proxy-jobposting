@@ -582,12 +582,50 @@ export const HowItWorks: React.FC = () => {
         }
 
         @media (max-width: 768px) {
+          .how-it-works-section {
+            padding: 32px 0 48px;
+          }
           .hiw-main-title {
-            font-size: 32px;
+            font-size: 28px;
+          }
+          .hiw-subtitle {
+            font-size: 14.5px;
           }
           .hiw-trust-bar {
             flex-direction: column;
             align-items: flex-start;
+            padding: 16px 20px;
+          }
+          .hiw-cards-overlay-grid {
+            padding: 20px 12px;
+            gap: 16px;
+          }
+          .hiw-integrated-card {
+            padding: 20px 16px;
+          }
+        }
+
+        @media (max-width: 480px) {
+          .hiw-main-title {
+            font-size: 24px;
+          }
+          .hiw-kicker {
+            font-size: 11px;
+          }
+          .hiw-card-heading {
+            font-size: 16px;
+          }
+          .hiw-pills-flow {
+            flex-wrap: wrap;
+            gap: 8px;
+          }
+          .hiw-pill-chevron {
+            display: none;
+          }
+          .hiw-pill-item {
+            flex-direction: row;
+            text-align: left;
+            gap: 8px;
           }
         }
       `}</style>

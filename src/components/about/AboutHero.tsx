@@ -166,17 +166,44 @@ export const AboutHero: React.FC<AboutHeroProps> = ({ onScrollToStory }) => {
             min-height: auto;
           }
           .about-hero-content {
-            padding: 48px 24px;
+            padding: 40px 20px;
           }
           .about-hero-heading {
-            font-size: 36px;
+            font-size: 32px;
           }
           .about-hero-image-wrapper {
             width: 100%;
-            height: 320px;
-            min-height: 320px;
+            height: 300px;
+            min-height: 300px;
             -webkit-mask-image: linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 1) 25%);
             mask-image: linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 1) 25%);
+          }
+        }
+
+        @media (max-width: 640px) {
+          .about-hero-heading {
+            font-size: 28px;
+          }
+          .about-hero-desc {
+            font-size: 14.5px;
+          }
+          .about-hero-image-wrapper {
+            height: 240px;
+            min-height: 240px;
+          }
+        }
+
+        @media (max-width: 480px) {
+          .about-hero-heading {
+            font-size: 24px;
+          }
+          .about-hero-btn {
+            width: 100%;
+            justify-content: center;
+          }
+          .about-hero-image-wrapper {
+            height: 200px;
+            min-height: 200px;
           }
         }
       `}</style>

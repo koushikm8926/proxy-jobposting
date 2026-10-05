@@ -375,6 +375,26 @@ export const Footer: React.FC<FooterProps> = ({ variant = 'dark' }) => {
             text-align: center;
           }
         }
+
+        @media (max-width: 480px) {
+          .site-footer {
+            padding-top: 36px;
+            padding-bottom: 20px;
+          }
+          .footer-grid {
+            gap: 24px;
+          }
+          .footer-brand-desc {
+            max-width: 100%;
+            font-size: 13px;
+          }
+          .address-text {
+            font-size: 12px;
+          }
+          .disclaimer-text {
+            font-size: 11px;
+          }
+        }
       `}</style>
     </footer>
   )

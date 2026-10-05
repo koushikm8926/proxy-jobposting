@@ -241,6 +241,36 @@ export const CandidateBengaluruBanner: React.FC = () => {
             padding: 10px 16px;
           }
         }
+
+        @media (max-width: 640px) {
+          .cand-city-title {
+            font-size: 24px;
+          }
+          .cand-city-sub {
+            font-size: 14px;
+          }
+          .cand-city-image-wrapper {
+            height: 200px;
+            min-height: 200px;
+          }
+        }
+
+        @media (max-width: 480px) {
+          .cand-city-title {
+            font-size: 20px;
+          }
+          .cand-city-content {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 14px;
+          }
+          .cand-launch-badge {
+            bottom: 12px;
+            right: 12px;
+            padding: 8px 12px;
+            gap: 8px;
+          }
+        }
       `}</style>
     </section>
   )

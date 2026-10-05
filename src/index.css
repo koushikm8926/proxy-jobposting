@@ -78,6 +78,18 @@ img {
   padding: 0 24px;
 }
 
+@media (max-width: 640px) {
+  .container {
+    padding: 0 16px;
+  }
+}
+
+@media (max-width: 400px) {
+  .container {
+    padding: 0 14px;
+  }
+}
+
 /* Typography Helpers */
 .section-kicker {
   font-size: 11px;
@@ -118,6 +130,19 @@ img {
     font-size: 14px;
   }
 }
+
+@media (max-width: 480px) {
+  .section-title {
+    font-size: 22px;
+  }
+  .section-subtitle {
+    font-size: 13.5px;
+  }
+  .section-header {
+    margin-bottom: 32px;
+  }
+}
+
 
 /* Buttons */
 .btn {

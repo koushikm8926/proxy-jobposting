@@ -268,6 +268,44 @@ export const BengaluruFocus: React.FC<BengaluruFocusProps> = ({ onKnowMore }) =>
             padding: 10px 18px;
           }
         }
+
+        @media (max-width: 640px) {
+          .bengaluru-heading {
+            font-size: 28px;
+          }
+          .bengaluru-paragraph {
+            font-size: 14px;
+          }
+          .bengaluru-content-col {
+            padding: 36px 20px;
+          }
+          .bengaluru-skyline-col {
+            height: 240px;
+            min-height: 240px;
+          }
+        }
+
+        @media (max-width: 480px) {
+          .bengaluru-heading {
+            font-size: 24px;
+          }
+          .bengaluru-paragraph {
+            font-size: 13.5px;
+          }
+          .bengaluru-btn {
+            width: 100%;
+            justify-content: center;
+          }
+          .bengaluru-floating-pill {
+            bottom: 16px;
+            right: 16px;
+            padding: 8px 14px;
+            gap: 10px;
+          }
+          .pill-city-name {
+            font-size: 14px;
+          }
+        }
       `}</style>
     </section>
   )

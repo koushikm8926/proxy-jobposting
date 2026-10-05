@@ -348,7 +348,8 @@ export const PreVerifiedHiring: React.FC<PreVerifiedHiringProps> = ({
         @media (max-width: 1080px) {
           .verified-hero-grid {
             grid-template-columns: 1fr;
-            gap: 40px;
+            gap: 36px;
+            padding: 0;
           }
           .verified-left-col {
             max-width: 100%;
@@ -358,15 +359,36 @@ export const PreVerifiedHiring: React.FC<PreVerifiedHiringProps> = ({
           }
           .verified-features-grid {
             grid-template-columns: repeat(2, 1fr);
+            padding: 0;
           }
           .trust-pillar-sep {
             display: none;
+          }
+          .verified-trust-bar {
+            margin: 0;
+          }
+        }
+
+        @media (max-width: 768px) {
+          .verified-hiring-section {
+            padding: 40px 0 48px;
+          }
+          .verified-headline {
+            font-size: 32px;
+          }
+          .verified-subtext {
+            font-size: 14.5px;
+          }
+          .verified-trust-bar {
+            flex-direction: column;
+            align-items: flex-start;
+            padding: 16px 20px;
           }
         }
 
         @media (max-width: 640px) {
           .verified-headline {
-            font-size: 34px;
+            font-size: 28px;
           }
           .verified-features-grid {
             grid-template-columns: 1fr;
@@ -374,6 +396,22 @@ export const PreVerifiedHiring: React.FC<PreVerifiedHiringProps> = ({
           .verified-trust-bar {
             flex-direction: column;
             align-items: flex-start;
+          }
+          .btn-recruiter-cta {
+            width: 100%;
+            justify-content: center;
+          }
+        }
+
+        @media (max-width: 480px) {
+          .verified-headline {
+            font-size: 24px;
+          }
+          .verified-kicker {
+            font-size: 11px;
+          }
+          .feature-card-title {
+            font-size: 16px;
           }
         }
       `}</style>

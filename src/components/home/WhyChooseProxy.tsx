@@ -130,15 +130,30 @@ export const WhyChooseProxy: React.FC = () => {
             padding: 24px 0 20px;
           }
           .why-choose-title {
-            font-size: 34px;
+            font-size: 30px;
           }
           .pillars-grid-large {
             grid-template-columns: 1fr;
-            gap: 28px;
+            gap: 20px;
             max-width: 480px;
           }
           .pillar-card-bold {
             padding: 16px;
+          }
+        }
+
+        @media (max-width: 480px) {
+          .why-choose-title {
+            font-size: 24px;
+          }
+          .pillars-grid-large {
+            max-width: 100%;
+          }
+          .pillar-title-large {
+            font-size: 20px;
+          }
+          .pillar-desc-bold {
+            font-size: 14px;
           }
         }
       `}</style>

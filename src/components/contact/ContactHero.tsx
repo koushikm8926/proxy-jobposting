@@ -144,11 +144,11 @@ export const ContactHero: React.FC<ContactHeroProps> = ({ onScrollToForm }) => {
           position: relative;
           z-index: 1;
           display: grid;
-          grid-template-columns: minmax(460px, 1.05fr) minmax(480px, 1.25fr);
+          grid-template-columns: 1.05fr 1.25fr;
           align-items: center;
           gap: 0;
           width: 100%;
-          padding-left: clamp(24px, 5vw, 72px);
+          padding-left: clamp(16px, 5vw, 72px);
           padding-right: 0;
           box-sizing: border-box;
         }
@@ -286,6 +286,9 @@ export const ContactHero: React.FC<ContactHeroProps> = ({ onScrollToForm }) => {
         }
 
         @media (max-width: 990px) {
+          .contact-hero-root {
+            min-height: auto;
+          }
           .contact-container-fluid {
             grid-template-columns: 1fr;
             padding-left: 20px;
@@ -296,17 +299,18 @@ export const ContactHero: React.FC<ContactHeroProps> = ({ onScrollToForm }) => {
           .contact-text-block {
             max-width: 100%;
             padding-right: 20px;
+            padding-bottom: 32px;
           }
           .contact-main-title {
             font-size: 42px;
           }
           .contact-panoramic-visual {
             justify-content: center;
-            min-height: 360px;
+            min-height: 320px;
           }
           .contact-feathered-img {
-            min-height: 360px;
-            max-height: 400px;
+            min-height: 320px;
+            max-height: 380px;
             -webkit-mask-image: linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 1) 20%);
             mask-image: linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 1) 20%);
           }
@@ -314,7 +318,10 @@ export const ContactHero: React.FC<ContactHeroProps> = ({ onScrollToForm }) => {
 
         @media (max-width: 600px) {
           .contact-main-title {
-            font-size: 36px;
+            font-size: 34px;
+          }
+          .contact-paragraph {
+            font-size: 14.5px;
           }
           .contact-badges-row {
             flex-wrap: wrap;
@@ -323,6 +330,22 @@ export const ContactHero: React.FC<ContactHeroProps> = ({ onScrollToForm }) => {
           .contact-pill-btn {
             width: 100%;
             justify-content: center;
+          }
+          .contact-text-block {
+            padding-right: 16px;
+          }
+          .contact-feathered-img {
+            min-height: 260px;
+            max-height: 300px;
+          }
+          .contact-panoramic-visual {
+            min-height: 260px;
+          }
+        }
+
+        @media (max-width: 400px) {
+          .contact-main-title {
+            font-size: 28px;
           }
         }
       `}</style>

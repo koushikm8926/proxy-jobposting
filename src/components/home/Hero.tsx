@@ -120,11 +120,11 @@ export const Hero: React.FC<HeroProps> = ({ onFindJobs, onHireTalent }) => {
           position: relative;
           z-index: 1;
           display: grid;
-          grid-template-columns: minmax(500px, 1.15fr) minmax(440px, 1.25fr);
+          grid-template-columns: 1.15fr 1.25fr;
           align-items: center;
           gap: 0;
           width: 100%;
-          padding-left: clamp(24px, 5vw, 72px);
+          padding-left: clamp(16px, 5vw, 72px);
           padding-right: 0; /* ZERO gap on the right side */
           box-sizing: border-box;
         }
@@ -166,13 +166,13 @@ export const Hero: React.FC<HeroProps> = ({ onFindJobs, onHireTalent }) => {
         }
 
         .title-tagline {
-          font-size: clamp(28px, 2.3vw, 34px);
+          font-size: clamp(18px, 2.3vw, 34px);
           font-weight: 800;
           letter-spacing: -0.025em;
           color: #0c0d0e;
           margin-top: 8px;
-          line-height: 1.15;
-          white-space: nowrap;
+          line-height: 1.2;
+          white-space: normal;
         }
 
         .hero-paragraph {
@@ -309,13 +309,14 @@ export const Hero: React.FC<HeroProps> = ({ onFindJobs, onHireTalent }) => {
           }
           .hero-text-block {
             max-width: 100%;
+            padding-right: 16px;
           }
           .title-brand {
             font-size: 54px;
           }
           .title-tagline {
-            font-size: clamp(22px, 3.8vw, 28px);
-            white-space: nowrap;
+            font-size: clamp(20px, 3.8vw, 28px);
+            white-space: normal;
           }
           .hero-panoramic-visual {
             justify-content: center;
@@ -328,20 +329,53 @@ export const Hero: React.FC<HeroProps> = ({ onFindJobs, onHireTalent }) => {
         }
 
         @media (max-width: 600px) {
+          .home-hero-root {
+            min-height: auto;
+          }
+          .hero-text-block {
+            padding-top: 28px;
+            padding-bottom: 24px;
+            padding-right: 20px;
+          }
+          .hero-container-fluid {
+            padding-left: 16px;
+            padding-top: 0;
+            padding-bottom: 0;
+          }
           .title-brand {
-            font-size: 44px;
+            font-size: 42px;
           }
           .title-tagline {
-            font-size: clamp(17px, 4.8vw, 22px);
-            white-space: nowrap;
+            font-size: clamp(16px, 5.5vw, 22px);
+            white-space: normal;
+          }
+          .hero-paragraph {
+            font-size: 14.5px;
+            margin-bottom: 24px;
           }
           .hero-cta-group {
             flex-direction: column;
             align-items: stretch;
+            gap: 12px;
+            margin-bottom: 24px;
           }
           .hero-pill-btn {
             justify-content: center;
             width: 100%;
+            height: 46px;
+            font-size: 14px;
+          }
+          .hero-feathered-img {
+            max-height: 260px;
+          }
+        }
+
+        @media (max-width: 400px) {
+          .title-brand {
+            font-size: 36px;
+          }
+          .title-tagline {
+            font-size: 16px;
           }
         }
       `}</style>

@@ -416,6 +416,27 @@ export const Navbar: React.FC<NavbarProps> = ({
           }
         }
 
+        @media (max-width: 480px) {
+          .top-bar-highlights {
+            font-size: 10.5px;
+          }
+          .highlight-item span {
+            display: inline;
+          }
+          .top-bar-dot {
+            display: none;
+          }
+          .top-bar-highlights .highlight-item:nth-child(n+3) {
+            display: none;
+          }
+        }
+
+        @media (max-width: 360px) {
+          .top-bar-highlights {
+            display: none;
+          }
+        }
+
         @media (max-width: 900px) {
           .desktop-nav, .desktop-actions {
             display: none !important;
