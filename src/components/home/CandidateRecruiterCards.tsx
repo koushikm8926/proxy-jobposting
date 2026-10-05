@@ -287,8 +287,11 @@ export const CandidateRecruiterCards: React.FC<CandidateRecruiterCardsProps> = (
             height: 220px;
           }
           .image-fade-mask {
-            -webkit-mask-image: linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 1) 25%);
-            mask-image: linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 1) 25%);
+            -webkit-mask-image: none;
+            mask-image: none;
+          }
+          .audience-feathered-photo {
+            object-position: center top;
           }
         }
       `}</style>

@@ -140,8 +140,8 @@ export const AboutJourney: React.FC = () => {
             width: 100%;
             height: 280px;
             min-height: 280px;
-            -webkit-mask-image: linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 1) 22%);
-            mask-image: linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 1) 22%);
+            -webkit-mask-image: none;
+            mask-image: none;
           }
         }
       `}</style>

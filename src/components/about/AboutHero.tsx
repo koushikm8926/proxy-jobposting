@@ -175,8 +175,8 @@ export const AboutHero: React.FC<AboutHeroProps> = ({ onScrollToStory }) => {
             width: 100%;
             height: 300px;
             min-height: 300px;
-            -webkit-mask-image: linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 1) 25%);
-            mask-image: linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 1) 25%);
+            -webkit-mask-image: none;
+            mask-image: none;
           }
         }
 

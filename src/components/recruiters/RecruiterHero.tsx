@@ -300,8 +300,8 @@ export const RecruiterHero: React.FC<RecruiterHeroProps> = ({ onRegister }) => {
           .rec-feathered-img {
             min-height: 320px;
             max-height: 380px;
-            -webkit-mask-image: linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 1) 20%);
-            mask-image: linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 1) 20%);
+            -webkit-mask-image: none;
+            mask-image: none;
           }
         }
 

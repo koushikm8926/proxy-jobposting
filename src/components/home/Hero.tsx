@@ -325,6 +325,8 @@ export const Hero: React.FC<HeroProps> = ({ onFindJobs, onHireTalent }) => {
           .hero-feathered-img {
             max-width: 100%;
             max-height: 380px;
+            -webkit-mask-image: none;
+            mask-image: none;
           }
         }
 

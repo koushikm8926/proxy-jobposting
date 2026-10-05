@@ -259,8 +259,8 @@ export const BengaluruFocus: React.FC<BengaluruFocusProps> = ({ onKnowMore }) =>
             min-height: 300px;
           }
           .skyline-fade-wrap {
-            -webkit-mask-image: linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 1) 22%);
-            mask-image: linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 1) 22%);
+            -webkit-mask-image: none;
+            mask-image: none;
           }
           .bengaluru-floating-pill {
             bottom: 20px;

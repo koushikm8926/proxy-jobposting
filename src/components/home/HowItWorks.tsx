@@ -559,15 +559,21 @@ export const HowItWorks: React.FC = () => {
           .hiw-unified-stage-card {
             min-height: auto;
             background: #f8fafc;
+            border-radius: 20px;
           }
           .hiw-stage-bg-image {
-            position: relative;
-            height: 280px;
-            object-fit: cover;
+            display: none;
+          }
+          .hiw-fade-left,
+          .hiw-fade-right,
+          .hiw-fade-top {
+            display: none;
           }
           .hiw-cards-overlay-grid {
+            position: static;
             grid-template-columns: 1fr;
-            padding: 24px 16px;
+            padding: 20px 16px;
+            gap: 16px;
           }
           .hiw-stem-connector,
           .hiw-waypoint-pin {
@@ -578,6 +584,9 @@ export const HowItWorks: React.FC = () => {
           }
           .hiw-trust-divider {
             display: none;
+          }
+          .hiw-integrated-card {
+            background: #ffffff;
           }
         }
 
@@ -597,11 +606,27 @@ export const HowItWorks: React.FC = () => {
             padding: 16px 20px;
           }
           .hiw-cards-overlay-grid {
-            padding: 20px 12px;
-            gap: 16px;
+            padding: 16px 12px;
+            gap: 14px;
           }
           .hiw-integrated-card {
             padding: 20px 16px;
+          }
+          /* Pills: show as 3-column grid so all 3 fit in one row */
+          .hiw-pills-flow {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+            justify-items: center;
+          }
+          .hiw-pill-chevron {
+            display: none;
+          }
+          .hiw-pill-item {
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            gap: 5px;
           }
         }
 
@@ -616,16 +641,26 @@ export const HowItWorks: React.FC = () => {
             font-size: 16px;
           }
           .hiw-pills-flow {
-            flex-wrap: wrap;
-            gap: 8px;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 6px;
+            justify-items: center;
           }
           .hiw-pill-chevron {
             display: none;
           }
           .hiw-pill-item {
-            flex-direction: row;
-            text-align: left;
-            gap: 8px;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            gap: 4px;
+          }
+          .hiw-pill-ico {
+            width: 30px;
+            height: 30px;
+          }
+          .hiw-pill-txt {
+            font-size: 9.5px;
           }
         }
       `}</style>

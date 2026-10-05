@@ -232,8 +232,8 @@ export const CandidateBengaluruBanner: React.FC = () => {
             width: 100%;
             height: 260px;
             min-height: 260px;
-            -webkit-mask-image: linear-gradient(to bottom, transparent 0%, rgba(0, 0, 1) 22%);
-            mask-image: linear-gradient(to bottom, transparent 0%, rgba(0, 0, 1) 22%);
+            -webkit-mask-image: none;
+            mask-image: none;
           }
           .cand-launch-badge {
             bottom: 18px;
