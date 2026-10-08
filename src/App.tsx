@@ -10,7 +10,8 @@ import {
   JoinCandidatePage,
   RecruiterRegisterPage,
   CandidateDashboard,
-  RecruiterDashboard
+  RecruiterDashboard,
+  JobsPage
 } from './pages'
 import { AuthModal } from './components/auth/AuthModal'
 import { useScrollReveal } from './hooks/useScrollReveal'
@@ -22,6 +23,7 @@ export function App() {
     if (typeof window !== 'undefined') {
       const hash = window.location.hash.toLowerCase()
       if (hash === '#home') return 'home'
+      if (hash === '#jobs' || hash === '#find-jobs') return 'jobs'
       if (hash === '#about') return 'about'
       if (hash === '#recruiters') return 'recruiters'
       if (hash === '#candidates') return 'candidates'
@@ -50,6 +52,8 @@ export function App() {
       const hash = window.location.hash.toLowerCase()
       if (hash === '#home') {
         setCurrentPage('home')
+      } else if (hash === '#jobs' || hash === '#find-jobs') {
+        setCurrentPage('jobs')
       } else if (hash === '#about' || hash === '#about-us' || hash === '#our-story') {
         setCurrentPage('about')
       } else if (hash === '#recruiters' || hash === '#for-recruiters') {
@@ -97,7 +101,8 @@ export function App() {
 
   const handleOpenCategoryModal = (catName: string) => {
     setSelectedCategory(catName)
-    setModalType('category')
+    handlePageChange('jobs')
+    window.scrollTo({ top: 0, behavior: 'smooth' })
   }
 
   const handleOpenInfoModal = () => {
@@ -146,6 +151,16 @@ export function App() {
             onKnowMore={handleOpenInfoModal}
           />
         )}
+        {currentPage === 'jobs' && (
+          <JobsPage
+            onOpenAuth={() => handleOpenAuth('candidate')}
+            onNavigateDashboard={() => {
+              handlePageChange('candidate-dashboard')
+              window.scrollTo({ top: 0, behavior: 'smooth' })
+            }}
+            initialCategory={selectedCategory}
+          />
+        )}
         {currentPage === 'about' && (
           <AboutPage
             onJoinCandidate={handleOpenCandidateModal}
@@ -178,7 +193,7 @@ export function App() {
           <RecruiterRegisterPage />
         )}
         {currentPage === 'candidate-dashboard' && (
-          <CandidateDashboard onBrowseJobs={() => handlePageChange('candidates')} />
+          <CandidateDashboard onBrowseJobs={() => handlePageChange('jobs')} />
         )}
         {currentPage === 'recruiter-dashboard' && (
           <RecruiterDashboard />

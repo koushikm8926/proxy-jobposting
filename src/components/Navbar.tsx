@@ -5,6 +5,7 @@ import { useAuth } from '../context/AuthContext'
 
 export type NavPage =
   | 'home'
+  | 'jobs'
   | 'about'
   | 'recruiters'
   | 'candidates'
@@ -46,6 +47,7 @@ export const Navbar: React.FC<NavbarProps> = ({
 
   const navLinks = [
     { name: 'Home', id: 'home', isPage: true },
+    { name: 'Find Jobs', id: 'jobs', isPage: true },
     { name: 'About', id: 'about', isPage: true },
     { name: 'Recruiters', id: 'recruiters', isPage: true },
     { name: 'Candidates', id: 'candidates', isPage: true },
