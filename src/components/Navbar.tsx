@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { Logo } from './Logo'
-import { Menu, X, ArrowRight, Sparkles, ShieldCheck, MapPin, Phone, Mail } from 'lucide-react'
+import { Menu, X, ArrowRight, Sparkles, ShieldCheck, MapPin, Phone, Mail, LogIn, LayoutDashboard } from 'lucide-react'
+import { useAuth } from '../context/AuthContext'
 
 export type NavPage =
   | 'home'
@@ -11,12 +12,15 @@ export type NavPage =
   | 'faq'
   | 'join-candidate'
   | 'register-recruiter'
+  | 'candidate-dashboard'
+  | 'recruiter-dashboard'
 
 interface NavbarProps {
   currentPage: NavPage
   onPageChange: (page: NavPage) => void
   onJoinCandidate: () => void
   onHireTalent: () => void
+  onOpenAuth: (role?: 'candidate' | 'recruiter') => void
   onNavigateSection?: (sectionId: string) => void
 }
 
@@ -25,8 +29,10 @@ export const Navbar: React.FC<NavbarProps> = ({
   onPageChange,
   onJoinCandidate,
   onHireTalent,
+  onOpenAuth,
   onNavigateSection
 }) => {
+  const { user, userRole, logout } = useAuth()
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
 
@@ -176,27 +182,90 @@ export const Navbar: React.FC<NavbarProps> = ({
             gap: '12px'
           }}
         >
-          <button
-            type="button"
-            className={`btn ${isJoinCandidateActive ? 'btn-primary' : 'btn-outline'}`}
-            onClick={onJoinCandidate}
-            style={{
-              fontSize: '13px',
-              padding: '9px 18px',
-              borderWidth: isJoinCandidateActive ? '1px' : '1.5px',
-              borderColor: '#0c0d0e'
-            }}
-          >
-            Join as Candidate
-          </button>
-          <button
-            type="button"
-            className="btn btn-primary"
-            onClick={onHireTalent}
-            style={{ fontSize: '13px', padding: '9px 18px' }}
-          >
-            Hire Talent
-          </button>
+          {user ? (
+            <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+              <button
+                type="button"
+                className="btn btn-primary"
+                onClick={() => {
+                  if (userRole === 'recruiter') {
+                    onPageChange('recruiter-dashboard')
+                  } else {
+                    onPageChange('candidate-dashboard')
+                  }
+                  window.scrollTo({ top: 0, behavior: 'smooth' })
+                }}
+                style={{
+                  fontSize: '13px',
+                  padding: '9px 18px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '6px'
+                }}
+              >
+                <LayoutDashboard size={15} />
+                {userRole === 'recruiter' ? 'Recruiter Dashboard' : 'My Dashboard'}
+              </button>
+              <button
+                type="button"
+                onClick={logout}
+                style={{
+                  fontSize: '13px',
+                  padding: '8px 14px',
+                  borderRadius: '8px',
+                  border: '1px solid #e4e4e7',
+                  backgroundColor: '#ffffff',
+                  color: '#71717a',
+                  cursor: 'pointer',
+                  fontWeight: 600
+                }}
+              >
+                Sign Out
+              </button>
+            </div>
+          ) : (
+            <>
+              <button
+                type="button"
+                onClick={() => onOpenAuth('candidate')}
+                style={{
+                  background: 'none',
+                  border: 'none',
+                  fontSize: '13px',
+                  fontWeight: 700,
+                  color: '#09090b',
+                  cursor: 'pointer',
+                  padding: '8px 12px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '6px'
+                }}
+              >
+                <LogIn size={15} /> Sign In
+              </button>
+              <button
+                type="button"
+                className={`btn ${isJoinCandidateActive ? 'btn-primary' : 'btn-outline'}`}
+                onClick={onJoinCandidate}
+                style={{
+                  fontSize: '13px',
+                  padding: '9px 18px',
+                  borderWidth: isJoinCandidateActive ? '1px' : '1.5px',
+                  borderColor: '#0c0d0e'
+                }}
+              >
+                Join as Candidate
+              </button>
+              <button
+                type="button"
+                className="btn btn-primary"
+                onClick={onHireTalent}
+                style={{ fontSize: '13px', padding: '9px 18px' }}
+              >
+                Hire Talent
+              </button>
+            </>
+          )}
         </div>
 
         {/* Mobile Hamburger Button */}

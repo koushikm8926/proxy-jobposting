@@ -8,12 +8,16 @@ import {
   ContactPage,
   FAQPage,
   JoinCandidatePage,
-  RecruiterRegisterPage
+  RecruiterRegisterPage,
+  CandidateDashboard,
+  RecruiterDashboard
 } from './pages'
+import { AuthModal } from './components/auth/AuthModal'
 import { useScrollReveal } from './hooks/useScrollReveal'
+import type { UserRole } from './types/user'
 
 export function App() {
-  // Support hash navigation and state, defaulting to 'register-recruiter' for current screen
+  // Support hash navigation and state
   const [currentPage, setCurrentPage] = useState<NavPage>(() => {
     if (typeof window !== 'undefined') {
       const hash = window.location.hash.toLowerCase()
@@ -25,12 +29,18 @@ export function App() {
       if (hash === '#faq' || hash === '#faqs') return 'faq'
       if (hash === '#join-candidate' || hash === '#join') return 'join-candidate'
       if (hash === '#register-recruiter' || hash === '#recruiter-registration' || hash === '#hire-talent') return 'register-recruiter'
+      if (hash === '#candidate-dashboard') return 'candidate-dashboard'
+      if (hash === '#recruiter-dashboard') return 'recruiter-dashboard'
     }
     return 'home'
   })
 
   const [modalType, setModalType] = useState<ModalType>(null)
   const [selectedCategory, setSelectedCategory] = useState<string>('')
+
+  // Auth modal state
+  const [authModalOpen, setAuthModalOpen] = useState(false)
+  const [authInitialRole, setAuthInitialRole] = useState<UserRole>('candidate')
 
   // Trigger GPU-accelerated scroll animations dynamically on page change
   useScrollReveal(currentPage)
@@ -54,6 +64,10 @@ export function App() {
         setCurrentPage('join-candidate')
       } else if (hash === '#register-recruiter' || hash === '#recruiter-registration' || hash === '#hire-talent') {
         setCurrentPage('register-recruiter')
+      } else if (hash === '#candidate-dashboard') {
+        setCurrentPage('candidate-dashboard')
+      } else if (hash === '#recruiter-dashboard') {
+        setCurrentPage('recruiter-dashboard')
       }
     }
 
@@ -74,6 +88,11 @@ export function App() {
   const handleOpenRecruiterModal = () => {
     handlePageChange('register-recruiter')
     window.scrollTo({ top: 0, behavior: 'smooth' })
+  }
+
+  const handleOpenAuth = (role: UserRole = 'candidate') => {
+    setAuthInitialRole(role)
+    setAuthModalOpen(true)
   }
 
   const handleOpenCategoryModal = (catName: string) => {
@@ -107,12 +126,13 @@ export function App() {
 
   return (
     <div className="proxy-app-root">
-      {/* 1. Header with active tab underline & instant switching */}
+      {/* 1. Header with active tab underline, auth button & instant switching */}
       <Navbar
         currentPage={currentPage}
         onPageChange={handlePageChange}
         onJoinCandidate={handleOpenCandidateModal}
         onHireTalent={handleOpenRecruiterModal}
+        onOpenAuth={handleOpenAuth}
         onNavigateSection={handleNavigateSection}
       />
 
@@ -157,13 +177,30 @@ export function App() {
         {currentPage === 'register-recruiter' && (
           <RecruiterRegisterPage />
         )}
+        {currentPage === 'candidate-dashboard' && (
+          <CandidateDashboard onBrowseJobs={() => handlePageChange('candidates')} />
+        )}
+        {currentPage === 'recruiter-dashboard' && (
+          <RecruiterDashboard />
+        )}
       </main>
 
-      {/* 3. Interactive Modal Dialog */}
+      {/* 3. Interactive Category/Info Modal Dialog */}
       <Modal
         type={modalType}
         categoryName={selectedCategory}
         onClose={handleCloseModal}
+      />
+
+      {/* 4. Multi-Role Phone OTP & Email Authentication Modal */}
+      <AuthModal
+        isOpen={authModalOpen}
+        onClose={() => setAuthModalOpen(false)}
+        initialRole={authInitialRole}
+        onSuccess={(role) => {
+          handlePageChange(role === 'recruiter' ? 'recruiter-dashboard' : 'candidate-dashboard')
+          window.scrollTo({ top: 0, behavior: 'smooth' })
+        }}
       />
     </div>
   )
