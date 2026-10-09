@@ -116,15 +116,14 @@ export const CandidateRegistrationReview: React.FC<CandidateRegistrationReviewPr
           }}
           className="left-hero-card"
         >
-          {/* Subtle background image of modern office with laptop and window view */}
+          {/* Clean modern office background with dark overlay */}
           <div
             style={{
               position: 'absolute',
               inset: 0,
-              backgroundImage: 'url(/images/candidate_reg_left_card.png)',
+              backgroundImage: 'linear-gradient(rgba(12, 13, 18, 0.88), rgba(12, 13, 18, 0.94)), url(/images/join_candidate_hero.jpg)',
               backgroundSize: 'cover',
-              backgroundPosition: 'center top',
-              opacity: 0.98,
+              backgroundPosition: 'center',
               zIndex: 0
             }}
           />
@@ -145,11 +144,11 @@ export const CandidateRegistrationReview: React.FC<CandidateRegistrationReviewPr
             {/* Top Brand & Hero Text */}
             <div>
               {/* Logo */}
-              <div style={{ marginBottom: '40px' }}>
+              <div style={{ marginBottom: '32px' }}>
                 <img
                   src="/logo-white.png"
                   alt="proXHire - INDIA'S ULTIMATE CAREER BRIDGE"
-                  style={{ height: '46px', width: 'auto', objectFit: 'contain' }}
+                  style={{ height: '42px', width: 'auto', objectFit: 'contain' }}
                 />
               </div>
 
@@ -169,18 +168,17 @@ export const CandidateRegistrationReview: React.FC<CandidateRegistrationReviewPr
 
               {/* Main Headline */}
               <h1
+                className="hero-main-headline"
                 style={{
-                  fontSize: '44px',
+                  fontSize: '40px',
                   fontWeight: 800,
-                  lineHeight: 1.12,
+                  lineHeight: 1.18,
                   letterSpacing: '-0.03em',
                   color: '#ffffff',
-                  marginBottom: '20px'
+                  marginBottom: '18px'
                 }}
               >
-                Your Next<br />
-                Opportunity<br />
-                Starts Here<span style={{ color: 'rgba(255,255,255,0.4)' }}>.</span>
+                Your Next Opportunity Starts Here<span style={{ color: 'rgba(255,255,255,0.4)' }}>.</span>
               </h1>
 
               {/* Subtitle */}
@@ -1657,11 +1655,19 @@ export const CandidateRegistrationReview: React.FC<CandidateRegistrationReviewPr
           .registration-review-container {
             grid-template-columns: 1fr !important;
           }
-          .left-hero-card {
-            min-height: 520px !important;
-          }
         }
         @media (max-width: 768px) {
+          .left-hero-card {
+            min-height: auto !important;
+            border-radius: 20px !important;
+          }
+          .left-card-inner-content {
+            padding: 28px 20px !important;
+          }
+          .hero-main-headline {
+            font-size: 26px !important;
+            line-height: 1.22 !important;
+          }
           .right-review-card {
             padding: 24px 18px !important;
           }
