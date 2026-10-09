@@ -10,11 +10,7 @@ import {
   CheckCircle2,
   ArrowLeft,
   ArrowRight,
-  ShieldCheck,
-  Search,
-  Award,
-  Bell,
-  TrendingUp
+  ShieldCheck
 } from 'lucide-react'
 
 interface CandidateRegistrationReviewProps {
@@ -82,7 +78,7 @@ export const CandidateRegistrationReview: React.FC<CandidateRegistrationReviewPr
   return (
     <div
       style={{
-        backgroundColor: '#f1f5f9',
+        backgroundColor: '#edf3fa',
         minHeight: '100vh',
         padding: '36px 20px 60px',
         fontFamily: 'Inter, system-ui, -apple-system, sans-serif'
@@ -93,253 +89,38 @@ export const CandidateRegistrationReview: React.FC<CandidateRegistrationReviewPr
           maxWidth: '1440px',
           margin: '0 auto',
           display: 'grid',
-          gridTemplateColumns: 'minmax(360px, 460px) 1fr',
+          gridTemplateColumns: 'minmax(380px, 460px) 1fr',
           gap: '32px',
           alignItems: 'stretch'
         }}
         className="registration-review-container"
       >
-        {/* ================= LEFT DARK HERO CARD ================= */}
+        {/* ================= LEFT DARK HERO CARD (EXACT MOCKUP CARD) ================= */}
         <div
           style={{
             position: 'relative',
-            borderRadius: '28px',
+            borderRadius: '24px',
             backgroundColor: '#0c0d12',
-            color: '#ffffff',
             overflow: 'hidden',
+            boxShadow: '0 20px 40px -15px rgba(0,0,0,0.25)',
             display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'space-between',
-            boxShadow: '0 20px 40px -15px rgba(0,0,0,0.3)',
-            border: '1px solid #1e2433',
+            alignItems: 'stretch',
+            alignSelf: 'stretch',
             minHeight: '840px'
           }}
           className="left-hero-card"
         >
-          {/* Clean modern office background with dark overlay */}
-          <div
+          <img
+            src="/images/candidate_reg_left_card.png"
+            alt="proXHire - Create Your Account. Your Next Opportunity Starts Here."
             style={{
-              position: 'absolute',
-              inset: 0,
-              backgroundImage: 'linear-gradient(rgba(12, 13, 18, 0.88), rgba(12, 13, 18, 0.94)), url(/images/join_candidate_hero.jpg)',
-              backgroundSize: 'cover',
-              backgroundPosition: 'center',
-              zIndex: 0
+              width: '100%',
+              height: '100%',
+              objectFit: 'cover',
+              objectPosition: 'center top',
+              display: 'block'
             }}
           />
-
-          {/* Accessible Fallback Overlay if image is hidden or on high-contrast */}
-          <div
-            style={{
-              position: 'relative',
-              zIndex: 1,
-              padding: '42px 36px 36px',
-              display: 'flex',
-              flexDirection: 'column',
-              justifyContent: 'space-between',
-              height: '100%'
-            }}
-            className="left-card-inner-content"
-          >
-            {/* Top Brand & Hero Text */}
-            <div>
-              {/* Logo */}
-              <div style={{ marginBottom: '32px' }}>
-                <img
-                  src="/logo-white.png"
-                  alt="proXHire - INDIA'S ULTIMATE CAREER BRIDGE"
-                  style={{ height: '42px', width: 'auto', objectFit: 'contain' }}
-                />
-              </div>
-
-              {/* Kicker */}
-              <div
-                style={{
-                  fontSize: '11px',
-                  fontWeight: 700,
-                  letterSpacing: '0.18em',
-                  color: 'rgba(255,255,255,0.7)',
-                  textTransform: 'uppercase',
-                  marginBottom: '14px'
-                }}
-              >
-                CREATE YOUR ACCOUNT
-              </div>
-
-              {/* Main Headline */}
-              <h1
-                className="hero-main-headline"
-                style={{
-                  fontSize: '40px',
-                  fontWeight: 800,
-                  lineHeight: 1.18,
-                  letterSpacing: '-0.03em',
-                  color: '#ffffff',
-                  marginBottom: '18px'
-                }}
-              >
-                Your Next Opportunity Starts Here<span style={{ color: 'rgba(255,255,255,0.4)' }}>.</span>
-              </h1>
-
-              {/* Subtitle */}
-              <p
-                style={{
-                  fontSize: '15px',
-                  lineHeight: 1.55,
-                  color: 'rgba(255,255,255,0.78)',
-                  maxWidth: '360px',
-                  marginBottom: '36px'
-                }}
-              >
-                Join thousands of job seekers, connect with top companies and take the next step in your career journey.
-              </p>
-
-              {/* 4 Feature Items */}
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '22px' }}>
-                {/* 1 */}
-                <div style={{ display: 'flex', alignItems: 'flex-start', gap: '16px' }}>
-                  <div
-                    style={{
-                      width: '42px',
-                      height: '42px',
-                      borderRadius: '50%',
-                      backgroundColor: 'rgba(255,255,255,0.08)',
-                      border: '1px solid rgba(255,255,255,0.14)',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      flexShrink: 0
-                    }}
-                  >
-                    <Search size={18} color="#ffffff" />
-                  </div>
-                  <div>
-                    <div style={{ fontSize: '15px', fontWeight: 700, color: '#ffffff' }}>
-                      Find Verified Jobs
-                    </div>
-                    <div style={{ fontSize: '13px', color: 'rgba(255,255,255,0.65)', marginTop: '2px' }}>
-                      Explore opportunities from trusted companies.
-                    </div>
-                  </div>
-                </div>
-
-                {/* 2 */}
-                <div style={{ display: 'flex', alignItems: 'flex-start', gap: '16px' }}>
-                  <div
-                    style={{
-                      width: '42px',
-                      height: '42px',
-                      borderRadius: '50%',
-                      backgroundColor: 'rgba(255,255,255,0.08)',
-                      border: '1px solid rgba(255,255,255,0.14)',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      flexShrink: 0
-                    }}
-                  >
-                    <Award size={18} color="#ffffff" />
-                  </div>
-                  <div>
-                    <div style={{ fontSize: '15px', fontWeight: 700, color: '#ffffff' }}>
-                      Build a Strong Profile
-                    </div>
-                    <div style={{ fontSize: '13px', color: 'rgba(255,255,255,0.65)', marginTop: '2px' }}>
-                      Showcase your skills, experience and achievements.
-                    </div>
-                  </div>
-                </div>
-
-                {/* 3 */}
-                <div style={{ display: 'flex', alignItems: 'flex-start', gap: '16px' }}>
-                  <div
-                    style={{
-                      width: '42px',
-                      height: '42px',
-                      borderRadius: '50%',
-                      backgroundColor: 'rgba(255,255,255,0.08)',
-                      border: '1px solid rgba(255,255,255,0.14)',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      flexShrink: 0
-                    }}
-                  >
-                    <Bell size={18} color="#ffffff" />
-                  </div>
-                  <div>
-                    <div style={{ fontSize: '15px', fontWeight: 700, color: '#ffffff' }}>
-                      Get Notified
-                    </div>
-                    <div style={{ fontSize: '13px', color: 'rgba(255,255,255,0.65)', marginTop: '2px' }}>
-                      Receive real-time updates on relevant job opportunities.
-                    </div>
-                  </div>
-                </div>
-
-                {/* 4 */}
-                <div style={{ display: 'flex', alignItems: 'flex-start', gap: '16px' }}>
-                  <div
-                    style={{
-                      width: '42px',
-                      height: '42px',
-                      borderRadius: '50%',
-                      backgroundColor: 'rgba(255,255,255,0.08)',
-                      border: '1px solid rgba(255,255,255,0.14)',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      flexShrink: 0
-                    }}
-                  >
-                    <TrendingUp size={18} color="#ffffff" />
-                  </div>
-                  <div>
-                    <div style={{ fontSize: '15px', fontWeight: 700, color: '#ffffff' }}>
-                      Grow Your Career
-                    </div>
-                    <div style={{ fontSize: '13px', color: 'rgba(255,255,255,0.65)', marginTop: '2px' }}>
-                      Learn, upskill and connect with the right opportunities.
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Bottom Stats */}
-            <div
-              style={{
-                marginTop: '60px',
-                paddingTop: '24px',
-                borderTop: '1px solid rgba(255,255,255,0.12)',
-                display: 'grid',
-                gridTemplateColumns: 'repeat(3, 1fr)',
-                gap: '16px',
-                textAlign: 'left'
-              }}
-            >
-              <div>
-                <div style={{ fontSize: '24px', fontWeight: 800, color: '#ffffff' }}>5000+</div>
-                <div style={{ fontSize: '11px', color: 'rgba(255,255,255,0.65)', marginTop: '4px' }}>
-                  Verified Companies
-                </div>
-              </div>
-
-              <div style={{ borderLeft: '1px solid rgba(255,255,255,0.12)', paddingLeft: '16px' }}>
-                <div style={{ fontSize: '24px', fontWeight: 800, color: '#ffffff' }}>1L+</div>
-                <div style={{ fontSize: '11px', color: 'rgba(255,255,255,0.65)', marginTop: '4px' }}>
-                  Active Job Opportunities
-                </div>
-              </div>
-
-              <div style={{ borderLeft: '1px solid rgba(255,255,255,0.12)', paddingLeft: '16px' }}>
-                <div style={{ fontSize: '24px', fontWeight: 800, color: '#ffffff' }}>2M+</div>
-                <div style={{ fontSize: '11px', color: 'rgba(255,255,255,0.65)', marginTop: '4px' }}>
-                  Successful Hires
-                </div>
-              </div>
-            </div>
-          </div>
         </div>
 
         {/* ================= RIGHT WHITE CARD ================= */}
@@ -1655,18 +1436,16 @@ export const CandidateRegistrationReview: React.FC<CandidateRegistrationReviewPr
           .registration-review-container {
             grid-template-columns: 1fr !important;
           }
+          .left-hero-card {
+            min-height: auto !important;
+            max-height: 520px !important;
+          }
         }
         @media (max-width: 768px) {
           .left-hero-card {
             min-height: auto !important;
-            border-radius: 20px !important;
-          }
-          .left-card-inner-content {
-            padding: 28px 20px !important;
-          }
-          .hero-main-headline {
-            font-size: 26px !important;
-            line-height: 1.22 !important;
+            max-height: 420px !important;
+            border-radius: 18px !important;
           }
           .right-review-card {
             padding: 24px 18px !important;
