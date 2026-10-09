@@ -187,7 +187,7 @@ export function App() {
           />
         )}
         {currentPage === 'join-candidate' && (
-          <JoinCandidatePage />
+          <JoinCandidatePage onNavigateDashboard={() => handlePageChange('candidate-dashboard')} />
         )}
         {currentPage === 'register-recruiter' && (
           <RecruiterRegisterPage />
