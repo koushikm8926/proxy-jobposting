@@ -32,7 +32,7 @@ export const CandidateRegistrationReview: React.FC<CandidateRegistrationReviewPr
   const [documentsOpen, setDocumentsOpen] = useState(true)
 
   // Stepper state
-  const [, setCurrentStep] = useState<number>(4)
+  const [currentStep, setCurrentStep] = useState<number>(4)
 
   // Terms agreement state
   const [termsAgreed, setTermsAgreed] = useState(true)
