@@ -31,7 +31,7 @@ export function App() {
       if (hash === '#faq' || hash === '#faqs') return 'faq'
       if (hash === '#join-candidate' || hash === '#join') return 'join-candidate'
       if (hash === '#register-recruiter' || hash === '#recruiter-registration' || hash === '#hire-talent') return 'register-recruiter'
-      if (hash === '#candidate-dashboard') return 'candidate-dashboard'
+      if (hash === '#candidate-dashboard' || hash === '#profile' || hash === '#candidate-profile' || hash === '#settings') return 'candidate-dashboard'
       if (hash === '#recruiter-dashboard') return 'recruiter-dashboard'
     }
     return 'home'
@@ -68,7 +68,18 @@ export function App() {
         setCurrentPage('join-candidate')
       } else if (hash === '#register-recruiter' || hash === '#recruiter-registration' || hash === '#hire-talent') {
         setCurrentPage('register-recruiter')
-      } else if (hash === '#candidate-dashboard') {
+      } else if (
+        hash === '#candidate-dashboard' ||
+        hash === '#settings' ||
+        hash === '#candidate-settings' ||
+        hash === '#applications' ||
+        hash === '#my-applications' ||
+        hash === '#saved-jobs' ||
+        hash === '#saved' ||
+        hash === '#notifications' ||
+        hash === '#profile' ||
+        hash === '#candidate-profile'
+      ) {
         setCurrentPage('candidate-dashboard')
       } else if (hash === '#recruiter-dashboard') {
         setCurrentPage('recruiter-dashboard')
