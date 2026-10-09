@@ -27,15 +27,20 @@ import {
   Sliders,
   MailCheck,
   HelpCircle,
-  Sparkles,
   Megaphone,
   X,
-  ExternalLink,
-  ShieldCheck,
-  LogOut
+  LogOut,
+  Menu
 } from 'lucide-react'
 import { CompanyLogo } from '../components/common/CompanyLogo'
 import { useAuth } from '../context/AuthContext'
+import { CandidateOverviewTab } from '../components/dashboard/CandidateOverviewTab'
+import { CandidateJobsTab } from '../components/dashboard/CandidateJobsTab'
+import { CandidateSavedJobsTab } from '../components/dashboard/CandidateSavedJobsTab'
+import { CandidateInterviewsTab } from '../components/dashboard/CandidateInterviewsTab'
+import { CandidateProfileTab } from '../components/dashboard/CandidateProfileTab'
+import { CandidateSkillsTab } from '../components/dashboard/CandidateSkillsTab'
+import { CandidateSettingsTab } from '../components/dashboard/CandidateSettingsTab'
 
 interface CandidateDashboardProps {
   onBrowseJobs?: () => void
@@ -55,17 +60,38 @@ type DashboardSidebarTab =
 type ApplicationFilter = 'ALL' | 'UNDER_REVIEW' | 'SHORTLISTED' | 'INTERVIEW' | 'OFFERED' | 'REJECTED'
 type NotificationFilter = 'ALL' | 'UPDATES' | 'INTERVIEWS' | 'ALERTS' | 'MESSAGES' | 'PROFILE'
 
-export const CandidateDashboard: React.FC<CandidateDashboardProps> = ({ onBrowseJobs }) => {
-  const { user, candidateProfile, logout } = useAuth()
+export const CandidateDashboard: React.FC<CandidateDashboardProps> = () => {
+  const { logout } = useAuth()
 
-  // Sidebar navigation state: defaults to 'applications' as requested
-  const [activeSidebarTab, setActiveSidebarTab] = useState<DashboardSidebarTab>('applications')
+  // Sidebar navigation state: defaults to 'dashboard' (or 'applications')
+  const [activeSidebarTab, setActiveSidebarTab] = useState<DashboardSidebarTab>('dashboard')
+
+  // Mobile drawer state
+  const [mobileDrawerOpen, setMobileDrawerOpen] = useState(false)
 
   // Top header search query
   const [topSearchQuery, setTopSearchQuery] = useState('')
 
   // User profile dropdown toggle
   const [profileDropdownOpen, setProfileDropdownOpen] = useState(false)
+
+  // Saved jobs IDs shared across tabs
+  const [savedJobIds, setSavedJobIds] = useState<string[]>([
+    'job-swiggy-fe',
+    'job-google-swe',
+    'job-adobe-pe',
+    'job-amazon-hr'
+  ])
+
+  const handleSaveJob = (jobId: string) => {
+    setSavedJobIds(prev =>
+      prev.includes(jobId) ? prev.filter(id => id !== jobId) : [...prev, jobId]
+    )
+  }
+
+  const handleRemoveSavedJob = (jobId: string) => {
+    setSavedJobIds(prev => prev.filter(id => id !== jobId))
+  }
 
   // ================= APPLICATIONS STATE =================
   const [appFilter, setAppFilter] = useState<ApplicationFilter>('ALL')
@@ -337,6 +363,15 @@ export const CandidateDashboard: React.FC<CandidateDashboardProps> = ({ onBrowse
       className="candidate-dashboard-layout"
     >
       {/* ================= 1. DARK LEFT SIDEBAR ================= */}
+      {/* Mobile Drawer Overlay */}
+      {mobileDrawerOpen && (
+        <div
+          className="dashboard-mobile-overlay"
+          onClick={() => setMobileDrawerOpen(false)}
+        />
+      )}
+
+      {/* ================= 1. DARK LEFT SIDEBAR ================= */}
       <aside
         style={{
           width: '260px',
@@ -350,24 +385,46 @@ export const CandidateDashboard: React.FC<CandidateDashboardProps> = ({ onBrowse
           borderRight: '1px solid #1e2433',
           minHeight: '100vh'
         }}
-        className="dashboard-dark-sidebar"
+        className={`dashboard-dark-sidebar ${mobileDrawerOpen ? 'mobile-open' : ''}`}
       >
         <div>
-          {/* Logo */}
+          {/* Logo and Mobile Close */}
           <div
             style={{
-              padding: '0 8px 28px',
-              cursor: 'pointer'
-            }}
-            onClick={() => {
-              window.location.hash = '#home'
+              padding: '0 8px 24px',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between'
             }}
           >
-            <img
-              src="/logo-white.png"
-              alt="proXHire"
-              style={{ height: '38px', width: 'auto', objectFit: 'contain' }}
-            />
+            <div
+              style={{ cursor: 'pointer' }}
+              onClick={() => {
+                window.location.hash = '#home'
+              }}
+            >
+              <img
+                src="/logo-white.png"
+                alt="proXHire"
+                style={{ height: '36px', width: 'auto', objectFit: 'contain' }}
+              />
+            </div>
+
+            {/* Mobile close button */}
+            <button
+              type="button"
+              className="mobile-sidebar-close-btn"
+              onClick={() => setMobileDrawerOpen(false)}
+              style={{
+                background: 'none',
+                border: 'none',
+                color: '#94a3b8',
+                cursor: 'pointer',
+                padding: '4px'
+              }}
+            >
+              <X size={20} />
+            </button>
           </div>
 
           {/* Navigation Items */}
@@ -375,7 +432,10 @@ export const CandidateDashboard: React.FC<CandidateDashboardProps> = ({ onBrowse
             {/* Dashboard */}
             <button
               type="button"
-              onClick={() => setActiveSidebarTab('dashboard')}
+              onClick={() => {
+                setActiveSidebarTab('dashboard')
+                setMobileDrawerOpen(false)
+              }}
               style={{
                 display: 'flex',
                 alignItems: 'center',
@@ -401,8 +461,8 @@ export const CandidateDashboard: React.FC<CandidateDashboardProps> = ({ onBrowse
             <button
               type="button"
               onClick={() => {
-                if (onBrowseJobs) onBrowseJobs()
-                else window.location.hash = '#jobs'
+                setActiveSidebarTab('jobs')
+                setMobileDrawerOpen(false)
               }}
               style={{
                 display: 'flex',
@@ -428,7 +488,10 @@ export const CandidateDashboard: React.FC<CandidateDashboardProps> = ({ onBrowse
             {/* My Applications (Active in design) */}
             <button
               type="button"
-              onClick={() => setActiveSidebarTab('applications')}
+              onClick={() => {
+                setActiveSidebarTab('applications')
+                setMobileDrawerOpen(false)
+              }}
               style={{
                 display: 'flex',
                 alignItems: 'center',
@@ -453,7 +516,10 @@ export const CandidateDashboard: React.FC<CandidateDashboardProps> = ({ onBrowse
             {/* Saved Jobs */}
             <button
               type="button"
-              onClick={() => setActiveSidebarTab('saved')}
+              onClick={() => {
+                setActiveSidebarTab('saved')
+                setMobileDrawerOpen(false)
+              }}
               style={{
                 display: 'flex',
                 alignItems: 'center',
@@ -478,7 +544,10 @@ export const CandidateDashboard: React.FC<CandidateDashboardProps> = ({ onBrowse
             {/* Interview Calls */}
             <button
               type="button"
-              onClick={() => setActiveSidebarTab('interviews')}
+              onClick={() => {
+                setActiveSidebarTab('interviews')
+                setMobileDrawerOpen(false)
+              }}
               style={{
                 display: 'flex',
                 alignItems: 'center',
@@ -503,7 +572,10 @@ export const CandidateDashboard: React.FC<CandidateDashboardProps> = ({ onBrowse
             {/* Profile */}
             <button
               type="button"
-              onClick={() => setActiveSidebarTab('profile')}
+              onClick={() => {
+                setActiveSidebarTab('profile')
+                setMobileDrawerOpen(false)
+              }}
               style={{
                 display: 'flex',
                 alignItems: 'center',
@@ -528,7 +600,10 @@ export const CandidateDashboard: React.FC<CandidateDashboardProps> = ({ onBrowse
             {/* Skill Assessment */}
             <button
               type="button"
-              onClick={() => setActiveSidebarTab('skills')}
+              onClick={() => {
+                setActiveSidebarTab('skills')
+                setMobileDrawerOpen(false)
+              }}
               style={{
                 display: 'flex',
                 alignItems: 'center',
@@ -553,7 +628,10 @@ export const CandidateDashboard: React.FC<CandidateDashboardProps> = ({ onBrowse
             {/* Notifications (with red badge 3) */}
             <button
               type="button"
-              onClick={() => setActiveSidebarTab('notifications')}
+              onClick={() => {
+                setActiveSidebarTab('notifications')
+                setMobileDrawerOpen(false)
+              }}
               style={{
                 display: 'flex',
                 alignItems: 'center',
@@ -598,7 +676,10 @@ export const CandidateDashboard: React.FC<CandidateDashboardProps> = ({ onBrowse
             {/* Settings */}
             <button
               type="button"
-              onClick={() => setActiveSidebarTab('settings')}
+              onClick={() => {
+                setActiveSidebarTab('settings')
+                setMobileDrawerOpen(false)
+              }}
               style={{
                 display: 'flex',
                 alignItems: 'center',
@@ -683,34 +764,53 @@ export const CandidateDashboard: React.FC<CandidateDashboardProps> = ({ onBrowse
             zIndex: 40
           }}
         >
-          {/* Top Search Input */}
-          <div style={{ position: 'relative', width: '100%', maxWidth: '440px' }}>
-            <Search
-              size={17}
+          {/* Mobile hamburger menu toggle */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+            <button
+              type="button"
+              className="mobile-hamburger-btn"
+              onClick={() => setMobileDrawerOpen(true)}
               style={{
-                position: 'absolute',
-                left: '14px',
-                top: '50%',
-                transform: 'translateY(-50%)',
-                color: '#94a3b8'
-              }}
-            />
-            <input
-              type="text"
-              placeholder="Search for jobs, companies or skills..."
-              value={topSearchQuery}
-              onChange={(e) => setTopSearchQuery(e.target.value)}
-              style={{
-                width: '100%',
-                padding: '10px 14px 10px 40px',
-                borderRadius: '9999px',
-                border: '1px solid #e2e8f0',
-                backgroundColor: '#f8fafc',
-                fontSize: '13px',
+                background: 'none',
+                border: 'none',
                 color: '#0f172a',
-                outline: 'none'
+                cursor: 'pointer',
+                padding: '6px'
               }}
-            />
+              aria-label="Open Navigation Menu"
+            >
+              <Menu size={22} />
+            </button>
+
+            {/* Top Search Input */}
+            <div style={{ position: 'relative', width: '100%', maxWidth: '440px' }} className="header-search-wrapper">
+              <Search
+                size={17}
+                style={{
+                  position: 'absolute',
+                  left: '14px',
+                  top: '50%',
+                  transform: 'translateY(-50%)',
+                  color: '#94a3b8'
+                }}
+              />
+              <input
+                type="text"
+                placeholder="Search for jobs, companies or skills..."
+                value={topSearchQuery}
+                onChange={(e) => setTopSearchQuery(e.target.value)}
+                style={{
+                  width: '100%',
+                  padding: '10px 14px 10px 40px',
+                  borderRadius: '9999px',
+                  border: '1px solid #e2e8f0',
+                  backgroundColor: '#f8fafc',
+                  fontSize: '13px',
+                  color: '#0f172a',
+                  outline: 'none'
+                }}
+              />
+            </div>
           </div>
 
           {/* Right User Actions */}
@@ -879,6 +979,48 @@ export const CandidateDashboard: React.FC<CandidateDashboardProps> = ({ onBrowse
             </div>
           </div>
         </header>
+
+        {/* Mobile Horizontal Tabs Navigation */}
+        <div className="mobile-tab-scroll-bar">
+          {[
+            { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboard },
+            { id: 'jobs', label: 'Jobs', icon: Search },
+            { id: 'applications', label: 'Applications (18)', icon: FileText },
+            { id: 'saved', label: `Saved (${savedJobIds.length})`, icon: Bookmark },
+            { id: 'interviews', label: 'Interviews (3)', icon: Calendar },
+            { id: 'profile', label: 'Profile', icon: User },
+            { id: 'skills', label: 'Skills', icon: BarChart2 },
+            { id: 'notifications', label: `Alerts (${unreadCount})`, icon: Bell },
+            { id: 'settings', label: 'Settings', icon: Settings }
+          ].map((item) => {
+            const Icon = item.icon
+            const isActive = activeSidebarTab === item.id
+            return (
+              <button
+                key={item.id}
+                type="button"
+                onClick={() => setActiveSidebarTab(item.id as DashboardSidebarTab)}
+                style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '6px',
+                  padding: '7px 14px',
+                  borderRadius: '9999px',
+                  fontSize: '12px',
+                  fontWeight: isActive ? 700 : 500,
+                  backgroundColor: isActive ? '#0f172a' : '#f1f5f9',
+                  color: isActive ? '#ffffff' : '#475569',
+                  border: 'none',
+                  cursor: 'pointer',
+                  flexShrink: 0
+                }}
+              >
+                <Icon size={14} />
+                <span>{item.label}</span>
+              </button>
+            )
+          })}
+        </div>
 
         {/* Main Body Content based on Active Tab */}
         <main style={{ padding: '32px', flex: 1 }}>
@@ -2285,75 +2427,61 @@ export const CandidateDashboard: React.FC<CandidateDashboardProps> = ({ onBrowse
             </div>
           )}
 
-          {/* Fallback for other sidebar views */}
-          {activeSidebarTab !== 'applications' && activeSidebarTab !== 'notifications' && (
-            <div
-              style={{
-                backgroundColor: '#ffffff',
-                borderRadius: '16px',
-                border: '1px solid #e2e8f0',
-                padding: '40px',
-                textAlign: 'center',
-                maxWidth: '680px',
-                margin: '40px auto'
+          {/* ================= VIEW: DASHBOARD OVERVIEW ================= */}
+          {activeSidebarTab === 'dashboard' && (
+            <CandidateOverviewTab
+              onNavigateTab={(tab) => setActiveSidebarTab(tab)}
+              onSaveJob={handleSaveJob}
+              savedJobIds={savedJobIds}
+            />
+          )}
+
+          {/* ================= VIEW: JOBS ================= */}
+          {activeSidebarTab === 'jobs' && (
+            <CandidateJobsTab
+              onSaveJob={handleSaveJob}
+              savedJobIds={savedJobIds}
+              onApplicationSubmit={() => {}}
+            />
+          )}
+
+          {/* ================= VIEW: SAVED JOBS ================= */}
+          {activeSidebarTab === 'saved' && (
+            <CandidateSavedJobsTab
+              onNavigateTab={(tab) => setActiveSidebarTab(tab)}
+              savedJobIds={savedJobIds}
+              onRemoveSavedJob={handleRemoveSavedJob}
+            />
+          )}
+
+          {/* ================= VIEW: INTERVIEW CALLS ================= */}
+          {activeSidebarTab === 'interviews' && (
+            <CandidateInterviewsTab
+              onNavigateTab={(tab) => setActiveSidebarTab(tab)}
+              onOpenOfferModal={(app) => {
+                setActiveModalApp(app)
+                setActiveModalType('offer')
               }}
-            >
-              <div
-                style={{
-                  width: '54px',
-                  height: '54px',
-                  borderRadius: '50%',
-                  backgroundColor: '#f1f5f9',
-                  color: '#0f172a',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  margin: '0 auto 16px'
-                }}
-              >
-                <Sparkles size={26} />
-              </div>
-              <h2 style={{ fontSize: '22px', fontWeight: 800, color: '#0f172a', marginBottom: '8px', textTransform: 'capitalize' }}>
-                {activeSidebarTab.replace('-', ' ')}
-              </h2>
-              <p style={{ fontSize: '14px', color: '#64748b', lineHeight: 1.6, marginBottom: '24px' }}>
-                Manage your candidate preferences, view verified recruiter matches, and track your ongoing career journey.
-              </p>
-              <div style={{ display: 'flex', gap: '12px', justifyContent: 'center' }}>
-                <button
-                  type="button"
-                  onClick={() => setActiveSidebarTab('applications')}
-                  style={{
-                    backgroundColor: '#0f172a',
-                    color: '#ffffff',
-                    border: 'none',
-                    padding: '10px 22px',
-                    borderRadius: '10px',
-                    fontWeight: 700,
-                    fontSize: '13px',
-                    cursor: 'pointer'
-                  }}
-                >
-                  View My Applications
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setActiveSidebarTab('notifications')}
-                  style={{
-                    backgroundColor: '#ffffff',
-                    color: '#0f172a',
-                    border: '1.5px solid #0f172a',
-                    padding: '10px 22px',
-                    borderRadius: '10px',
-                    fontWeight: 700,
-                    fontSize: '13px',
-                    cursor: 'pointer'
-                  }}
-                >
-                  Check Notifications
-                </button>
-              </div>
-            </div>
+              onOpenFeedbackModal={(app) => {
+                setActiveModalApp(app)
+                setActiveModalType('feedback')
+              }}
+            />
+          )}
+
+          {/* ================= VIEW: PROFILE ================= */}
+          {activeSidebarTab === 'profile' && (
+            <CandidateProfileTab />
+          )}
+
+          {/* ================= VIEW: SKILLS ================= */}
+          {activeSidebarTab === 'skills' && (
+            <CandidateSkillsTab />
+          )}
+
+          {/* ================= VIEW: SETTINGS ================= */}
+          {activeSidebarTab === 'settings' && (
+            <CandidateSettingsTab />
           )}
         </main>
       </div>
@@ -2633,19 +2761,75 @@ export const CandidateDashboard: React.FC<CandidateDashboardProps> = ({ onBrowse
 
       {/* Responsive Layout Styles */}
       <style>{`
+        .mobile-hamburger-btn {
+          display: none;
+        }
+        .mobile-sidebar-close-btn {
+          display: none;
+        }
+        .mobile-tab-scroll-bar {
+          display: none;
+        }
         @media (max-width: 1080px) {
           .dashboard-two-column-grid {
             grid-template-columns: 1fr !important;
           }
         }
-        @media (max-width: 768px) {
+        @media (max-width: 850px) {
           .candidate-dashboard-layout {
             flex-direction: column !important;
           }
+          .mobile-hamburger-btn {
+            display: flex !important;
+          }
+          .mobile-sidebar-close-btn {
+            display: block !important;
+          }
+          .mobile-tab-scroll-bar {
+            display: flex !important;
+            overflow-x: auto;
+            white-space: nowrap;
+            padding: 10px 16px;
+            gap: 8px;
+            background-color: #ffffff;
+            border-bottom: 1px solid #e2e8f0;
+            position: sticky;
+            top: 60px;
+            z-index: 30;
+            -webkit-overflow-scrolling: touch;
+          }
+          .mobile-tab-scroll-bar::-webkit-scrollbar {
+            display: none;
+          }
           .dashboard-dark-sidebar {
-            width: 100% !important;
-            min-height: auto !important;
+            display: none !important;
+          }
+          .dashboard-dark-sidebar.mobile-open {
+            display: flex !important;
+            position: fixed !important;
+            top: 0 !important;
+            left: 0 !important;
+            bottom: 0 !important;
+            z-index: 200 !important;
+            width: 280px !important;
+            max-width: 85vw !important;
+            box-shadow: 10px 0 30px rgba(0,0,0,0.5) !important;
+          }
+          .dashboard-mobile-overlay {
+            position: fixed;
+            inset: 0;
+            background-color: rgba(0,0,0,0.5);
+            z-index: 199;
+          }
+          main {
             padding: 16px !important;
+          }
+          header {
+            padding: 0 16px !important;
+            height: 60px !important;
+          }
+          .header-search-wrapper {
+            max-width: 220px !important;
           }
         }
       `}</style>

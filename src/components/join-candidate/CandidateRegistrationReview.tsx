@@ -14,10 +14,7 @@ import {
   Search,
   Award,
   Bell,
-  TrendingUp,
-  CheckCircle,
-  X,
-  ExternalLink
+  TrendingUp
 } from 'lucide-react'
 
 interface CandidateRegistrationReviewProps {
@@ -34,8 +31,8 @@ export const CandidateRegistrationReview: React.FC<CandidateRegistrationReviewPr
   const [professionalOpen, setProfessionalOpen] = useState(true)
   const [documentsOpen, setDocumentsOpen] = useState(true)
 
-  // Stepper state (1: Basic Details, 2: Professional Details, 3: Document Verification, 4: Review & Submit)
-  const [currentStep, setCurrentStep] = useState<number>(4)
+  // Stepper state
+  const [, setCurrentStep] = useState<number>(4)
 
   // Terms agreement state
   const [termsAgreed, setTermsAgreed] = useState(true)
