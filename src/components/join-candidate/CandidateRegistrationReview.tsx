@@ -77,6 +77,7 @@ export const CandidateRegistrationReview: React.FC<CandidateRegistrationReviewPr
 
   return (
     <div
+      className="registration-page-wrapper"
       style={{
         backgroundColor: '#edf3fa',
         minHeight: '100vh',
@@ -104,9 +105,9 @@ export const CandidateRegistrationReview: React.FC<CandidateRegistrationReviewPr
             overflow: 'hidden',
             boxShadow: '0 20px 40px -15px rgba(0,0,0,0.25)',
             display: 'flex',
-            alignItems: 'stretch',
-            alignSelf: 'stretch',
-            minHeight: '840px'
+            alignItems: 'flex-start',
+            alignSelf: 'flex-start',
+            width: '100%'
           }}
           className="left-hero-card"
         >
@@ -115,11 +116,11 @@ export const CandidateRegistrationReview: React.FC<CandidateRegistrationReviewPr
             alt="proXHire - Create Your Account. Your Next Opportunity Starts Here."
             style={{
               width: '100%',
-              height: '100%',
-              objectFit: 'cover',
-              objectPosition: 'center top',
-              display: 'block'
+              height: 'auto',
+              display: 'block',
+              borderRadius: '24px'
             }}
+            className="left-hero-img"
           />
         </div>
 
@@ -1438,13 +1439,29 @@ export const CandidateRegistrationReview: React.FC<CandidateRegistrationReviewPr
           }
           .left-hero-card {
             min-height: auto !important;
-            max-height: 520px !important;
+            max-height: none !important;
+            width: 100% !important;
+            max-width: 520px !important;
+            margin: 0 auto !important;
+          }
+          .left-hero-img {
+            width: 100% !important;
+            height: auto !important;
+            display: block !important;
           }
         }
         @media (max-width: 768px) {
           .left-hero-card {
             min-height: auto !important;
-            max-height: 420px !important;
+            max-height: none !important;
+            width: 100% !important;
+            max-width: 100% !important;
+            border-radius: 18px !important;
+          }
+          .left-hero-img {
+            width: 100% !important;
+            height: auto !important;
+            display: block !important;
             border-radius: 18px !important;
           }
           .right-review-card {
@@ -1463,6 +1480,9 @@ export const CandidateRegistrationReview: React.FC<CandidateRegistrationReviewPr
           }
         }
         @media (max-width: 480px) {
+          .registration-page-wrapper {
+            padding: 16px 12px 40px !important;
+          }
           .documents-grid-4cols {
             grid-template-columns: 1fr !important;
           }
