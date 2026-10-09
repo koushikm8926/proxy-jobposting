@@ -14,10 +14,7 @@ import {
   Search,
   Award,
   Bell,
-  TrendingUp,
-  CheckCircle,
-  X,
-  ExternalLink
+  TrendingUp
 } from 'lucide-react'
 
 interface CandidateRegistrationReviewProps {
@@ -547,7 +544,7 @@ export const CandidateRegistrationReview: React.FC<CandidateRegistrationReviewPr
                 Candidate Registration
               </h2>
               <div style={{ fontSize: '14px', fontWeight: 600, color: '#334155', marginBottom: '4px' }}>
-                Step 4 of 4 - Review &amp; Submit
+                Step {currentStep} of 4 - Review &amp; Submit
               </div>
               <p style={{ fontSize: '14px', color: '#64748b', margin: 0 }}>
                 Please review your details before submitting. You can go back and edit if needed.
